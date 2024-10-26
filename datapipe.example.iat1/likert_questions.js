@@ -11,6 +11,8 @@ define(['questAPI'], function (quest) {
             text: '<b>Instructions:</b> Please indicate your level of agreement with the following statements.',
             submitText: 'Submit and Continue',
             name: 'likertPage', // for logs, does not appear on webpage
+            decline: 'double',
+            declineText: 'Decline to answer (click twice)',
             questions: [
                 {
                     type: 'grid',

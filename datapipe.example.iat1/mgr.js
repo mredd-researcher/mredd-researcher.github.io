@@ -69,7 +69,12 @@ define(['managerAPI',
             name: 'intro',
             templateUrl: 'intro.jst',
             title: 'Intro',
-            header: 'Welcome'
+        }],
+
+        consent: [{
+            type: 'quest',
+            name: 'consent',
+            scriptUrl: 'consent.js'
         }],
 
         likert: [{
@@ -118,11 +123,11 @@ define(['managerAPI',
         redirect:
         [{ 
 			//Replace with any URL you need to put at the end of your study, or just remove this task from the sequence below
-            type:'redirect', name:'redirecting', url: 'https://www.google.com/search' 
+            type:'redirect', name:'redirecting', url: 'https://mredd-researcher.github.io' 
         }],
 		
 		//This task waits until the data are sent to the server.
-        uploading: uploading_task({header: 'just a moment', body:'Please wait, sending data... '})
+        uploading: uploading_task({header: 'Just a moment', body:'Please wait, sending data... '})
     });
 
     API.addSequence([
@@ -167,6 +172,7 @@ define(['managerAPI',
         
         
         {inherit: 'intro'},
+        {inherit: 'consent'},
         {inherit: 'likert'},
         {inherit: "interview"},
         // {
