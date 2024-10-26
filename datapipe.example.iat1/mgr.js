@@ -72,6 +72,12 @@ define(['managerAPI',
             header: 'Welcome'
         }],
 
+        likert: [{
+            type: 'quest',
+            name: 'likert',
+            scriptUrl: 'likert_questions.js'
+        }],
+
         raceiat_instructions: [{
             inherit: 'instructions',
             name: 'raceiat_instructions',
@@ -80,16 +86,22 @@ define(['managerAPI',
             header: 'Implicit Association Test'
         }],
 
-        explicits: [{
-            type: 'quest',
-            name: 'explicits',
-            scriptUrl: 'explicits.js'
-        }],
+        // explicits: [{
+        //     type: 'quest',
+        //     name: 'explicits',
+        //     scriptUrl: 'explicits.js'
+        // }],
 
         raceiat: [{
             type: 'time',
             name: 'raceiat',
             scriptUrl: 'raceiat.js'
+        }],
+
+        interview: [{
+            type: 'quest',
+            name: 'interview',
+            scriptUrl: 'interview_questions.js'
         }],
 
         lastpage: [{
@@ -155,22 +167,25 @@ define(['managerAPI',
         
         
         {inherit: 'intro'},
-        {
-            mixer:'repeat',
-            times: 1,
-            data:[
-                {inherit: 'explicits'},
+        {inherit: 'likert'},
+        {inherit: "interview"},
+        // {
+        //     mixer:'repeat',
+        //     times: 1,
+        //     data:[
+        //         {inherit: 'explicits'},
 
-                // force the instructions to preceed the iat
-                {
-                    mixer: 'wrapper',
-                    data: [
-                        {inherit: 'raceiat_instructions'},
-                        {inherit: 'raceiat'}
-                    ]
-                }
-            ]
-        },
+        //         // force the instructions to preceed the iat
+        //         {
+        //             mixer: 'wrapper',
+        //             data: [
+        //                 {inherit: 'raceiat_instructions'},
+        //                 {inherit: 'raceiat'}
+        //             ]
+        //         },
+        //         {inherit: "interview"}
+        //     ]
+        // },
 
 		{inherit: 'uploading'},
         {inherit: 'lastpage'},
