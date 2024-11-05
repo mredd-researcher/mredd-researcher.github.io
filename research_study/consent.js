@@ -14,8 +14,8 @@ define(['questAPI'], function (quest) {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Educational Leadership, Educational Technology, and Interdisciplinary EdD.<br><br>
 <b>Student Investigator:</b> Mary Redden<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Educational Leadership, Educational Technology, and Interdisciplinary EdD.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: xxx.xxx@my.liu.edu<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phone: xxxxx<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: Mary.Redden@my.liu.edu<br>
+<br>
 
 You are being asked to join a research study. Participation in this study is voluntary. Even if you decide to join now, you can change your mind later.
             `,
@@ -124,8 +124,7 @@ If you agree to participate, you will be asked to do the following:
                     description: `
 If you have any questions, please contact:<br>
 <b>Mary Redden</b><br>
-Email: xxxxxxx@my.liu.edu<br>
-Phone: xxxxxxx<br>
+Email: Mary.Redden@my.liu.edu<br>
 <br>
 If you have questions about your rights as a research participant, please contact the Long Island University Institutional Review Board at <a href="mailto:osp@liu.edu">osp@liu.edu</a>.
 `,
