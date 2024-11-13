@@ -144,6 +144,17 @@ By marking the “Agree to Participate” box below, you are indicating that you
                     correctValue: 'I agree to participate',
                     errorMsg: {correct: `If you do not agree to participate, you may simply close this webpage.`},
                 },
+                {
+                    type: 'selectOne',
+                    name: 'infoPar12',
+                    stem: `<b>Do you teach a STEM subject for grades 6-12?</b>`,
+                    description: `If No, you may still complete the study, but your results will not be included the analysis.`,
+                    required: true,
+                    answers: [
+                        'Yes',
+                        'No',
+                    ],
+                },
             ]
         },
     ]);
