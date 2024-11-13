@@ -103,6 +103,12 @@ define(['managerAPI',
             scriptUrl: 'raceiat.js'
         }],
 
+        displayResults: [{
+            type: 'quest',
+            name: 'displayResults',
+            scriptUrl: 'displayResults.js'
+        }],
+
         interview: [{
             type: 'quest',
             name: 'interview',
@@ -190,6 +196,7 @@ define(['managerAPI',
         //         },
         //     ]
         // },
+        {inherit: 'displayResults'},
         {inherit: "interview"},
 		{inherit: 'uploading'},
         {inherit: 'lastpage'},
