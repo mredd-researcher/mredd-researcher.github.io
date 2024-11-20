@@ -8,7 +8,7 @@ define(['questAPI'], function (quest) {
     API.addSequence([
         {
             header: 'Semi-Structured Interview Guide',
-            text: '<b>Instructions:</b> Thank you for participating in this interview. Your responses provide valuable insights into how biases affect educational practices. Your responses are anonymous to everyone but the researcher.',
+            text: '<b>Instructions:</b> Thank you for participating in this interview. Your responses provide valuable insights into how biases affect educational practices. Your responses are anonymous to everyone.',
             submitText: 'Finish',
             // numbered: true,
             autoFocus: true,
