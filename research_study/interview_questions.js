@@ -26,7 +26,7 @@ define(['questAPI'], function (quest) {
                 },
                 {
                     type: 'textarea',
-                    stem: 'How do you think your self-perception of bias (as indicated by your responses on the Likert scale) compares with your IAT results? Can you describe any discrepancies?',
+                    stem: 'How do you think your self-perception of implicit bias (as indicated by your responses on the Likert scale) compares with your IAT results? Do you believe any biases you posess are controlled in the classroom?',
                     name: 'interview2', // for labeling in response data
                     rows: 4,
                     // minlength: 2, // ensures a minimum of 2 characters
@@ -34,7 +34,7 @@ define(['questAPI'], function (quest) {
                 },
                 {
                     type: 'textarea',
-                    stem: 'How do external factors, such as testing policies or administrative support, affect the way you recommend students for STEM courses?',
+                    stem: 'How much do external factors like standardized test results and administrative influence (e.g., policy directives, feedback on your teaching, and administrative support with parents) shape your teaching practices and recommendations of your students?',
                     name: 'interview3', // for labeling in response data
                     rows: 4,
                     // minlength: 2, // ensures a minimum of 2 characters
@@ -42,7 +42,7 @@ define(['questAPI'], function (quest) {
                 },
                 {
                     type: 'textarea',
-                    stem: 'Now that you have completed the IAT, has your belief in the existence or influence of implicit biases in your teaching practices changed? If so, how?',
+                    stem: 'After completing the IAT, has your belief in the existence or influence of implicit racial biases changed at all? If so, how?',
                     name: 'interview4', // for labeling in response data
                     rows: 4,
                     // minlength: 2, // ensures a minimum of 2 characters
@@ -58,7 +58,7 @@ define(['questAPI'], function (quest) {
                 },
                 {
                     type: 'textarea',
-                    stem: 'Do you think professional development can help teachers recognize and address implicit biases? If not, what alternative suggestions do you have?',
+                    stem: 'Do you believe professional development initiatives can help teachers identifying and mitigate potential implicit biases? Why or why not? If not, are there other methods that might be more effective?',
                     name: 'interview6', // for labeling in response data
                     rows: 4,
                     // minlength: 2, // ensures a minimum of 2 characters
