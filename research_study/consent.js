@@ -17,7 +17,7 @@ define(['questAPI'], function (quest) {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: Mary.Redden@my.liu.edu<br>
 <br>
 
-You are being asked to join a research study. Participation in this study is voluntary. Even if you decide to join now, you can change your mind later.
+You are being asked to join a research study. Participation in this study is voluntary. Even if you decide to join now, you can change your mind later at stop at any time.
             `,
             submitText: 'Accept and Continue',
             name: 'consentPage', // for logs, does not appear on webpage
@@ -30,8 +30,8 @@ You are being asked to join a research study. Participation in this study is vol
                     stem: `<b>Why is this research being done?</b>`,
                     description: `
 <ul>
-<li>This research is being done to help bring awareness to STEM teachers about their implicit racial biases, with a specific focus on Black students in STEM courses. By bringing awareness to these biases, this study seeks to promote equity in educational opportunities.</li>
-<li>Participants in this study will be current STEM teachers in grades 6–12 with at least three years of teaching experience. I anticipate roughly 60 participants will take part in this study.</li>
+<li>This research examines STEM teachers' awareness of their potential implicit racial biases. The study explores whether teachers in science, technology, engineering, and math (STEM) fields recognize any unconscious attitudes or stereotypes they may hold about different racial groups, and how these potential biases may influence their interactions with students and the opportunities they provide in the classroom</li>
+<li>Participants of this study will be current STEM teachers of grades 6–12, and will have at least three years of teaching experience. Your participation is confidential. All responses will be anonymized and used solely for research purposes. No personally identifiable information will be collected or shared.</li>
 </ul>
 `,
                 },
@@ -40,12 +40,12 @@ You are being asked to join a research study. Participation in this study is vol
                     name: 'infoPar2',
                     stem: `<b>What will happen if you join this study?</b>`,
                     description: `
-If you agree to participate, you will be asked to do the following:                    
+You will receive a link to this online study and you are asked to complete the following three sections of this test in one, 15-minute session.                    
 <ul>
-<li>Complete a 6-question Likert scale survey assessing your self-perceived bias.</li>
-<li>Take the Harvard Implicit Association Test (IAT), which measures implicit associations and biases based on reaction times when categorizing words and images.</li>
-<li>Answer follow-up questions related to your test results and strategies you might adopt to mitigate bias in your recommendations for students.</li>
-<li>The study will take place online, and the entire session will take approximately 15-20 minutes. You will only need to complete this one session, and your participation will be completely confidential.</li>
+<li>1. Self-Perception Survey: First, you will complete a brief 6-question Likert scale survey designed to assess your self-perceived racial biases in classroom interactions.</li>
+<li>2. Implicit Association Test (IAT): Next, you will take the Implicit Association Test to measure potential implicit racial biases you may have. After completing the test, you will immediately receive your IAT results along with your Likert Scale survey responses.</li>
+<li>3. Reflective Questions: Last, you will answer six follow-up questions that encourage reflection on your IAT and survey results. These questions will gauge your reaction to the assessments and guide you in conjuring strategies that may mitigate any identified racial biases from the IAT and consider how to incorporate these strategies into your teaching practices.</li>
+<li>The study will take place online, at a time and place of your convienience. Your participation will be completely confidential.</li>
 </ul>
 `,
                 },
@@ -56,8 +56,8 @@ If you agree to participate, you will be asked to do the following:
                     description: `
 <ul>
 <li>The risks are minimal and no greater than those encountered in daily life. There may be a potential risk of discomfort when reflecting on personal biases, but you are free to stop participation at any time if you feel uncomfortable.</li>
-<li>Although your responses will remain confidential, there is a small possibility of data tampering when using the internet to collect information. All data collected will be stored securely, and every effort will be made to protect your privacy.</li>
-<li>You may get tired or bored when we are asking you questions or you are completing questionnaires. You do not have to answer any question you do not want to answer.</li>
+<li>While your responses will remain confidential, there is always a small possibility of data tampering when using the internet for data collection. All data will be securely stored, and every effort will be made to protect your privacy.</li>
+<li>You may get tired or bored when taking this study. You are not required to answer any questions you prefer to skip</li>
 <li>Although your IP address will not be stored in the survey results, there is always the possibility of tampering from an outside source when using the Internet for collecting information. While the confidentiality of your responses will be protected, there is always the possibility of hacking or other security breaches that could threaten the confidentiality of your responses.</li>
 <li>If you wish to stop at any time, please click out of the form and your answers will not be submitted.</li>
 </ul>
