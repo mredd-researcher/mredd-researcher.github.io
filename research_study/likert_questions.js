@@ -32,7 +32,7 @@ define(['questAPI'], function (quest) {
                         { left: 'I believe that my recommendations for students are entirely free from racial bias.' },
                         { left: 'I think it is possible to hold racial biases without being consciously aware of them.' },
                         { left: 'I actively work to identify and mitigate any racial biases I might have.' },
-                        { left: 'I believe that my implicit biases could influence my recommendations for student placements.' },
+                        { left: 'I regularly reflect on my teaching practices to identify and address any potential biases.' },
                         { left: 'When making decisions, I consider whether my choices might be influenced by stereotypes or biases.' },
                     ],
                 },
