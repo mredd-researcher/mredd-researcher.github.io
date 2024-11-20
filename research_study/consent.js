@@ -17,7 +17,7 @@ define(['questAPI'], function (quest) {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: Mary.Redden@my.liu.edu<br>
 <br>
 
-You are being asked to join a research study. Participation in this study is voluntary. Even if you decide to join now, you can change your mind later at stop at any time.
+You are being asked to join a research study. Participation in this study is voluntary. Even if you decide to join now, you can change your mind and stop at any time.
             `,
             submitText: 'Accept and Continue',
             name: 'consentPage', // for logs, does not appear on webpage
@@ -30,7 +30,7 @@ You are being asked to join a research study. Participation in this study is vol
                     stem: `<b>Why is this research being done?</b>`,
                     description: `
 <ul>
-<li>This research examines STEM teachers' awareness of their potential implicit racial biases. The study explores whether teachers in science, technology, engineering, and math (STEM) fields recognize any unconscious attitudes or stereotypes they may hold about different racial groups, and how these potential biases may influence their interactions with students and the opportunities they provide in the classroom</li>
+<li>This research examines STEM teachers' awareness of their potential implicit racial biases. The study explores whether teachers in science, technology, engineering, and math (STEM) fields recognize any unconscious attitudes or stereotypes they may have about different racial groups, and how these potential biases may influence their interactions with students in their classroom.</li>
 <li>Participants of this study will be current STEM teachers of grades 6–12, and will have at least three years of teaching experience. Your participation is confidential. All responses will be anonymized and used solely for research purposes. No personally identifiable information will be collected or shared.</li>
 </ul>
 `,
@@ -42,9 +42,9 @@ You are being asked to join a research study. Participation in this study is vol
                     description: `
 You will receive a link to this online study and you are asked to complete the following three sections of this test in one, 15-minute session.                    
 <ul>
-<li>1. Self-Perception Survey: First, you will complete a brief 6-question Likert scale survey designed to assess your self-perceived racial biases in classroom interactions.</li>
-<li>2. Implicit Association Test (IAT): Next, you will take the Implicit Association Test to measure potential implicit racial biases you may have. After completing the test, you will immediately receive your IAT results along with your Likert Scale survey responses.</li>
-<li>3. Reflective Questions: Last, you will answer six follow-up questions that encourage reflection on your IAT and survey results. These questions will gauge your reaction to the assessments and guide you in conjuring strategies that may mitigate any identified racial biases from the IAT and consider how to incorporate these strategies into your teaching practices.</li>
+<li>1. Self-Perception Survey: First, you will complete a brief 6-question survey designed to assess your self-perceived racial bias levels.</li>
+<li>2. Implicit Association Test (IAT): Next, you will take the Implicit Association Test to measure potential implicit racial biases you may have. After completing the test, you will immediately receive your IAT results along with your survey responses.</li>
+<li>3. Reflective Questions: Lastly, you will answer six follow-up questions designed to encourage reflection on your IAT and survey results. These questions aim to gauge your reaction to the assessments and help you develop strategies to mitigate any identified racial biases from the IAT, while considering how to integrate these strategies into your teaching practices.</li>
 <li>The study will take place online, at a time and place of your convienience. Your participation will be completely confidential.</li>
 </ul>
 `,
