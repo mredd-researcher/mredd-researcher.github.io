@@ -11,7 +11,8 @@ define(['questAPI'], function (quest) {
             text: `
 <b>Study Title:</b> Invisible Barriers: Investigating the Impact of Teacher Bias on Black Students’ Opportunities in Science<br><br>
 <b>Faculty Investigator:</b> Dr. Jan Hammond, EdD<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Educational Leadership, Educational Technology, and Interdisciplinary EdD.<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Educational Leadership, Educational Technology, and Interdisciplinary EdD.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: jan.hammond@liu.edu<br><br>
 <b>Student Investigator:</b> Mary Redden<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Educational Leadership, Educational Technology, and Interdisciplinary EdD.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: Mary.Redden@my.liu.edu<br>
@@ -42,9 +43,9 @@ You are being asked to join a research study. Participation in this study is vol
                     description: `
 You are being asked to complete the following three sections of this test in one, 15-minute session:                    
 <ul>
-<li>1. Self-Perception Survey: First, you will complete a brief 6-question survey designed to assess your self-perceived racial bias levels.</li>
-<li>2. Implicit Association Test (IAT): Next, you will take the Implicit Association Test to measure potential implicit racial biases you may have. After completing the test, you will immediately receive your IAT results along with your Likert survey responses.</li>
-<li>3. Reflective Questions: Lastly, you will answer six follow-up questions designed to prompt reflection on your IAT and survey results. These questions aim to assess your reactions to the assessments and develop potential strategies to address any identified racial biases from the IAT, as well as explore ways to integrate these strategies into your teaching practices.</li>
+<li>Self-Perception Survey: First, you will complete a brief 6-question survey designed to assess your self-perceived racial bias levels.</li>
+<li>Implicit Association Test (IAT): Next, you will take the Implicit Association Test to measure potential implicit racial biases you may have. After completing the test, you will immediately receive your IAT results along with your Likert survey responses.</li>
+<li>Reflective Questions: Lastly, you will answer six follow-up questions designed to prompt reflection on your IAT and survey results. These questions aim to assess your reactions to the assessments and develop potential strategies to address any identified racial biases from the IAT, as well as explore ways to integrate these strategies into your teaching practices.</li>
 <li>The study will take place online, at a time and place of your convienience. Your participation will be completely confidential.</li>
 </ul>
 `,
@@ -147,7 +148,7 @@ By marking the “Agree to Participate” box below, you are indicating that you
                 {
                     type: 'selectOne',
                     name: 'infoPar12',
-                    stem: `<b>Do you teach a STEM subject for grades 6-12?</b>`,
+                    stem: `<b>Do you teach a STEM subject for grades 6-12 and have more than 3 years of teaching experience?</b>`,
                     description: `If No, you may still complete the study, but your results will not be included the analysis.`,
                     required: true,
                     answers: [
