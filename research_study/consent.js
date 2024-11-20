@@ -30,7 +30,7 @@ You are being asked to join a research study. Participation in this study is vol
                     stem: `<b>Why is this research being done?</b>`,
                     description: `
 <ul>
-<li>This research examines STEM teachers' awareness of potential implicit racial biases. It explores whether educators in science, technology, engineering, and math (STEM) fields recognize unconscious attitudes or stereotypes they may have about different racial groups. It also investigates how these biases may influence their interactions with students.</li>
+<li>This research examines STEM teachers' awareness of their potential implicit racial biases. It explores whether educators in science, technology, engineering, and math (STEM) fields recognize unconscious attitudes or stereotypes they may have about different racial groups. It also investigates how these biases may influence their interactions with students.</li>
 <li>Participants in this study will be current STEM teachers of grades 6–12 in public schools on Long Island, NY. Participation will be confidential, with all responses anonymized and used exclusively for research purposes. No personally identifiable information will be collected or disclosed.</li>
 </ul>
 `,
