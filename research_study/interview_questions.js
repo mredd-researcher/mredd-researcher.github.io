@@ -18,7 +18,7 @@ define(['questAPI'], function (quest) {
             questions: [
                 {
                     type: 'textarea',
-                    stem: 'Were you surprised by your IAT results? Do you feel these results accurately reflect your levels of implicit bias? Why or why not?',
+                    stem: 'Do you agree with your IAT scores? Why or why not?',
                     name: 'interview1', // for labeling in response data
                     rows: 4,
                     // minlength: 2, // ensures a minimum of 2 characters
@@ -34,7 +34,7 @@ define(['questAPI'], function (quest) {
                 },
                 {
                     type: 'textarea',
-                    stem: 'Can you provide an example of how you think implicit biases might have influenced your recommendations or interactions with students in the past?',
+                    stem: 'How do external factors, such as testing policies or administrative support, affect the way you recommend students for STEM courses?',
                     name: 'interview3', // for labeling in response data
                     rows: 4,
                     // minlength: 2, // ensures a minimum of 2 characters
@@ -50,7 +50,7 @@ define(['questAPI'], function (quest) {
                 },
                 {
                     type: 'textarea',
-                    stem: 'Given your IAT results, what specific strategies do you think you can implement to reduce the impact of biases in your decision-making moving forward?',
+                    stem: 'Based on your IAT results, what specific strategies do you think might help reduce any potential biases in your decision-making moving forward?',
                     name: 'interview5', // for labeling in response data
                     rows: 4,
                     // minlength: 2, // ensures a minimum of 2 characters
@@ -58,7 +58,7 @@ define(['questAPI'], function (quest) {
                 },
                 {
                     type: 'textarea',
-                    stem: 'How do you see the role of professional development in helping teachers like yourself recognize and address implicit biases? What improvements or changes would you suggest?',
+                    stem: 'Do you think professional development can help teachers recognize and address implicit biases? If not, what alternative suggestions do you have?',
                     name: 'interview6', // for labeling in response data
                     rows: 4,
                     // minlength: 2, // ensures a minimum of 2 characters
