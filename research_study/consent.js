@@ -17,7 +17,7 @@ define(['questAPI'], function (quest) {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: Mary.Redden@my.liu.edu<br>
 <br>
 
-You are being asked to join a research study. Participation in this study is voluntary. Even if you decide to join now, you can change your mind and stop at any time.
+You are being asked to join a research study. Participation in this study is voluntary. Even if you decide to join now, you can stop at any time.
             `,
             submitText: 'Accept and Continue',
             name: 'consentPage', // for logs, does not appear on webpage
@@ -30,8 +30,8 @@ You are being asked to join a research study. Participation in this study is vol
                     stem: `<b>Why is this research being done?</b>`,
                     description: `
 <ul>
-<li>This research examines STEM teachers' awareness of their potential implicit racial biases. The study explores whether teachers in science, technology, engineering, and math (STEM) fields recognize any unconscious attitudes or stereotypes they may have about different racial groups, and how these potential biases may influence their interactions with students in their classroom.</li>
-<li>Participants of this study will be current STEM teachers of grades 6–12, and will have at least three years of teaching experience. Your participation is confidential. All responses will be anonymized and used solely for research purposes. No personally identifiable information will be collected or shared.</li>
+<li>This research examines STEM teachers' awareness of potential implicit racial biases. It explores whether educators in science, technology, engineering, and math (STEM) fields recognize unconscious attitudes or stereotypes they may have about different racial groups. It also investigates how these biases may influence their interactions with students.</li>
+<li>Participants in this study will be current STEM teachers of grades 6–12 in public schools on Long Island, NY. Participation will be confidential, with all responses anonymized and used exclusively for research purposes. No personally identifiable information will be collected or disclosed.</li>
 </ul>
 `,
                 },
@@ -40,11 +40,11 @@ You are being asked to join a research study. Participation in this study is vol
                     name: 'infoPar2',
                     stem: `<b>What will happen if you join this study?</b>`,
                     description: `
-You will receive a link to this online study and you are asked to complete the following three sections of this test in one, 15-minute session.                    
+You are being asked to complete the following three sections of this test in one, 15-minute session:                    
 <ul>
 <li>1. Self-Perception Survey: First, you will complete a brief 6-question survey designed to assess your self-perceived racial bias levels.</li>
-<li>2. Implicit Association Test (IAT): Next, you will take the Implicit Association Test to measure potential implicit racial biases you may have. After completing the test, you will immediately receive your IAT results along with your survey responses.</li>
-<li>3. Reflective Questions: Lastly, you will answer six follow-up questions designed to encourage reflection on your IAT and survey results. These questions aim to gauge your reaction to the assessments and help you develop strategies to mitigate any identified racial biases from the IAT, while considering how to integrate these strategies into your teaching practices.</li>
+<li>2. Implicit Association Test (IAT): Next, you will take the Implicit Association Test to measure potential implicit racial biases you may have. After completing the test, you will immediately receive your IAT results along with your Likert survey responses.</li>
+<li>3. Reflective Questions: Lastly, you will answer six follow-up questions designed to prompt reflection on your IAT and survey results. These questions aim to assess your reactions to the assessments and develop potential strategies to address any identified racial biases from the IAT, as well as explore ways to integrate these strategies into your teaching practices.</li>
 <li>The study will take place online, at a time and place of your convienience. Your participation will be completely confidential.</li>
 </ul>
 `,
@@ -79,7 +79,7 @@ You will receive a link to this online study and you are asked to complete the f
                     stem: `<b>What are your options if you do not want to be in the study?</b>`,
                     description: `
 <ul>
-<li>Your participation in this study is entirely voluntary. If you choose not to participate, or wish to stop at any time, you may do so and your answers up until that point will be destroyed.</li>
+<li>Your participation in this study is entirely voluntary. If you choose not to participate, or wish to stop at any time, you may do so and your answers up until that point will not be submitted.</li>
 </ul>
 `,
                 },
@@ -101,9 +101,9 @@ You will receive a link to this online study and you are asked to complete the f
                     stem: `<b>How will the confidentiality and/or data be protected?</b>`,
                     description: `
 <ul>
-<li>All study records that identify you will be kept confidential to the extent possible by law. Your participation will be completely anonymous, and the data will be stored securely with access limited to the research team. The results of this study may be published or presented, but your identity will not be disclosed.</li>
-<li>Participants will submit all responses through a secure, self-coded online platform. Data will be anonymized using unique code numbers, with no identifying information linked to your responses. All data will be stored on an encrypted, password-protected server, accessible only to the research team.</li>
-<li>Data will be retained for three years, then securely deleted. Only the research team will have access to the information.</li>
+<li>There are no study records that will identify you. All data collected will be confidential. Your participation will be completely anonymous, and the data will be stored securely with access limited to the Student Investigator. The results of this study may be published or presented, but your identity will not be disclosed.</li>
+<li>Participants will submit all responses through a secure, self-coded online platform. Data will be anonymized using unique code numbers, with no identifying information linked to your responses. All data will be stored on an encrypted, password-protected server, accessible only to the Student Investigator.</li>
+<li>Data will be retained for three years, then securely deleted. Only the Student Investigator will have access to the information.</li>
 </ul>
 `,
                 },
