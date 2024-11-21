@@ -35,43 +35,49 @@ function likertScoreDescription(likertScore) {
 
 // Function to get the IAT description based on the participant's feedback
 function iatScoreDescription(iatFeedback) {
-    if (iatFeedback.includes('Strong automatic preference for European Americans over African Americans')) {
+    if (!iatFeedback) {
+        return "<b>Error:</b> IAT feedback is missing.";
+    }
+
+    const feedbackLower = iatFeedback.trim().toLowerCase();
+
+    if (feedbackLower.includes('strong automatic preference for european americans over african americans')) {
         return `
             <h3>Implicit Association Test (IAT) Results</h3>
             <p>Your IAT score indicates that you have a <strong>Strong Automatic Preference for European Americans Over African Americans</strong></p>
             <p>You have a strong unconscious association favoring European Americans. You more quickly associated "European Americans" with positive words and "African Americans" with negative words during the test.</p>
         `;
-    } else if (iatFeedback.includes('Moderate automatic preference for European Americans over African Americans')) {
+    } else if (feedbackLower.includes('moderate automatic preference for european americans over african americans')) {
         return `
             <h3>Implicit Association Test (IAT) Results</h3>
             <p>Your IAT score indicates that you have a <strong>Moderate Automatic Preference for European Americans Over African Americans</strong></p>
             <p>You have a moderate unconscious association favoring European Americans. You more quickly associated "European Americans" with positive words and "African Americans" with negative words during the test.</p>
         `;
-    } else if (iatFeedback.includes('Slight automatic preference for European Americans over African Americans')) {
+    } else if (feedbackLower.includes('slight automatic preference for european americans over african americans')) {
         return `
             <h3>Implicit Association Test (IAT) Results</h3>
             <p>Your IAT score indicates that you have a <strong>Slight Automatic Preference for European Americans Over African Americans</strong></p>
             <p>You have a slight unconscious association favoring European Americans. You more quickly associated "European Americans" with positive words and "African Americans" with negative words during the test.</p>
         `;
-    } else if (iatFeedback.includes('Little to no automatic preference between European Americans and African Americans')) {
+    } else if (feedbackLower.includes('little to no automatic preference between european americans and african americans')) {
         return `
             <h3>Implicit Association Test (IAT) Results</h3>
             <p>Your IAT score indicates that you have <strong>Little to No Automatic Preference Between European Americans and African Americans</strong></p>
             <p>You do not exhibit a significant implicit preference for either racial group. Your associations between both groups and positive or negative words were similar during the test.</p>
         `;
-    } else if (iatFeedback.includes('Slight automatic preference for African Americans over European Americans')) {
+    } else if (feedbackLower.includes('slight automatic preference for african americans over european americans')) {
         return `
             <h3>Implicit Association Test (IAT) Results</h3>
             <p>Your IAT score indicates that you have a <strong>Slight Automatic Preference for African Americans Over European Americans</strong></p>
             <p>You have a slight unconscious association favoring African Americans. You more quickly associated "African Americans" with positive words and "European Americans" with negative words during the test.</p>
         `;
-    } else if (iatFeedback.includes('Moderate automatic preference for African Americans over European Americans')) {
+    } else if (feedbackLower.includes('moderate automatic preference for african americans over european americans')) {
         return `
             <h3>Implicit Association Test (IAT) Results</h3>
             <p>Your IAT score indicates that you have a <strong>Moderate Automatic Preference for African Americans Over European Americans</strong></p>
             <p>You have a moderate unconscious association favoring African Americans. You more quickly associated "African Americans" with positive words and "European Americans" with negative words during the test.</p>
         `;
-    } else if (iatFeedback.includes('Strong automatic preference for African Americans over European Americans')) {
+    } else if (feedbackLower.includes('strong automatic preference for african americans over european americans')) {
         return `
             <h3>Implicit Association Test (IAT) Results</h3>
             <p>Your IAT score indicates that you have a <strong>Strong Automatic Preference for African Americans Over European Americans</strong></p>
@@ -92,14 +98,9 @@ define(['questAPI'], function (quest) {
     // Obtain the participant's IAT feedback
     let iatFeedback = global.raceiat.feedback; // Ensure this path is correct
 
-    const category1 = global.blackLabels;
-    const category2 = global.whiteLabels;
-    const att1 = 'Good';
-    const att2 = 'Bad';  
-
-    // Removed the unused variables:
-    // const explanationText = `...`;
-    // const likertRangeDescriptions = `...`;
+    // Debugging: Log the retrieved scores (optional, can be removed after verification)
+    console.log('Likert Score:', likertScore);
+    console.log('IAT Feedback:', iatFeedback);
 
     API.addSequence([
         {
