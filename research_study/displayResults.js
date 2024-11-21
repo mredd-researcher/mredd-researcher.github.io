@@ -1,21 +1,20 @@
 /* 
 Displaying results from Explicit and Implicit Bias Tests
 */
-function likertScoreDescription(likertScore){
-    const rangeMap = new Map([
-        [[0, 5], "<b>N/A:</b> Participant declined to answer Self-Perceived Bias questions."],
-        [[6, 12], "<b>Low self-perceived bias awareness-</b> (Participants in this range perceive themselves as having little to no bias and may believe their decisions are entirely impartial)."],
-        [[13, 18], "<b>Moderate self-perceived bias awareness-</b> (Participants acknowledge some level of bias but may not fully recognize its impact or may only occasionally reflect on it)."],
-        [[19, 24], "<b>High self-perceived bias awareness-</b> (Participants are more aware and reflective of their biases and are more likely to take active steps to address them)."],
-        [[24, 30], "<b>Very high self-perceived bias awareness-</b> (Participants demonstrate a strong awareness of potential biases and are highly engaged in efforts to mitigate them)."],
-    ]);
-
-    for (let [range, output] of rangeMap) {
-        if (likertScore >= range[0] && likertScore <= range[1]) {
-            return output;
+function likertScoreDescription(likertScore) {
+    const ranges = [
+        { min: 0, max: 5, output: "<b>N/A:</b> Participant declined to answer Self-Perceived Bias questions." },
+        { min: 6, max: 12, output: "<b>Low self-perceived bias awareness:</b> Participants perceive themselves as having little to no bias and may believe their decisions are entirely impartial." },
+        { min: 13, max: 18, output: "<b>Moderate self-perceived bias awareness:</b> Participants acknowledge some level of bias but may not fully recognize its impact or may only occasionally reflect on it." },
+        { min: 19, max: 24, output: "<b>High self-perceived bias awareness:</b> Participants are more aware and reflective of their biases and are more likely to take active steps to address them." },
+        { min: 25, max: 30, output: "<b>Very high self-perceived bias awareness:</b> Participants demonstrate a strong awareness of potential biases and are highly engaged in efforts to mitigate them." },
+    ];
+    for (let range of ranges) {
+        if (likertScore >= range.min && likertScore <= range.max) {
+            return range.output;
         }
     }
-    return "N/A: Error occurred";
+    return "<b>Error:</b> Invalid Likert score.";
 }
 
 
