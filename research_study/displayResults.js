@@ -1,116 +1,158 @@
 /* 
 Displaying results from Explicit and Implicit Bias Tests
 */
+
+// Function to get the Likert Scale description based on the participant's score
 function likertScoreDescription(likertScore) {
-    const ranges = [
-        { min: 0, max: 5, output: "<b>N/A:</b> Participant declined to answer Self-Perceived Bias questions." },
-        { min: 6, max: 12, output: "<b>Low self-perceived bias awareness:</b> Participants perceive themselves as having little to no bias and may believe their decisions are entirely impartial." },
-        { min: 13, max: 18, output: "<b>Moderate self-perceived bias awareness:</b> Participants acknowledge some level of bias but may not fully recognize its impact or may only occasionally reflect on it." },
-        { min: 19, max: 24, output: "<b>High self-perceived bias awareness:</b> Participants are more aware and reflective of their biases and are more likely to take active steps to address them." },
-        { min: 25, max: 30, output: "<b>Very high self-perceived bias awareness:</b> Participants demonstrate a strong awareness of potential biases and are highly engaged in efforts to mitigate them." },
-    ];
-    for (let range of ranges) {
-        if (likertScore >= range.min && likertScore <= range.max) {
-            return range.output;
-        }
+    if (likertScore >= 6 && likertScore <= 12) {
+        return `
+            <h3>Participant Results: Likert Scale</h3>
+            <p>Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
+            <p><strong>Scores between 6-12:</strong> You have a low level of self-awareness and commitment to equity. You may benefit from increasing your awareness of potential biases and exploring ways to promote equity in your teaching practices. Recognizing and acknowledging biases is a crucial step toward fostering an inclusive learning environment.</p>
+        `;
+    } else if (likertScore >= 13 && likertScore <= 18) {
+        return `
+            <h3>Participant Results: Likert Scale</h3>
+            <p>Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
+            <p><strong>Scores between 13-18:</strong> You have a moderate level of self-awareness and commitment to equity. You are somewhat aware of potential biases and are beginning to incorporate equity into your teaching practices. There are opportunities to deepen your understanding and further reduce biases in the classroom.</p>
+        `;
+    } else if (likertScore >= 19 && likertScore <= 24) {
+        return `
+            <h3>Participant Results: Likert Scale</h3>
+            <p>Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
+            <p><strong>Scores between 19-24:</strong> You have a high level of self-awareness and commitment to equity. You are actively aware of potential biases and are working to promote equity in your teaching practices. Your commitment to fostering an inclusive learning environment is commendable.</p>
+        `;
+    } else if (likertScore >= 25 && likertScore <= 30) {
+        return `
+            <h3>Participant Results: Likert Scale</h3>
+            <p>Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
+            <p><strong>Scores between 25-30:</strong> You have a very high level of self-awareness and commitment to equity. You are deeply committed to promoting equity in your teaching practices and creating an inclusive and fair learning environment. Your dedication is exemplary.</p>
+        `;
+    } else {
+        return "<b>Error:</b> Invalid Likert score.";
     }
-    return "<b>Error:</b> Invalid Likert score.";
 }
 
+// Function to get the IAT description based on the participant's feedback
+function iatScoreDescription(iatFeedback) {
+    if (iatFeedback.includes('Strong automatic preference for European Americans over African Americans')) {
+        return `
+            <h3>Implicit Association Test (IAT) Results</h3>
+            <p>Your IAT score indicates that you have a <strong>Strong Automatic Preference for European Americans Over African Americans</strong></p>
+            <p>You have a strong unconscious association favoring European Americans. You more quickly associated "European Americans" with positive words and "African Americans" with negative words during the test.</p>
+        `;
+    } else if (iatFeedback.includes('Moderate automatic preference for European Americans over African Americans')) {
+        return `
+            <h3>Implicit Association Test (IAT) Results</h3>
+            <p>Your IAT score indicates that you have a <strong>Moderate Automatic Preference for European Americans Over African Americans</strong></p>
+            <p>You have a moderate unconscious association favoring European Americans. You more quickly associated "European Americans" with positive words and "African Americans" with negative words during the test.</p>
+        `;
+    } else if (iatFeedback.includes('Slight automatic preference for European Americans over African Americans')) {
+        return `
+            <h3>Implicit Association Test (IAT) Results</h3>
+            <p>Your IAT score indicates that you have a <strong>Slight Automatic Preference for European Americans Over African Americans</strong></p>
+            <p>You have a slight unconscious association favoring European Americans. You more quickly associated "European Americans" with positive words and "African Americans" with negative words during the test.</p>
+        `;
+    } else if (iatFeedback.includes('Little to no automatic preference between European Americans and African Americans')) {
+        return `
+            <h3>Implicit Association Test (IAT) Results</h3>
+            <p>Your IAT score indicates that you have <strong>Little to No Automatic Preference Between European Americans and African Americans</strong></p>
+            <p>You do not exhibit a significant implicit preference for either racial group. Your associations between both groups and positive or negative words were similar during the test.</p>
+        `;
+    } else if (iatFeedback.includes('Slight automatic preference for African Americans over European Americans')) {
+        return `
+            <h3>Implicit Association Test (IAT) Results</h3>
+            <p>Your IAT score indicates that you have a <strong>Slight Automatic Preference for African Americans Over European Americans</strong></p>
+            <p>You have a slight unconscious association favoring African Americans. You more quickly associated "African Americans" with positive words and "European Americans" with negative words during the test.</p>
+        `;
+    } else if (iatFeedback.includes('Moderate automatic preference for African Americans over European Americans')) {
+        return `
+            <h3>Implicit Association Test (IAT) Results</h3>
+            <p>Your IAT score indicates that you have a <strong>Moderate Automatic Preference for African Americans Over European Americans</strong></p>
+            <p>You have a moderate unconscious association favoring African Americans. You more quickly associated "African Americans" with positive words and "European Americans" with negative words during the test.</p>
+        `;
+    } else if (iatFeedback.includes('Strong automatic preference for African Americans over European Americans')) {
+        return `
+            <h3>Implicit Association Test (IAT) Results</h3>
+            <p>Your IAT score indicates that you have a <strong>Strong Automatic Preference for African Americans Over European Americans</strong></p>
+            <p>You have a strong unconscious association favoring African Americans. You more quickly associated "African Americans" with positive words and "European Americans" with negative words during the test.</p>
+        `;
+    } else {
+        return "<b>Error:</b> Invalid IAT result.";
+    }
+}
 
 define(['questAPI'], function (quest) {
     var API = new quest();
     let global = API.getGlobal();
 
-	const category1 = global.blackLabels;
+    // Obtain the participant's Likert score
+    let likertScore = parseInt(global.likert.questions.likertQ.response); // Adjust the path if necessary
+
+    // Obtain the participant's IAT feedback
+    let iatFeedback = global.raceiat.feedback; // Ensure this path is correct
+
+    const category1 = global.blackLabels;
     const category2 = global.whiteLabels;
     const att1 = 'Good';
-    const att2 = 'Bad'
+    const att2 = 'Bad';  
 
-    const explanationText = `
-    In this study, we measured your automatically-activated associations between the concepts "${category1}" and "${category2}" with the concepts "${att1}" and "${att2}". 
-    Your automatically-activated association might be different than the association that you explicitly endorse. 	
-    For instance, you might consciously associate "${category1}" with the concept "${att2}", 
-    but show an automatic association of "${category1}" with "${att1}".<br/>
-    To measure your automatically-activated association, we used the Implicit Association Test (the IAT). 
-    <br><br>
-    
-    <b>Disclaimer:</b><br/>
-    These results are not a definitive assessment of your automatically-activated associations. 
-    The results may be influenced by variables related to the test 
-    (e.g., the category labels or particular items used to represent the categories on the IAT) 
-    or the person (e.g., how tired you are). 
-    The results are provided for educational purposes only.
-    <br><br>
+    // Removed the unused variables:
+    // const explanationText = `...`;
+    // const likertRangeDescriptions = `...`;
 
-    <b>How Does The IAT Work?</b>
-    The IAT measures the strength of associations between concepts 
-    (e.g., ${category1}, ${category2}) and attributes (e.g., ${att1}, ${att2}). 
-    The main idea is that making a response is easier when 
-    closely related items share the same response key. 
-    We would say that one has an automatically activated association of 
-    ${category1} with ${att1} and ${category2} with ${att2} 
-    if they are faster to categorize items 
-    when ${category1} and ${att1} share a response key 
-    relative to when ${category2} and ${att1} share a response key. <br/><br/>
-    Many researchers consider associations of Black and White people with 
-    the concepts Good and Bad an estimate of 
-    automatic preference between Black and White people. 
-    An automatic preference is your very first preference betweens people, groups, or other objects. 
-    An automatic preference might be activated even if people do not endorse that preference. 
-    <br/><br/>
-    Any single IAT is unlikely to predict behavior well for a specific individual. 
-    In the aggregate, the IAT can predict behavior 
-    such as discrimination in hiring and promotion, medical treatment, 
-    and decisions related to criminal justice.
-    <br/><br/>
-
-    <b>Does The Order In Which I Took The IAT Matter?</b>
-    Yes, the order in which you take the IAT can influence your overall results. 
-    But, the effect is very small. 
-    So if you first pair ${category1} + ${att1} / ${category2} + ${att2} 
-    and then pair ${category1} + ${att2} / ${category2}  + ${att1}, 
-    your results might be a just a tiny bit different 
-    than they would be if you had done the reverse pairing first. 
-    To minimize the order effect, we give more practice trials 
-    before the second pairing than we did before the first pairing. 
-    We also randomly assign participants to one of the two possible orderings, 
-    so half of the test-takers complete 
-    ${category1} + ${att1} / ${category2} + ${att2} 
-    and then ${category1} + ${att2} / ${category2}  + ${att1}, 
-    and the other half get the opposite order.
-    `
-
-    const likertRangeDescriptions = `
-    Overall interpretation of Likert scale score:<br>
-    <ul>
-    <li> 6-12: Low self-awareness and commitment to equity
-    <li> 13-18: Moderate self-awareness and commitment to equity
-    <li> 19-24: High self-awareness and commitment to equity
-    <li> 25-30: Very high self-awareness and commitment to equity
-    </ul>
-    `
     API.addSequence([
         {
             header: 'Participant Results',
-            text: "Description of results",
+            text: "",
             submitText: 'Continue',
             name: 'resultsPage', // for logs, does not appear on webpage
-            // prev: true,
-            // prevText: "Go Back",
-            // numbered: true,
             questions: [
                 {
                     type: 'info',
                     name: 'resultExplicit',
-                    stem: `Your Likert scale self-perceived bias score is: <b>${global.likert.questions.likertQ.response}</b>`,
-                    description: likertRangeDescriptions,
+                    stem: likertScoreDescription(likertScore),
+                },
+                {
+                    type: 'info',
+                    name: 'likertUnderstanding',
+                    stem: `
+                        <h3>Understanding Self-Perceived Bias:</h3>
+                        <ul>
+                            <li>Recognizing your own biases is important for personal and professional growth.</li>
+                            <li>Increased self-awareness allows you to reflect on how your beliefs and actions may impact others.</li>
+                            <li>Continuous learning and reflection can help you foster a more inclusive environment.</li>
+                        </ul>
+                        <h3>Next Steps:</h3>
+                        <ul>
+                            <li>Engage in professional development workshops on diversity and inclusion.</li>
+                            <li>Reflect on your teaching practices and identify areas for improvement.</li>
+                            <li>Explore resources on implicit bias and equitable education strategies.</li>
+                        </ul>
+                    `,
                 },
                 {
                     type: 'info',
                     name: 'resultImplicit',
-                    stem: `<b>Results from Implicit Bias: ${global.raceiat.feedback}</b>`,
-                    description: explanationText,
+                    stem: iatScoreDescription(iatFeedback),
+                },
+                {
+                    type: 'info',
+                    name: 'implicitUnderstanding',
+                    stem: `
+                        <h3>Understanding Implicit Bias:</h3>
+                        <ul>
+                            <li>Implicit biases are unconscious associations that can influence perceptions and actions without conscious intent.</li>
+                            <li>Recognizing these biases is a positive step toward promoting equity and inclusivity.</li>
+                            <li>Implicit biases are common and can be addressed through conscious effort and reflection.</li>
+                        </ul>
+                        <h3>Next Steps:</h3>
+                        <ul>
+                            <li>Reflect on how these unconscious associations may impact your interactions and decision-making.</li>
+                            <li>Participate in training or workshops focused on diversity, equity, and inclusion.</li>
+                            <li>Implement strategies to mitigate the influence of implicit biases in your professional practice.</li>
+                        </ul>
+                    `,
                 },
             ]
         },
