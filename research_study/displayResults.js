@@ -147,11 +147,13 @@ define(['questAPI'], function (quest) {
             submitText: 'Continue',
             name: 'resultsPage', // for logs, does not appear on webpage
             questions: [
+                // Likert Scale Results
                 {
                     type: 'info',
                     name: 'resultExplicit',
                     stem: likertScoreDescription(likertScore),
                 },
+                // Understanding Self-Perceived Bias
                 {
                     type: 'info',
                     name: 'likertUnderstanding',
@@ -170,29 +172,26 @@ define(['questAPI'], function (quest) {
                         </ul>
                     `,
                 },
+                // IAT Results
                 {
                     type: 'info',
                     name: 'resultImplicit',
                     stem: iatScoreDescription(iatFeedback),
                 },
+                // Understanding Implicit Bias
                 {
                     type: 'info',
                     name: 'implicitUnderstanding',
                     stem: `
-                        <h3>Understanding Implicit Bias:</h3>
+                        <h3>Understanding Your IAT Results</h3>
                         <ul>
-                            <li>Implicit biases are unconscious associations that can influence perceptions and actions without conscious intent.</li>
-                            <li>Recognizing these biases is a positive step toward promoting equity and inclusivity.</li>
-                            <li>Implicit biases are common and can be addressed through conscious effort and reflection.</li>
-                        </ul>
-                        <h3>Next Steps:</h3>
-                        <ul>
-                            <li>Reflect on how these unconscious associations may impact your interactions and decision-making.</li>
-                            <li>Participate in training or workshops focused on diversity, equity, and inclusion.</li>
-                            <li>Implement strategies to mitigate the influence of implicit biases in your professional practice.</li>
+                            <li><strong>Implicit vs. Explicit Attitudes:</strong> Remember that implicit biases are unconscious and may not align with your conscious beliefs or values.</li>
+                            <li><strong>Commonality of Biases:</strong> Implicit biases are common and result from societal influences, cultural exposure, and personal experiences.</li>
+                            <li><strong>Opportunity for Growth:</strong> Recognizing implicit biases provides an opportunity to reflect and take steps toward mitigating their impact.</li>
                         </ul>
                     `,
                 },
+                // Disclaimer
                 {
                     type: 'info',
                     name: 'iatDisclaimer',
@@ -205,6 +204,31 @@ define(['questAPI'], function (quest) {
                         <p>Any single IAT is unlikely to predict behavior well for a specific individual. In the aggregate, the IAT can predict behavior such as discrimination in hiring and promotion, medical treatment, and decisions related to criminal justice.</p>
                         <h3>Does The Order In Which I Took The IAT Matter?</h3>
                         <p>Yes, the order in which you take the IAT can influence your overall results. But, the effect is very small. So if you first pair African Americans + Good / European Americans + Bad and then pair African Americans + Bad / European Americans + Good, your results might be just a tiny bit different than they would be if you had done the reverse pairing first. To minimize the order effect, we give more practice trials before the second pairing than we did before the first pairing. We also randomly assign participants to one of the two possible orderings, so half of the test-takers complete African Americans + Good / European Americans + Bad and then African Americans + Bad / European Americans + Good, and the other half get the opposite order.</p>
+                    `,
+                },
+                // Resources for Further Understanding
+                {
+                    type: 'info',
+                    name: 'iatResources',
+                    stem: `
+                        <h3>Resources for Further Understanding</h3>
+                        <ul>
+                            <li><strong>Project Implicit:</strong> <a href="https://implicit.harvard.edu" target="_blank">implicit.harvard.edu</a>
+                                <ul>
+                                    <li>Explore more about the IAT and view examples of how results are presented.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Understanding Implicit Bias: Kirwan Institute</strong>
+                                <ul>
+                                    <li>Offers resources on the impact of implicit bias and strategies for addressing it.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Implicit Bias in Education: Teaching Tolerance</strong>
+                                <ul>
+                                    <li>Provides materials for educators to recognize and reduce bias in schools.</li>
+                                </ul>
+                            </li>
+                        </ul>
                     `,
                 },
             ]
