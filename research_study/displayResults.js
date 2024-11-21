@@ -117,7 +117,7 @@ define(['questAPI'], function (quest) {
     let global = API.getGlobal();
 
     // Obtain the participant's Likert score
-    let likertScore = parseInt(global.likert.questions.likertQ.response); // Adjust the path if necessary
+    let likertScore = parseInt(global.likert.questions.likertQ.response); // Adjust if necessary
 
     // Obtain the participant's IAT feedback
     let iatFeedback = global.raceiat.feedback; // Ensure this path is correct
