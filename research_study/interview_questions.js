@@ -26,7 +26,7 @@ define(['questAPI'], function (quest) {
                 },
                 {
                     type: 'textarea',
-                    stem: 'How does your self-perception of implicit bias compare with your IAT results? Do you believe any biases you possess are controlled in the classroom?',
+                    stem: 'How does your self-perception of implicit bias compare with your IAT results? Do you believe any biases you may possess are controlled in the classroom?',
                     name: 'interview2', // for labeling in response data
                     rows: 4,
                     // minlength: 2, // ensures a minimum of 2 characters
