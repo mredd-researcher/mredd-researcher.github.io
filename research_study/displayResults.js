@@ -106,7 +106,20 @@ function iatScoreDescription(iatFeedback) {
             <p>Your IAT score indicates that you have a <strong>Strong Automatic Preference for Black People Over White People</strong></p>
             <p>You have a strong unconscious association favoring Black people. You were strongly faster at sorting "White people" with "Bad words" and "Black people" with "Good words" compared to the reverse during the test.</p>
         `;
-    } else {
+    }
+
+    // New Condition to Handle "About Equally Fast" Feedback
+    else if (feedbackLower.includes("about equally fast at sorting 'black people' with 'bad words' and 'white people' with 'good words'")) {
+        return `
+            <h3>Implicit Association Test (IAT) Results</h3>
+            <p>Your IAT score indicates that you have <strong>Little to No Automatic Preference Between White People and Black People</strong></p>
+            <p>You do not exhibit a significant implicit preference for either racial group. Your associations between both groups and positive or negative words were similar during the test.</p>
+        `;
+    }
+
+    // Optionally, add more conditions or use a catch-all pattern here
+
+    else {
         // If no conditions match, display the error with raw feedback
         return `<b>Error:</b> Invalid IAT result.<br><strong>Raw IAT Feedback:</strong> ${iatFeedback}`;
     }
@@ -117,7 +130,7 @@ define(['questAPI'], function (quest) {
     let global = API.getGlobal();
 
     // Obtain the participant's Likert score
-    let likertScore = parseInt(global.likert.questions.likertQ.response); // Adjust if necessary
+    let likertScore = parseInt(global.likert.questions.likertQ.response); // Adjust the path if necessary
 
     // Obtain the participant's IAT feedback
     let iatFeedback = global.raceiat.feedback; // Ensure this path is correct
@@ -177,6 +190,20 @@ define(['questAPI'], function (quest) {
                             <li>Participate in training or workshops focused on diversity, equity, and inclusion.</li>
                             <li>Implement strategies to mitigate the influence of implicit biases in your professional practice.</li>
                         </ul>
+                    `,
+                },
+                {
+                    type: 'info',
+                    name: 'iatDisclaimer',
+                    stem: `
+                        <h3>Disclaimer:</h3>
+                        <p>These results are not a definitive assessment of your automatically-activated associations. The results may be influenced by variables related to the test (e.g., the category labels or particular items used to represent the categories on the IAT) or the person (e.g., how tired you are). The results are provided for educational purposes only.</p>
+                        <h3>How Does The IAT Work?</h3>
+                        <p>The IAT measures the strength of associations between concepts (e.g., African Americans, European Americans) and attributes (e.g., Good, Bad). The main idea is that making a response is easier when closely related items share the same response key. We would say that one has an automatically activated association of African Americans with Good and European Americans with Bad if they are faster to categorize items when African Americans and Good share a response key relative to when European Americans and Good share a response key.</p>
+                        <p>Many researchers consider associations of Black and White people with the concepts Good and Bad an estimate of automatic preference between Black and White people. An automatic preference is your very first preference between people, groups, or other objects. An automatic preference might be activated even if people do not endorse that preference.</p>
+                        <p>Any single IAT is unlikely to predict behavior well for a specific individual. In the aggregate, the IAT can predict behavior such as discrimination in hiring and promotion, medical treatment, and decisions related to criminal justice.</p>
+                        <h3>Does The Order In Which I Took The IAT Matter?</h3>
+                        <p>Yes, the order in which you take the IAT can influence your overall results. But, the effect is very small. So if you first pair African Americans + Good / European Americans + Bad and then pair African Americans + Bad / European Americans + Good, your results might be just a tiny bit different than they would be if you had done the reverse pairing first. To minimize the order effect, we give more practice trials before the second pairing than we did before the first pairing. We also randomly assign participants to one of the two possible orderings, so half of the test-takers complete African Americans + Good / European Americans + Bad and then African Americans + Bad / European Americans + Good, and the other half get the opposite order.</p>
                     `,
                 },
             ]
