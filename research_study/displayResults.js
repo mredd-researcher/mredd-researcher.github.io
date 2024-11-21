@@ -34,17 +34,18 @@ define(['questAPI'], function (quest) {
     For instance, you might consciously associate "${category1}" with the concept "${att2}", 
     but show an automatic association of "${category1}" with "${att1}".<br/>
     To measure your automatically-activated association, we used the Implicit Association Test (the IAT). 
-    </p>
+    <br><br>
     
-    <p class='lead'><b>Disclaimer:</b><br/>
+    <b>Disclaimer:</b><br/>
     These results are not a definitive assessment of your automatically-activated associations. 
     The results may be influenced by variables related to the test 
     (e.g., the category labels or particular items used to represent the categories on the IAT) 
     or the person (e.g., how tired you are). 
-    The results are provided for educational purposes only.</p>
-    
-    <p class='lead'><b>How Does The IAT Work?</b></p>
-    <p class='lead'>The IAT measures the strength of associations between concepts 
+    The results are provided for educational purposes only.
+    <br><br>
+
+    <b>How Does The IAT Work?</b>
+    The IAT measures the strength of associations between concepts 
     (e.g., ${category1}, ${category2}) and attributes (e.g., ${att1}, ${att2}). 
     The main idea is that making a response is easier when 
     closely related items share the same response key. 
@@ -62,10 +63,11 @@ define(['questAPI'], function (quest) {
     Any single IAT is unlikely to predict behavior well for a specific individual. 
     In the aggregate, the IAT can predict behavior 
     such as discrimination in hiring and promotion, medical treatment, 
-    and decisions related to criminal justice. </p>
-    
-    <p class='lead'><b>Does The Order In Which I Took The IAT Matter?</b></p>
-    <p class='lead'>Yes, the order in which you take the IAT can influence your overall results. 
+    and decisions related to criminal justice.
+    <br/><br/>
+
+    <b>Does The Order In Which I Took The IAT Matter?</b>
+    Yes, the order in which you take the IAT can influence your overall results. 
     But, the effect is very small. 
     So if you first pair ${category1} + ${att1} / ${category2} + ${att2} 
     and then pair ${category1} + ${att2} / ${category2}  + ${att1}, 
@@ -77,9 +79,18 @@ define(['questAPI'], function (quest) {
     so half of the test-takers complete 
     ${category1} + ${att1} / ${category2} + ${att2} 
     and then ${category1} + ${att2} / ${category2}  + ${att1}, 
-    and the other half get the opposite order.</p>
+    and the other half get the opposite order.
     `
-    
+
+    const likertRangeDescriptions = `
+    Overall interpretation of Likert scale score:<br>
+    <ul>
+    <li> 6-12: Low self-awareness and commitment to equity
+    <li> 13-18: Moderate self-awareness and commitment to equity
+    <li> 19-24: High self-awareness and commitment to equity
+    <li> 25-30: Very high self-awareness and commitment to equity
+    </ul>
+    `
     API.addSequence([
         {
             header: 'Participant Results',
@@ -93,19 +104,13 @@ define(['questAPI'], function (quest) {
                 {
                     type: 'info',
                     name: 'resultExplicit',
-                    stem: `<b>Results from Explicit Bias</b>`,
-                    description: likertScoreDescription(global.likert.questions.likertQ.response),
+                    stem: `Your Likert scale self-perceived bias score is: <b>${global.likert.questions.likertQ.response}</b>`,
+                    description: likertRangeDescriptions,
                 },
                 {
                     type: 'info',
                     name: 'resultImplicit',
-                    stem: `<b>Results from Implicit Bias</b>`,
-                    description: global.raceiat.feedback,
-                },
-                {
-                    type: 'info',
-                    name: 'explanationText',
-                    stem: `<b>Results from Implicit Bias</b>`,
+                    stem: `<b>Results from Implicit Bias: ${global.raceiat.feedback}</b>`,
                     description: explanationText,
                 },
             ]
