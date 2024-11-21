@@ -39,6 +39,7 @@ function iatScoreDescription(iatFeedback) {
         return "<b>Error:</b> IAT feedback is missing.";
     }
 
+    // Convert feedback to lowercase and trim spaces for case-insensitive matching
     const feedbackLower = iatFeedback.trim().toLowerCase();
 
     if (feedbackLower.includes('strong automatic preference for european americans over african americans')) {
@@ -84,7 +85,8 @@ function iatScoreDescription(iatFeedback) {
             <p>You have a strong unconscious association favoring African Americans. You more quickly associated "African Americans" with positive words and "European Americans" with negative words during the test.</p>
         `;
     } else {
-        return "<b>Error:</b> Invalid IAT result.";
+        // Include raw feedback in the error message for debugging
+        return `<b>Error:</b> Invalid IAT result. <br><strong>Raw IAT Feedback:</strong> ${iatFeedback}`;
     }
 }
 
@@ -98,7 +100,7 @@ define(['questAPI'], function (quest) {
     // Obtain the participant's IAT feedback
     let iatFeedback = global.raceiat.feedback; // Ensure this path is correct
 
-    // Debugging: Log the retrieved scores (optional, can be removed after verification)
+    // Debugging: Log the retrieved scores
     console.log('Likert Score:', likertScore);
     console.log('IAT Feedback:', iatFeedback);
 
