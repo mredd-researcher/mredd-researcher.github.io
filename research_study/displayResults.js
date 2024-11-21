@@ -39,8 +39,11 @@ function iatScoreDescription(iatFeedback) {
         return "<b>Error:</b> IAT feedback is missing.";
     }
 
-    // Convert feedback to lowercase and trim spaces for case-insensitive matching
-    const feedbackLower = iatFeedback.trim().toLowerCase();
+    // Normalize quotes: replace curly quotes with straight quotes
+    const normalizedFeedback = iatFeedback.trim().toLowerCase()
+        .replace(/[“”]/g, '"')
+        .replace(/[‘’]/g, "'");
+    const feedbackLower = normalizedFeedback;
 
     // Conditions for "European Americans" and "African Americans"
     if (feedbackLower.includes('strong automatic preference for european americans over african americans')) {
@@ -109,15 +112,13 @@ function iatScoreDescription(iatFeedback) {
     }
 
     // New Condition to Handle "About Equally Fast" Feedback
-    else if (feedbackLower.includes("about equally fast at sorting 'black people' with 'bad words' and 'white people' with 'good words'")) {
+    else if (feedbackLower.includes("about equally fast")) {
         return `
             <h3>Implicit Association Test (IAT) Results</h3>
             <p>Your IAT score indicates that you have <strong>Little to No Automatic Preference Between White People and Black People</strong></p>
             <p>You do not exhibit a significant implicit preference for either racial group. Your associations between both groups and positive or negative words were similar during the test.</p>
         `;
     }
-
-    // Optionally, add more conditions or use a catch-all pattern here
 
     else {
         // If no conditions match, display the error with raw feedback
