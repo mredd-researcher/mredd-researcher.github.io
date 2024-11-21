@@ -45,7 +45,7 @@ You are being asked to complete the following three sections of this test in one
 <ul>
 <li>Self-Perception Survey: First, you will complete a brief 6-question survey designed to assess your self-perceived racial bias levels.</li>
 <li>Implicit Association Test (IAT): Next, you will take the Implicit Association Test to measure potential implicit racial biases you may have. After completing the test, you will immediately receive your IAT results along with your Likert survey responses.</li>
-<li>Reflective Questions: Lastly, you will answer six follow-up questions designed to prompt reflection on your IAT and survey results. These questions aim to assess your reactions to the assessments and develop potential strategies to address any identified racial biases from the IAT, as well as explore ways to integrate these strategies into your teaching practices.</li>
+<li>Reflective Questions: Lastly, you will answer six follow-up questions designed to prompt reflection on your IAT and survey results. These questions aim to assess your reactions to the tests and consider potential strategies that can be applied in the classroom to address any identified racial biases from the IAT.</li>
 <li>The study will take place online, at a time and place of your convienience. Your participation will be completely confidential.</li>
 </ul>
 `,
