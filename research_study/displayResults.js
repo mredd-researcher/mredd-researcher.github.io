@@ -1,3 +1,38 @@
+/* 
+Displaying results from Explicit and Implicit Bias Tests
+*/
+
+// Function to get the Likert Scale description based on the participant's score
+function likertScoreDescription(likertScore) {
+    if (likertScore >= 6 && likertScore <= 12) {
+        return `
+            <h3>Participant Results: Likert Scale</h3>
+            <p>Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
+            <p><strong>Scores between 6-12:</strong> You have a low level of self-awareness and commitment to equity. You may benefit from increasing your awareness of potential biases and exploring ways to promote equity in your teaching practices. Recognizing and acknowledging biases is a crucial step toward fostering an inclusive learning environment.</p>
+        `;
+    } else if (likertScore >= 13 && likertScore <= 18) {
+        return `
+            <h3>Participant Results: Likert Scale</h3>
+            <p>Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
+            <p><strong>Scores between 13-18:</strong> You have a moderate level of self-awareness and commitment to equity. You are somewhat aware of potential biases and are beginning to incorporate equity into your teaching practices. There are opportunities to deepen your understanding and further reduce biases in the classroom.</p>
+        `;
+    } else if (likertScore >= 19 && likertScore <= 24) {
+        return `
+            <h3>Participant Results: Likert Scale</h3>
+            <p>Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
+            <p><strong>Scores between 19-24:</strong> You have a high level of self-awareness and commitment to equity. You are actively aware of potential biases and are working to promote equity in your teaching practices. Your commitment to fostering an inclusive learning environment is commendable.</p>
+        `;
+    } else if (likertScore >= 25 && likertScore <= 30) {
+        return `
+            <h3>Participant Results: Likert Scale</h3>
+            <p>Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
+            <p><strong>Scores between 25-30:</strong> You have a very high level of self-awareness and commitment to equity. You are deeply committed to promoting equity in your teaching practices and creating an inclusive and fair learning environment. Your dedication is exemplary.</p>
+        `;
+    } else {
+        return "<b>Error:</b> Invalid Likert score.";
+    }
+}
+
 // Function to get the IAT description based on the participant's feedback
 function iatScoreDescription(iatFeedback) {
     if (!iatFeedback) {
