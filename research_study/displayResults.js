@@ -6,34 +6,34 @@ Displaying results from Explicit and Implicit Bias Tests
 function likertScoreDescription(likertScore) {
     if (likertScore >= 6 && likertScore <= 12) {
         return `
-            <h3 style="font-size: 13px; font-family: 'Times New Roman', Times, serif;">Participant Results: Likert Scale</h3>
+            <h3 style="font-size: 25px; font-family: 'Times New Roman', Times, serif;">Participant Results: Likert Scale</h3>
             <p>Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
             <ul>
-                <li><strong>Scores between 6-12:</strong> You have a low level of self-awareness and commitment to equity. You may benefit from increasing your awareness of potential biases and exploring ways to promote equity in your teaching practices. Recognizing and acknowledging biases is a crucial step toward fostering an inclusive learning environment.</li>
+                <li>Scores between 6-12: You have a low level of self-awareness and commitment to equity. You may benefit from increasing your awareness of potential biases and exploring ways to promote equity in your teaching practices. Recognizing and acknowledging biases is a crucial step toward fostering an inclusive learning environment.</li>
             </ul>
         `;
     } else if (likertScore >= 13 && likertScore <= 18) {
         return `
-            <h3 style="font-size: 13px; font-family: 'Times New Roman', Times, serif;">Participant Results: Likert Scale</h3>
+            <h3 style="font-size: 25px; font-family: 'Times New Roman', Times, serif;">Participant Results: Likert Scale</h3>
             <p>Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
             <ul>
-                <li><strong>Scores between 13-18:</strong> You have a moderate level of self-awareness and commitment to equity. You are somewhat aware of potential biases and are beginning to incorporate equity into your teaching practices. There are opportunities to deepen your understanding and further reduce biases in the classroom.</li>
+                <li>Scores between 13-18: You have a moderate level of self-awareness and commitment to equity. You are somewhat aware of potential biases and are beginning to incorporate equity into your teaching practices. There are opportunities to deepen your understanding and further reduce biases in the classroom.</li>
             </ul>
         `;
     } else if (likertScore >= 19 && likertScore <= 24) {
         return `
-            <h3 style="font-size: 13px; font-family: 'Times New Roman', Times, serif;">Participant Results: Likert Scale</h3>
+            <h3 style="font-size: 25px; font-family: 'Times New Roman', Times, serif;">Participant Results: Likert Scale</h3>
             <p>Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
             <ul>
-                <li><strong>Scores between 19-24:</strong> You have a high level of self-awareness and commitment to equity. You are actively aware of potential biases and are working to promote equity in your teaching practices. Your commitment to fostering an inclusive learning environment is commendable.</li>
+                <li>Scores between 19-24: You have a high level of self-awareness and commitment to equity. You are actively aware of potential biases and are working to promote equity in your teaching practices. Your commitment to fostering an inclusive learning environment is commendable.</li>
             </ul>
         `;
     } else if (likertScore >= 25 && likertScore <= 30) {
         return `
-            <h3 style="font-size: 13px; font-family: 'Times New Roman', Times, serif;">Participant Results: Likert Scale</h3>
+            <h3 style="font-size: 25px; font-family: 'Times New Roman', Times, serif;">Participant Results: Likert Scale</h3>
             <p>Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
             <ul>
-                <li><strong>Scores between 25-30:</strong> You have a very high level of self-awareness and commitment to equity. You are deeply committed to promoting equity in your teaching practices and creating an inclusive and fair learning environment. Your dedication is exemplary.</li>
+                <li>Scores between 25-30: You have a very high level of self-awareness and commitment to equity. You are deeply committed to promoting equity in your teaching practices and creating an inclusive and fair learning environment. Your dedication is exemplary.</li>
             </ul>
         `;
     } else {
@@ -44,7 +44,7 @@ function likertScoreDescription(likertScore) {
 // Function to get the IAT description based on the participant's feedback
 function iatScoreDescription(iatFeedback) {
     if (!iatFeedback) {
-        return "<p><strong>Your IAT score could not be determined.</strong></p>";
+        return "";
     }
 
     // Normalize quotes and convert to lowercase
@@ -71,7 +71,7 @@ function iatScoreDescription(iatFeedback) {
         {
             pattern: /slight\s+automatic\s+preference\s+for\s+european\s+americans\s+over\s+african\s+americans/,
             result: 'Slight Automatic Preference for European Americans Over African Americans',
-            explanation: 'You have a slight unconscious association favoring European Americans. You more quickly associated "European Americans" with positive words and "African Americans" with negative words during the test.'
+            explanation: 'You have a slight unconscious association favoring European Americans. You slightly quicker associated "European Americans" with positive words and "African Americans" with negative words during the test.'
         },
         {
             pattern: /little\s+to\s+no\s+automatic\s+preference\s+between\s+european\s+americans\s+and\s+african\s+americans/,
@@ -172,12 +172,12 @@ define(['questAPI'], function (quest) {
                         </div>
                     `,
                 },
-                // Participant Results: Implicit Association Test
+                // Implicit Association Test Results
                 {
                     type: 'info',
                     name: 'resultImplicit',
                     stem: `
-                        <h3 style="font-size: 13px; font-family: 'Times New Roman', Times, serif; font-weight: bold;">Participant Results: Implicit Association Test</h3>
+                        <h3 style="font-size: 25px; font-family: 'Times New Roman', Times, serif; font-weight: bold;">Implicit Association Test Results</h3>
                         ${iatScoreDescription(iatFeedback)}
                     `,
                 },
@@ -197,7 +197,7 @@ define(['questAPI'], function (quest) {
                         </ul>
                         <h4 style="font-size: 1em; font-family: Arial, sans-serif;"><strong>‘Slight Automatic Preference for European Americans Over African Americans’</strong></h4>
                         <ul>
-                            <li>You have a slight unconscious association favoring European Americans. You more quickly associated "European Americans" with positive words and "African Americans" with negative words during the test.</li>
+                            <li>You have a slight unconscious association favoring European Americans. You slightly quicker associated "European Americans" with positive words and "African Americans" with negative words during the test.</li>
                         </ul>
                         <h4 style="font-size: 1em; font-family: Arial, sans-serif;"><strong>‘Little to No Automatic Preference Between European Americans and African Americans’</strong></h4>
                         <ul>
