@@ -248,7 +248,8 @@ define(['questAPI'], function (quest) {
                     `,
                 },
             ]
-        });
+        } // End of the object inside addSequence
+    ]); // Corrected closing brackets for addSequence
 
-        return API.script;
-    });
+    return API.script;
+});
