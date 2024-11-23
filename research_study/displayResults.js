@@ -27,8 +27,6 @@ function likertScoreDescription(likertScore) {
             <p style="font-family: 'Times New Roman';">Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
             <p style="font-family: 'Times New Roman';"><strong>Scores between 25-30:</strong> You have a very high level of self-awareness and commitment to equity. You are deeply committed to promoting equity in your teaching practices and creating an inclusive and fair learning environment. Your dedication is exemplary.</p>
         `;
-    } else {
-        return "<b style=\"font-family: 'Times New Roman';\">Error:</b> Invalid Likert score.";
     }
 }
 // Function to get the IAT description based on the participant's feedback
