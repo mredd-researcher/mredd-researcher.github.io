@@ -107,19 +107,62 @@ function iatScoreDescription(iatFeedback) {
         return `<b style="font-family: 'Times New Roman';">Error:</b> Invalid IAT result.<br><strong style="font-family: 'Times New Roman';">Raw IAT Feedback:</strong> ${iatFeedback}`;
     }
 }
+// Function to render the comparison chart using Chart.js
+function renderBiasChart(likertScore, iatScore) {
+    // Check if the canvas element exists
+    const canvas = document.getElementById('biasChart');
+    if (!canvas) {
+        console.error('Canvas element with id "biasChart" not found.');
+        return;
+    }
+    const ctx = canvas.getContext('2d');
+    // Create the bar chart
+    new Chart(ctx, {
+        type: 'bar', // You can change this to 'line', 'pie', etc.
+        data: {
+            labels: ['Self-Perceived Bias', 'Implicit Bias (IAT D-Score)'],
+            datasets: [{
+                label: 'Bias Scores',
+                data: [likertScore, iatScore],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.7)', // Blue for Likert Scale
+                    'rgba(255, 99, 132, 0.7)'  // Red for IAT D-Score
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 30 // Adjust based on your score range
+                }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Comparison of Self-Perceived Bias and Implicit Bias'
+                }
+            }
+        }
+    });
+}
 define(['questAPI'], function (quest) {
     var API = new quest();
     let global = API.getGlobal();
-
     // Obtain the participant's Likert score
     let likertScore = parseInt(global.likert.questions.likertQ.response); // Adjust the path if necessary
-
     // Obtain the participant's IAT feedback
     let iatFeedback = global.raceiat.feedback; // Ensure this path is correct
-
+    // Extract IAT D-Score from feedback (modify based on your data structure)
+    let iatScore = parseFloat(global.raceiat.DScore); // Adjust accordingly
     // Debugging: Log the retrieved scores (can be removed after verification)
     console.log('Likert Score:', likertScore);
-    console.log('IAT Feedback:', iatFeedback);
+    console.log('IAT Score:', iatScore);
     API.addSequence([
         {
             header: 'Participant Results',
@@ -175,7 +218,13 @@ define(['questAPI'], function (quest) {
                 },
             ]
         },
+        // After the sequence, render the chart
+        {
+            type: 'callback',
+            callback: function () {
+                renderBiasChart(likertScore, iatScore);
+            }
+        }
     ]);
-
     return API.script;
 });
