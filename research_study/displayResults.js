@@ -4,100 +4,92 @@ Displaying results from Explicit and Implicit Bias Tests
 
 // Function to get the Likert Scale description based on the participant's score
 function likertScoreDescription(likertScore) {
-    let explanation = "";
-
     if (likertScore >= 6 && likertScore <= 12) {
-        explanation = "Scores between 6-12: You have a low level of self-awareness and commitment to equity. You may benefit from increasing your awareness of potential biases and exploring ways to promote equity in your teaching practices. Recognizing and acknowledging biases is a crucial step toward fostering an inclusive learning environment.";
+        return `
+            <h3 style="font-size: 1.5em; font-family: Arial, sans-serif;">Participant Results: Likert Scale</h3>
+            <p>Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
+            <p><strong>Scores between 6-12:</strong> You have a low level of self-awareness and commitment to equity. You may benefit from increasing your awareness of potential biases and exploring ways to promote equity in your teaching practices. Recognizing and acknowledging biases is a crucial step toward fostering an inclusive learning environment.</p>
+        `;
     } else if (likertScore >= 13 && likertScore <= 18) {
-        explanation = "Scores between 13-18: You have a moderate level of self-awareness and commitment to equity. You are somewhat aware of potential biases and are beginning to incorporate equity into your teaching practices. There are opportunities to deepen your understanding and further reduce biases in the classroom.";
+        return `
+            <h3 style="font-size: 1.5em; font-family: Arial, sans-serif;">Participant Results: Likert Scale</h3>
+            <p>Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
+            <p><strong>Scores between 13-18:</strong> You have a moderate level of self-awareness and commitment to equity. You are somewhat aware of potential biases and are beginning to incorporate equity into your teaching practices. There are opportunities to deepen your understanding and further reduce biases in the classroom.</p>
+        `;
     } else if (likertScore >= 19 && likertScore <= 24) {
-        explanation = "Scores between 19-24: You have a high level of self-awareness and commitment to equity. You are actively aware of potential biases and are working to promote equity in your teaching practices. Your commitment to fostering an inclusive learning environment is commendable.";
+        return `
+            <h3 style="font-size: 1.5em; font-family: Arial, sans-serif;">Participant Results: Likert Scale</h3>
+            <p>Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
+            <p><strong>Scores between 19-24:</strong> You have a high level of self-awareness and commitment to equity. You are actively aware of potential biases and are working to promote equity in your teaching practices. Your commitment to fostering an inclusive learning environment is commendable.</p>
+        `;
     } else if (likertScore >= 25 && likertScore <= 30) {
-        explanation = "Scores between 25-30: You have a very high level of self-awareness and commitment to equity. You are deeply committed to promoting equity in your teaching practices and creating an inclusive and fair learning environment. Your dedication is exemplary.";
+        return `
+            <h3 style="font-size: 1.5em; font-family: Arial, sans-serif;">Participant Results: Likert Scale</h3>
+            <p>Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
+            <p><strong>Scores between 25-30:</strong> You have a very high level of self-awareness and commitment to equity. You are deeply committed to promoting equity in your teaching practices and creating an inclusive and fair learning environment. Your dedication is exemplary.</p>
+        `;
     } else {
-        return "<p><strong>Error:</strong> Invalid Likert score. Please enter a score between 6 and 30.</p>";
+        return "<b>Error:</b> Invalid Likert score.";
     }
-
-    return `
-        <h3 class="result-header">Likert Scale Results</h3>
-        <p class="result-score">Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
-        <ul class="result-explanation">
-            <li>${explanation}</li>
-        </ul>
-    `;
 }
 
 // Function to get the IAT description based on the participant's feedback
 function iatScoreDescription(iatFeedback) {
     if (!iatFeedback) {
-        return "";
+        return "<p><strong>Your IAT score could not be determined.</strong></p>";
     }
 
-    // Normalize quotes and convert to lowercase for matching
+    // Normalize quotes: replace curly quotes with straight quotes
     const normalizedFeedback = iatFeedback.trim().toLowerCase()
         .replace(/[“”]/g, '"')
         .replace(/[‘’]/g, "'");
+    const feedbackLower = normalizedFeedback;
 
     let iatResult = "";
     let iatExplanation = "";
 
-    // Define mappings using exact matches for reliability
-    const mappings = {
-        'strong automatic preference for european americans over african americans': {
-            result: 'Strong Automatic Preference for European Americans Over African Americans',
-            explanation: 'You have a strong unconscious association favoring European Americans. You more quickly associated "European Americans" with positive words and "African Americans" with negative words during the test.'
-        },
-        'moderate automatic preference for european americans over african americans': {
-            result: 'Moderate Automatic Preference for European Americans Over African Americans',
-            explanation: 'You have a moderate unconscious association favoring European Americans. You more quickly associated "European Americans" with positive words and "African Americans" with negative words during the test.'
-        },
-        'slight automatic preference for european americans over african americans': {
-            result: 'Slight Automatic Preference for European Americans Over African Americans',
-            explanation: 'You have a slight unconscious association favoring European Americans. You slightly quicker associated "European Americans" with positive words and "African Americans" with negative words during the test.'
-        },
-        'little to no automatic preference between european americans and african americans': {
-            result: 'Little to No Automatic Preference Between European Americans and African Americans',
-            explanation: 'You do not exhibit a significant implicit preference for either racial group. Your associations between both groups and positive or negative words were similar during the test.'
-        },
-        'slight automatic preference for african americans over european americans': {
-            result: 'Slight Automatic Preference for African Americans Over European Americans',
-            explanation: 'You have a slight unconscious association favoring African Americans. You more quickly associated "African Americans" with positive words and "European Americans" with negative words during the test.'
-        },
-        'moderate automatic preference for african americans over european americans': {
-            result: 'Moderate Automatic Preference for African Americans Over European Americans',
-            explanation: 'You have a moderate unconscious association favoring African Americans. You more quickly associated "African Americans" with positive words and "European Americans" with negative words during the test.'
-        },
-        'strong automatic preference for african americans over european americans': {
-            result: 'Strong Automatic Preference for African Americans Over European Americans',
-            explanation: 'You have a strong unconscious association favoring African Americans. You more quickly associated "African Americans" with positive words and "European Americans" with negative words during the test.'
-        }
-    };
-
-    const key = normalizedFeedback;
-    if (mappings[key]) {
-        iatResult = mappings[key].result;
-        iatExplanation = mappings[key].explanation;
-    } else {
-        // Handle unknown feedback gracefully
-        iatResult = 'Unknown IAT Feedback';
-        iatExplanation = 'The provided IAT feedback does not match any known categories. Please ensure you select a valid feedback statement.';
-        // Optionally, you can return an error message or handle it as needed
-        return `
-            <h3 class="result-header">Implicit Association Test Results</h3>
-            <p class="result-score">Raw IAT Feedback: <strong>${iatFeedback}</strong></p>
-            <ul class="result-explanation">
-                <li>${iatExplanation}</li>
-            </ul>
-        `;
+    // Mapping feedback to IAT results and explanations
+    if (feedbackLower.includes('strong automatic preference for european americans over african americans')) {
+        iatResult = 'Strong Automatic Preference for European Americans Over African Americans';
+        iatExplanation = 'You have a strong unconscious association favoring European Americans. You more quickly associated "European Americans" with positive words and "African Americans" with negative words during the test.';
+    } else if (feedbackLower.includes('moderate automatic preference for european americans over african americans')) {
+        iatResult = 'Moderate Automatic Preference for European Americans Over African Americans';
+        iatExplanation = 'You have a moderate unconscious association favoring European Americans. You more quickly associated "European Americans" with positive words and "African Americans" with negative words during the test.';
+    } else if (feedbackLower.includes('slight automatic preference for european americans over african americans')) {
+        iatResult = 'Slight Automatic Preference for European Americans Over African Americans';
+        iatExplanation = 'You have a slight unconscious association favoring European Americans. You more quickly associated "European Americans" with positive words and "African Americans" with negative words during the test.';
+    } else if (feedbackLower.includes('little to no automatic preference between european americans and african americans')) {
+        iatResult = 'Little to No Automatic Preference Between European Americans and African Americans';
+        iatExplanation = 'You do not exhibit a significant implicit preference for either racial group. Your associations between both groups and positive or negative words were similar during the test.';
+    } else if (feedbackLower.includes("slightly faster at sorting 'black people' with 'bad words' and 'white people' with 'good words'")) {
+        iatResult = 'Slight Automatic Preference for White People Over Black People';
+        iatExplanation = 'You have a slight unconscious association favoring White people. You were slightly faster at sorting "Black people" with "Bad words" and "White people" with "Good words" compared to the reverse during the test.';
+    } else if (feedbackLower.includes("moderately faster at sorting 'black people' with 'bad words' and 'white people' with 'good words'")) {
+        iatResult = 'Moderate Automatic Preference for White People Over Black People';
+        iatExplanation = 'You have a moderate unconscious association favoring White people. You were moderately faster at sorting "Black people" with "Bad words" and "White people" with "Good words" compared to the reverse during the test.';
+    } else if (feedbackLower.includes("strongly faster at sorting 'black people' with 'bad words' and 'white people' with 'good words'")) {
+        iatResult = 'Strong Automatic Preference for White People Over Black People';
+        iatExplanation = 'You have a strong unconscious association favoring White people. You were strongly faster at sorting "Black people" with "Bad words" and "White people" with "Good words" compared to the reverse during the test.';
+    } else if (feedbackLower.includes("slightly faster at sorting 'white people' with 'bad words' and 'black people' with 'good words'")) {
+        iatResult = 'Slight Automatic Preference for Black People Over White People';
+        iatExplanation = 'You have a slight unconscious association favoring Black people. You were slightly faster at sorting "White people" with "Bad words" and "Black people" with "Good words" compared to the reverse during the test.';
+    } else if (feedbackLower.includes("moderately faster at sorting 'white people' with 'bad words' and 'black people' with 'good words'")) {
+        iatResult = 'Moderate Automatic Preference for Black People Over White People';
+        iatExplanation = 'You have a moderate unconscious association favoring Black people. You were moderately faster at sorting "White people" with "Bad words" and "Black people" with "Good words" compared to the reverse during the test.';
+    } else if (feedbackLower.includes("strongly faster at sorting 'white people' with 'bad words' and 'black people' with 'good words'")) {
+        iatResult = 'Strong Automatic Preference for Black People Over White People';
+        iatExplanation = 'You have a strong unconscious association favoring Black people. You were strongly faster at sorting "White people" with "Bad words" and "Black people" with "Good Words" compared to the reverse during the test.';
     }
 
-    return `
-        <h3 class="result-header">Implicit Association Test Results</h3>
-        <p class="result-score">Raw IAT Feedback: <strong>${iatResult}</strong></p>
-        <ul class="result-explanation">
-            <li>${iatExplanation}</li>
-        </ul>
-    `;
+    if (iatResult && iatExplanation) {
+        return `
+            <p><strong>Your IAT score indicates a ${iatResult}.</strong></p>
+            <p>${iatExplanation}</p>
+        `;
+    } else {
+        // Handle unknown feedback by returning a default message without raw feedback
+        return "<p><strong>Your IAT score indicates an unknown preference.</strong></p>";
+    }
 }
 
 define(['questAPI'], function (quest) {
@@ -114,44 +106,6 @@ define(['questAPI'], function (quest) {
     console.log('Likert Score:', likertScore);
     console.log('IAT Feedback:', iatFeedback);
 
-    // Validate Inputs
-    let validationErrors = [];
-
-    // Validate Likert Scale score
-    if (isNaN(likertScore)) {
-        validationErrors.push('Likert Scale Score must be a number.');
-    } else if (likertScore < 6 || likertScore > 30) {
-        validationErrors.push('Likert Scale Score must be between 6 and 30.');
-    }
-
-    // Validate IAT Feedback Statement
-    const validIATFeedbacks = [
-        'Strong Automatic Preference for European Americans Over African Americans',
-        'Moderate Automatic Preference for European Americans Over African Americans',
-        'Slight Automatic Preference for European Americans Over African Americans',
-        'Little to No Automatic Preference Between European Americans and African Americans',
-        'Slight Automatic Preference for African Americans Over European Americans',
-        'Moderate Automatic Preference for African Americans Over European Americans',
-        'Strong Automatic Preference for African Americans Over European Americans'
-    ];
-
-    if (!iatFeedback || !validIATFeedbacks.includes(iatFeedback)) {
-        validationErrors.push('Invalid or missing IAT Feedback Statement.');
-    }
-
-    if (validationErrors.length > 0) {
-        // Handle validation errors appropriately
-        // For QuestAPI, you might want to display these errors to the participant
-        // Here, we'll log them and stop the script
-        console.error('Validation Errors:', validationErrors);
-        return API.script;
-    }
-
-    // Generate feedback
-    const likertFeedbackHTML = likertScoreDescription(likertScore);
-    const iatFeedbackHTML = iatScoreDescription(iatFeedback);
-
-    // Add sequence with feedback
     API.addSequence([
         {
             header: '', // Removed "Participants Results" title
@@ -163,16 +117,16 @@ define(['questAPI'], function (quest) {
                 {
                     type: 'info',
                     name: 'resultExplicit',
-                    stem: likertFeedbackHTML,
+                    stem: likertScoreDescription(likertScore),
                 },
                 // Understanding Self-Perceived Bias
                 {
                     type: 'info',
                     name: 'likertUnderstanding',
                     stem: `
-                        <div class="subsection">
-                            <h3 class="section-header">Understanding Self-Perceived Bias</h3>
-                            <ul class="subsection-list">
+                        <div style="font-weight: bold; font-size: 0.9em;">
+                            <h3 style="font-size: 1.2em; font-family: Arial, sans-serif;">Understanding Self-Perceived Bias:</h3>
+                            <ul>
                                 <li>Recognizing your own biases is important for personal and professional growth.</li>
                                 <li>Increased self-awareness allows you to reflect on how your beliefs and actions may impact others.</li>
                                 <li>Continuous learning and reflection can help you foster a more inclusive environment.</li>
@@ -185,9 +139,9 @@ define(['questAPI'], function (quest) {
                     type: 'info',
                     name: 'nextSteps',
                     stem: `
-                        <div class="subsection">
-                            <h3 class="section-header">Next Steps</h3>
-                            <ul class="subsection-list">
+                        <div style="font-weight: bold; font-size: 0.9em;">
+                            <h3 style="font-size: 1.2em; font-family: Arial, sans-serif;">Next Steps:</h3>
+                            <ul>
                                 <li>Engage in professional development workshops on diversity and inclusion.</li>
                                 <li>Reflect on your teaching practices and identify areas for improvement.</li>
                                 <li>Explore resources on implicit bias and equitable education strategies.</li>
@@ -195,19 +149,58 @@ define(['questAPI'], function (quest) {
                         </div>
                     `,
                 },
-                // Implicit Association Test Results
+                // Participant Results: Implicit Association Test
                 {
                     type: 'info',
                     name: 'resultImplicit',
-                    stem: iatFeedbackHTML,
+                    stem: `
+                        <h3 style="font-size: 1.5em; font-family: Arial, sans-serif;"><strong>Participant Results: Implicit Association Test</strong></h3>
+                        ${iatScoreDescription(iatFeedback)}
+                    `,
+                },
+                // What Your Score Means:
+                {
+                    type: 'info',
+                    name: 'whatYourScoreMeans',
+                    stem: `
+                        <h3 style="font-size: 1.2em; font-family: Arial, sans-serif;">What your score means:</h3>
+                        <h4 style="font-size: 1em; font-family: Arial, sans-serif;"><strong>‘Strong Automatic Preference for European Americans Over African Americans’</strong></h4>
+                        <ul>
+                            <li>You have a strong unconscious association favoring European Americans. You more quickly associated "European Americans" with positive words and "African Americans" with negative words during the test.</li>
+                        </ul>
+                        <h4 style="font-size: 1em; font-family: Arial, sans-serif;"><strong>‘Moderate Automatic Preference for European Americans Over African Americans’</strong></h4>
+                        <ul>
+                            <li>You have a moderate unconscious association favoring European Americans. You more quickly associated "European Americans" with positive words and "African Americans" with negative words during the test.</li>
+                        </ul>
+                        <h4 style="font-size: 1em; font-family: Arial, sans-serif;"><strong>‘Slight Automatic Preference for European Americans Over African Americans’</strong></h4>
+                        <ul>
+                            <li>You have a slight unconscious association favoring European Americans. You more quickly associated "European Americans" with positive words and "African Americans" with negative words during the test.</li>
+                        </ul>
+                        <h4 style="font-size: 1em; font-family: Arial, sans-serif;"><strong>‘Little to No Automatic Preference Between European Americans and African Americans’</strong></h4>
+                        <ul>
+                            <li>You do not exhibit a significant implicit preference for either racial group. Your associations between both groups and positive or negative words were similar during the test.</li>
+                        </ul>
+                        <h4 style="font-size: 1em; font-family: Arial, sans-serif;"><strong>‘Slight Automatic Preference for African Americans Over European Americans’</strong></h4>
+                        <ul>
+                            <li>You have a slight unconscious association favoring African Americans. You more quickly associated "African Americans" with positive words and "European Americans" with negative words during the test.</li>
+                        </ul>
+                        <h4 style="font-size: 1em; font-family: Arial, sans-serif;"><strong>‘Moderate Automatic Preference for African Americans Over European Americans’</strong></h4>
+                        <ul>
+                            <li>You have a moderate unconscious association favoring African Americans. You more quickly associated "African Americans" with positive words and "European Americans" with negative words during the test.</li>
+                        </ul>
+                        <h4 style="font-size: 1em; font-family: Arial, sans-serif;"><strong>‘Strong Automatic Preference for African Americans Over European Americans’</strong></h4>
+                        <ul>
+                            <li>You have a strong unconscious association favoring African Americans. You more quickly associated "African Americans" with positive words and "European Americans" with negative words during the test.</li>
+                        </ul>
+                    `,
                 },
                 // Disclaimer
                 {
                     type: 'info',
                     name: 'disclaimer',
                     stem: `
-                        <div class="subsection disclaimer">
-                            <h3 class="section-header">Disclaimer</h3>
+                        <div style="font-weight: bold; font-size: 0.9em;">
+                            <h3 style="font-size: 1.2em; font-family: Arial, sans-serif;">Disclaimer:</h3>
                             <p>These results are not a definitive assessment of your automatically-activated associations. The results may be influenced by variables related to the test (e.g., the category labels or particular items used to represent the categories on the IAT) or the person (e.g., how tired you are). The results are provided for educational purposes only.</p>
                         </div>
                     `,
@@ -217,9 +210,9 @@ define(['questAPI'], function (quest) {
                     type: 'info',
                     name: 'understandingYourIATResults',
                     stem: `
-                        <div class="subsection">
-                            <h3 class="section-header">Understanding Your IAT Results</h3>
-                            <ul class="subsection-list">
+                        <div style="font-weight: bold; font-size: 0.9em;">
+                            <h3 style="font-size: 1.2em; font-family: Arial, sans-serif;">Understanding Your IAT Results</h3>
+                            <ul>
                                 <li><strong>Implicit vs. Explicit Attitudes:</strong> Remember that implicit biases are unconscious and may not align with your conscious beliefs or values.</li>
                                 <li><strong>Commonality of Biases:</strong> Implicit biases are common and result from societal influences, cultural exposure, and personal experiences.</li>
                                 <li><strong>Opportunity for Growth:</strong> Recognizing implicit biases provides an opportunity to reflect and take steps toward mitigating their impact.</li>
@@ -232,9 +225,9 @@ define(['questAPI'], function (quest) {
                     type: 'info',
                     name: 'resourcesForFurtherUnderstanding',
                     stem: `
-                        <div class="subsection">
-                            <h3 class="section-header">Resources for Further Understanding</h3>
-                            <ul class="subsection-list">
+                        <div style="font-weight: bold; font-size: 0.9em;">
+                            <h3 style="font-size: 1.2em; font-family: Arial, sans-serif;">Resources for Further Understanding</h3>
+                            <ul>
                                 <li><strong>Project Implicit:</strong> <a href="https://implicit.harvard.edu" target="_blank">implicit.harvard.edu</a>
                                     <ul>
                                         <li>Explore more about the IAT and view examples of how results are presented.</li>
@@ -255,8 +248,7 @@ define(['questAPI'], function (quest) {
                     `,
                 },
             ]
-        }
-    ]); // Corrected closing brackets for addSequence
+        });
 
-    return API.script;
-});
+        return API.script;
+    });
