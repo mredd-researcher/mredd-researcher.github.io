@@ -317,7 +317,7 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
     const iatExplanation = createElement('p', 'feedback-description', iatFeedbackDescription(iatFeedback));
     iatSection.appendChild(iatExplanation);
     // Disclaimer
-    const disclaimer = createElement('p', 'disclaimer', 'These results are NOT a definitive assessment of your automatically-activated associations. The results may be influenced by variables related to the test (e.g., the category labels or particular items used to represent the categories on the IAT) or the person (e.g., how tired you are). The results are provided for educational purposes only.');
+    const disclaimer = createElement('p', 'disclaimer', 'Disclaimer: These results are NOT a definitive assessment of your automatically-activated associations. The results may be influenced by variables related to the test (e.g., the category labels or particular items used to represent the categories on the IAT) or the person (e.g., how tired you are). The results are provided for educational purposes only.');
     iatSection.appendChild(disclaimer);
     // Understanding Your IAT Results Subsection
     const understandingIATTitle = createElement('h3', 'subsection-title', 'Understanding Your IAT Results');
