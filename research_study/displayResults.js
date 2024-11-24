@@ -28,11 +28,12 @@ function likertScoreDescription(likertScore) {
             <p style="font-family: 'Times New Roman';"><strong>Scores between 25-30:</strong> You have a very high level of self-awareness and commitment to equity. You are deeply committed to promoting equity in your teaching practices and creating an inclusive and fair learning environment. Your dedication is exemplary.</p>
         `;
     }
+    return "";
 }
 // Function to get the IAT description based on the participant's feedback
 function iatScoreDescription(iatFeedback) {
     if (!iatFeedback) {
-        return "<b>Error:</b> IAT feedback is missing.";
+        return "";
     }
     // Convert feedback to lowercase and trim spaces for case-insensitive matching
     const feedbackLower = iatFeedback.trim().toLowerCase();
@@ -100,24 +101,75 @@ function iatScoreDescription(iatFeedback) {
             <p style="font-family: 'Times New Roman';">Your IAT score indicates that you have a <strong>Strong Automatic Preference for Black People Over White People</strong></p>
             <p style="font-family: 'Times New Roman';">You have a strong unconscious association favoring Black people. You were strongly faster at sorting "White people" with "Bad words" and "Black people" with "Good words" compared to the reverse during the test.</p>
         `;
-    } else {
-        // If no conditions match, display the error with raw feedback
-        return `<b>Error:</b> Invalid IAT result.<br><strong>Raw IAT Feedback:</strong> ${iatFeedback}`;
     }
+    return "";
 }
-// Function to render the comparison chart using Chart.js
-function renderBiasChart(likertScore, iatScore) {
-    // Check if the canvas element exists
-    const canvas = document.getElementById('biasChart');
-    if (!canvas) {
-        console.error('Canvas element with id "biasChart" not found.');
-        return;
-    }
-    const ctx = canvas.getContext('2d');
-    // Create the bar chart
-    new Chart(ctx, {
-        type: 'bar', // You can change this to 'line', 'pie', etc.
-        data: {
-            labels: ['Self-Perceived Bias', 'Implicit Bias (IAT D-Score)'],
-            datasets: [{
-                label: '
+define(['questAPI'], function (quest) {
+    var API = new quest();
+    let global = API.getGlobal();
+    // Obtain the participant's Likert score
+    let likertScore = parseInt(global.likert.questions.likertQ.response); // Adjust the path if necessary
+    // Obtain the participant's IAT feedback
+    let iatFeedback = global.raceiat.feedback; // Ensure this path is correct
+    // Debugging: Log the retrieved scores (can be removed after verification)
+    console.log('Likert Score:', likertScore);
+    console.log('IAT Feedback:', iatFeedback);
+    API.addSequence([
+        {
+            header: 'Participant Results',
+            text: "",
+            submitText: 'Continue',
+            name: 'resultsPage', // for logs, does not appear on webpage
+            questions: [
+                {
+                    type: 'info',
+                    name: 'resultExplicit',
+                    stem: likertScoreDescription(likertScore),
+                },
+                {
+                    type: 'info',
+                    name: 'likertUnderstanding',
+                    stem: `
+                        <h3 style="font-family: 'Times New Roman';">Understanding Self-Perceived Bias:</h3>
+                        <ul style="font-family: 'Times New Roman';">
+                            <li>Recognizing your own biases is important for personal and professional growth.</li>
+                            <li>Increased self-awareness allows you to reflect on how your beliefs and actions may impact others.</li>
+                            <li>Continuous learning and reflection can help you foster a more inclusive environment.</li>
+                        </ul>
+                        <h3 style="font-family: 'Times New Roman';">Next Steps:</h3>
+                        <ul style="font-family: 'Times New Roman';">
+                            <li>Engage in professional development workshops on diversity and inclusion.</li>
+                            <li>Reflect on your teaching practices and identify areas for improvement.</li>
+                            <li>Explore resources on implicit bias and equitable education strategies.</li>
+                        </ul>
+                    `,
+                },
+                {
+                    type: 'info',
+                    name: 'resultImplicit',
+                    stem: iatScoreDescription(iatFeedback),
+                },
+                {
+                    type: 'info',
+                    name: 'implicitUnderstanding',
+                    stem: `
+                        <h3 style="font-family: 'Times New Roman';">Understanding Implicit Bias:</h3>
+                        <ul style="font-family: 'Times New Roman';">
+                            <li>Implicit biases are unconscious associations that can influence perceptions and actions without conscious intent.</li>
+                            <li>Recognizing these biases is a positive step toward promoting equity and inclusivity.</li>
+                            <li>Implicit biases are common and can be addressed through conscious effort and reflection.</li>
+                        </ul>
+                        <h3 style="font-family: 'Times New Roman';">Next Steps:</h3>
+                        <ul style="font-family: 'Times New Roman';">
+                            <li>Reflect on how these unconscious associations may impact your interactions and decision-making.</li>
+                            <li>Participate in training or workshops focused on diversity, equity, and inclusion.</li>
+                            <li>Implement strategies to mitigate the influence of implicit biases in your professional practice.</li>
+                        </ul>
+                    `,
+                },
+            ]
+        },
+    ]);
+
+    return API.script;
+});
