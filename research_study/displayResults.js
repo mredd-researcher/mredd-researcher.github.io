@@ -1,47 +1,41 @@
 /* 
 Displaying results from Explicit and Implicit Bias Tests
 */
-// Function to get the Likert Scale description based on the participant's score
 function likertScoreDescription(likertScore) {
     if (likertScore >= 6 && likertScore <= 12) {
         return `
-            <h2 class="section-title">Participant Results: Likert Scale</h2>
-            <p class="score">Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
+            <h2 class="section-title">Your Likert Scale Self-Perceived Bias Score is: <strong>${likertScore}</strong></h2>
             <ul class="description-list">
                 <li><strong>Scores between 6-12:</strong> You have a low level of self-awareness and commitment to equity. You may benefit from increasing your awareness of potential biases and exploring ways to promote equity in your teaching practices. Recognizing and acknowledging biases is a crucial step toward fostering an inclusive learning environment.</li>
             </ul>
         `;
     } else if (likertScore >= 13 && likertScore <= 18) {
         return `
-            <h2 class="section-title">Participant Results: Likert Scale</h2>
-            <p class="score">Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
+            <h2 class="section-title">Your Likert Scale Self-Perceived Bias Score is: <strong>${likertScore}</strong></h2>
             <ul class="description-list">
                 <li><strong>Scores between 13-18:</strong> You have a moderate level of self-awareness and commitment to equity. You are somewhat aware of potential biases and are beginning to incorporate equity into your teaching practices. There are opportunities to deepen your understanding and further reduce biases in the classroom.</li>
             </ul>
         `;
     } else if (likertScore >= 19 && likertScore <= 24) {
         return `
-            <h2 class="section-title">Participant Results: Likert Scale</h2>
-            <p class="score">Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
+            <h2 class="section-title">Your Likert Scale Self-Perceived Bias Score is: <strong>${likertScore}</strong></h2>
             <ul class="description-list">
                 <li><strong>Scores between 19-24:</strong> You have a high level of self-awareness and commitment to equity. You are actively aware of potential biases and are working to promote equity in your teaching practices. Your commitment to fostering an inclusive learning environment is commendable.</li>
             </ul>
         `;
     } else if (likertScore >= 25 && likertScore <= 30) {
         return `
-            <h2 class="section-title">Participant Results: Likert Scale</h2>
-            <p class="score">Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
+            <h2 class="section-title">Your Likert Scale Self-Perceived Bias Score is: <strong>${likertScore}</strong></h2>
             <ul class="description-list">
                 <li><strong>Scores between 25-30:</strong> You have a very high level of self-awareness and commitment to equity. You are deeply committed to promoting equity in your teaching practices and creating an inclusive and fair learning environment. Your dedication is exemplary.</li>
             </ul>
         `;
     } else {
         // Return an empty string or a placeholder if the score is invalid
-        return `<p class="score">Your Likert Scale Self-Perceived Bias Score is <strong>---</strong></p>
+        return `<p class="score">Your Likert Scale Self-Perceived Bias Score is: <strong>---</strong></p>
                 <p>Please ensure you have completed the Likert survey correctly.</p>`;
     }
 }
-// Function to get the IAT description based on the participant's feedback
 function iatScoreDescription(iatFeedback) {
     if (!iatFeedback) {
         // Return an empty string or a placeholder if feedback is missing
@@ -86,8 +80,8 @@ function iatScoreDescription(iatFeedback) {
     for (let key in feedbackMap) {
         if (feedbackLower.includes(key)) {
             return `
-                <h2 class="section-title">Implicit Association Test (IAT) Results</h2>
-                <p class="score">Your Raw IAT Feedback Results: <strong>${feedbackMap[key].title}</strong></p>
+                <h2 class="section-title">Your Raw IAT Feedback Results:</h2>
+                <p class="score"><strong>${feedbackMap[key].title}</strong></p>
                 <ul class="description-list">
                     <li>${feedbackMap[key].description}</li>
                 </ul>
@@ -96,8 +90,8 @@ function iatScoreDescription(iatFeedback) {
     }
     // If no match is found, provide a generic message without error
     return `
-        <h2 class="section-title">Implicit Association Test (IAT) Results</h2>
-        <p class="score">Your Raw IAT Feedback Results: <strong>${iatFeedback}</strong></p>
+        <h2 class="section-title">Your Raw IAT Feedback Results:</h2>
+        <p class="score"><strong>${iatFeedback}</strong></p>
         <ul class="description-list">
             <li>Your results indicate a unique pattern of associations.</li>
         </ul>
@@ -131,7 +125,7 @@ define(['questAPI'], function (quest) {
             overflow: hidden; /* Prevent scrolling */
         }
         .results-container {
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.95);
             padding: 40px;
             border-radius: 10px;
             max-width: 800px;
@@ -157,6 +151,7 @@ define(['questAPI'], function (quest) {
             margin-left: 20px;
             margin-bottom: 20px;
             color: #444;
+            list-style-type: disc;
         }
         .description-list li {
             margin-bottom: 15px;
@@ -166,6 +161,7 @@ define(['questAPI'], function (quest) {
             font-weight: bold;
             margin-top: 20px;
             color: #888;
+            text-align: justify;
         }
         .encouragement {
             font-size: 1.5em;
@@ -209,19 +205,32 @@ define(['questAPI'], function (quest) {
         // Ensure that 'likertQ' and 'raceiat' are the correct identifiers for your questions
         // You can verify this by checking the survey structure or using debugging logs
         // Debugging: Check if responses are correctly retrieved
+        console.log('Likert Score:', global.likert.questions.likertQ.response);
+        console.log('IAT Feedback:', global.raceiat.feedback);
+        let likertScore = parseInt(global.likert.questions.likertQ.response);
+        let iatFeedback = global.raceiat.feedback;
+        // Validate Likert Score
         if (isNaN(likertScore) || likertScore < 6 || likertScore > 30) {
-            console.error('Invalid or missing Likert score:', likertScore);
+            console.warn('Invalid Likert score:', likertScore);
             likertScore = null; // Reset to null if invalid
         }
-        if (!iatFeedback) {
-            console.error('Missing IAT feedback:', iatFeedback);
+        // Validate IAT Feedback
+        if (!iatFeedback || typeof iatFeedback !== 'string') {
+            console.warn('Invalid IAT feedback:', iatFeedback);
+            iatFeedback = null; // Reset to null if invalid
         }
         // Create Results HTML
         let resultsHTML = `
-            ${likertScoreDescription(likertScore)}
-            ${iatScoreDescription(iatFeedback)}
-            <p class="disclaimer">Disclaimer: These results are NOT a definitive assessment of your automatically-activated associations. The results may be influenced by variables related to the test (e.g., the category labels or particular items used to represent the categories on the IAT) or the person (e.g., how tired you are). The results are provided for educational purposes only.</p>
-            <div class="encouragement">Your willingness to engage with these assessments reflects a commitment to growth and equity. Remember, bias is not a fixed trait—your efforts can lead to meaningful change. Every step you take contributes to a more inclusive and fair educational system!</div>
+            <div class="results-container">
+                <h1 class="section-title">Participant Results</h1>
+                <p class="description-list">Thank you for participating in this study. Below are your results from the Likert scale and the Implicit Association Test (IAT).</p>
+                <hr />
+                ${likertScoreDescription(likertScore)}
+                ${iatScoreDescription(iatFeedback)}
+                <hr />
+                <p class="disclaimer">Disclaimer: These results are NOT a definitive assessment of your automatically-activated associations. The results may be influenced by variables related to the test (e.g., the category labels or particular items used to represent the categories on the IAT) or the person (e.g., how tired you are). The results are provided for educational purposes only.</p>
+                <div class="encouragement">Your willingness to engage with these assessments reflects a commitment to growth and equity. Remember, bias is not a fixed trait—your efforts can lead to meaningful change. Every step you take contributes to a more inclusive and fair educational system!</div>
+            </div>
         `;
         return resultsHTML;
     }
