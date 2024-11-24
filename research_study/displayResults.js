@@ -1,5 +1,5 @@
 /* 
-Displaying Results from Explicit and Implicit Bias Tests
+Display Results from Likert Scale and Implicit Association Test (IAT)
 */
 // Immediately Invoked Function Expression (IIFE) to encapsulate the code
 (function() {
@@ -43,7 +43,7 @@ Displaying Results from Explicit and Implicit Bias Tests
     const understandingIATContent = [
         {
             title: "Implicit vs. Explicit Attitudes:",
-            text: "Implicit biases are unconscious and may not align with your conscious beliefs or values."
+            text: "Remember that implicit biases are unconscious and may not align with your conscious beliefs or values."
         },
         {
             title: "Commonality of Biases:",
@@ -52,6 +52,21 @@ Displaying Results from Explicit and Implicit Bias Tests
         {
             title: "Opportunity for Growth:",
             text: "Recognizing implicit biases provides an opportunity to reflect and take steps toward mitigating their impact."
+        }
+    ];
+    // Resources for Further Understanding Content
+    const resourcesContent = [
+        {
+            title: "Project Implicit: implicit.harvard.edu",
+            text: "Explore more about the IAT and view examples of how results are presented."
+        },
+        {
+            title: "Understanding Implicit Bias: Kirwan Institute",
+            text: "Offers resources on the impact of implicit bias and strategies for addressing it."
+        },
+        {
+            title: "Implicit Bias in Education: Teaching Tolerance",
+            text: "Provides materials for educators to recognize and reduce bias in schools."
         }
     ];
     // Encouragement Text
@@ -108,6 +123,13 @@ Displaying Results from Explicit and Implicit Bias Tests
     function getUnderstandingIATContent() {
         return understandingIATContent;
     }
+    /**
+     * Retrieves the resources content.
+     * @returns {Array} Array of objects containing title and text.
+     */
+    function getResourcesContent() {
+        return resourcesContent;
+    }
     // ===========================
     // CSS Styles
     // ===========================
@@ -119,44 +141,39 @@ Displaying Results from Explicit and Implicit Bias Tests
             margin: 0;
             padding: 20px;
             background-color: #f9f9f9;
-            overflow-x: hidden;
         }
+        /* Container for all content */
         .container {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: flex-start;
-            max-width: 1600px; /* Increased width for landscape */
+            max-width: 800px;
             margin: auto;
             background: #fff;
-            padding: 30px;
+            padding: 40px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            gap: 40px; /* Space between Likert and IAT sections */
         }
-        /* Section Styles */
-        .section {
-            flex: 1;
-            min-width: 400px; /* Ensures readability on smaller screens */
+        /* Title */
+        .main-title {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        /* Thank You Paragraph */
+        .thank-you {
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 40px;
         }
         /* Section Titles */
         .section-title {
-            font-size: 2em; /* Bigger font */
+            font-size: 1.8em;
             margin-bottom: 20px;
             color: #333;
             text-align: center;
-        }
-        /* Subsection Titles */
-        .subsection-title {
-            font-size: 1.5em; /* Slightly smaller than section titles */
-            margin-top: 30px;
-            margin-bottom: 10px;
-            color: #444;
-            font-weight: bold;
         }
         /* Score Paragraph */
         .score {
             font-size: 1.2em;
             margin-bottom: 20px;
+            text-align: center;
         }
         /* Feedback Description */
         .feedback-description {
@@ -164,39 +181,78 @@ Displaying Results from Explicit and Implicit Bias Tests
             margin-bottom: 20px;
             text-align: justify;
         }
-        /* Understanding and Encouragement Sections */
+        /* Subsection Titles */
+        .subsection-title {
+            font-size: 1.4em;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            color: #444;
+            font-weight: bold;
+        }
+        /* Subtext Paragraphs */
         .subtext {
             font-size: 1em;
             margin-bottom: 20px;
             text-align: justify;
         }
-        /* Bold Text */
-        strong {
+        /* Disclaimer */
+        .disclaimer {
+            font-size: 0.9em;
             font-weight: bold;
+            margin-top: 20px;
+            text-align: justify;
+        }
+        /* Resources */
+        .resources-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .resources-list {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        .resources-list li {
+            margin-bottom: 10px;
+        }
+        .resources-list li ul {
+            list-style-type: circle;
+            padding-left: 20px;
+            margin-top: 5px;
+        }
+        /* Encouragement Section */
+        .encouragement {
+            font-size: 1.2em;
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #e7f3fe;
+            border-left: 6px solid #2196F3;
         }
         /* Responsive Design */
-        @media (max-width: 1200px) {
-            .container {
-                flex-direction: column;
-                align-items: center;
-            }
-            .section {
-                width: 100%;
-                max-width: 800px;
-            }
-        }
         @media (max-width: 600px) {
+            .main-title {
+                font-size: 2em;
+            }
+            .thank-you {
+                font-size: 1em;
+            }
             .section-title {
                 font-size: 1.5em;
-            }
-            .subsection-title {
-                font-size: 1.2em;
             }
             .score {
                 font-size: 1em;
             }
-            .feedback-description, .subtext {
+            .subsection-title {
+                font-size: 1.2em;
+            }
+            .feedback-description, .subtext, .disclaimer {
                 font-size: 0.9em;
+            }
+            .encouragement {
+                font-size: 1em;
             }
         }
     `;
@@ -206,44 +262,65 @@ Displaying Results from Explicit and Implicit Bias Tests
     // Create and Append Elements
     // ===========================
     // Create Main Container
-    const container = createElement('div', 'container', null);
-    document.body.appendChild(container);
+    const containerDiv = createElement('div', 'container', null);
+    document.body.appendChild(containerDiv);
+    // ---------------------------
+    // Participant Results Title
+    // ---------------------------
+    const title = createElement('h1', 'main-title', 'Participant Results');
+    containerDiv.appendChild(title);
+    // ---------------------------
+    // Thank You Paragraph
+    // ---------------------------
+    const thankYou = createElement('p', 'thank-you', 'Thank you for participating in this study. Below are your results from the Likert scale and the Implicit Association Test (IAT).');
+    containerDiv.appendChild(thankYou);
     // ---------------------------
     // Likert Scale Results Section
     // ---------------------------
     const likertSection = createElement('div', 'section', null);
     // Section Title
-    const likertTitle = createElement('h1', 'section-title', 'Likert Scale Results');
+    const likertTitle = createElement('h2', 'section-title', 'Your Likert scale self-perceived bias score is:');
     likertSection.appendChild(likertTitle);
-    // Likert Score Paragraph
-    const likertScoreParagraph = createElement('p', 'score', `Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong>`);
-    likertSection.appendChild(likertScoreParagraph);
-    // Likert Feedback Description
-    const likertDescription = createElement('p', 'feedback-description', likertScoreDescription(likertScore));
-    likertSection.appendChild(likertDescription);
-    // Understanding Your Results Subsection
-    const understandingResultsTitle = createElement('h2', 'subsection-title', 'Understanding Your Results');
-    likertSection.appendChild(understandingResultsTitle);
-    const understandingResultsParagraph = createElement('p', 'subtext', 
-        "The Likert Scale assesses your self-perceived awareness of bias and your commitment to equity, while the Implicit Association Test (IAT) evaluates unconscious associations that may influence your behaviors. Together, these tools provide a holistic view of your equity practices and areas for growth. Use these results as an opportunity to reflect on your practices and take steps toward fostering a more inclusive environment."
-    );
-    likertSection.appendChild(understandingResultsParagraph);
-    container.appendChild(likertSection);
-    // ---------------------------------
-    // Implicit Association Test Results
-    // ---------------------------------
+    // Score Display
+    const likertScoreDisplay = createElement('p', 'score', `<strong>${likertScore}</strong>`);
+    likertSection.appendChild(likertScoreDisplay);
+    // Corresponding Explanation
+    const likertExplanation = createElement('p', 'feedback-description', likertScoreDescription(likertScore));
+    likertSection.appendChild(likertExplanation);
+    // Understanding Self-Perceived Bias Subsection
+    const understandingLikertTitle = createElement('h3', 'subsection-title', 'Understanding Self-Perceived Bias');
+    likertSection.appendChild(understandingLikertTitle);
+    const understandingLikertList = createElement('ul', 'subtext', null);
+    const likertBullets = [
+        "Recognizing your own biases is important for personal and professional growth.",
+        "Increased self-awareness allows you to reflect on how your beliefs and actions may impact others.",
+        "Continuous learning and reflection can help you foster a more inclusive environment."
+    ];
+    likertBullets.forEach(bullet => {
+        const li = createElement('li', null, bullet);
+        understandingLikertList.appendChild(li);
+    });
+    likertSection.appendChild(understandingLikertList);
+    // Append Likert Section to Main Container
+    containerDiv.appendChild(likertSection);
+    // ---------------------------
+    // Implicit Association Test Results Section
+    // ---------------------------
     const iatSection = createElement('div', 'section', null);
     // Section Title
-    const iatTitle = createElement('h1', 'section-title', 'Implicit Association Test Results');
+    const iatTitle = createElement('h2', 'section-title', 'Raw IAT Feedback:');
     iatSection.appendChild(iatTitle);
-    // IAT Feedback Paragraph
-    const iatFeedbackParagraph = createElement('p', 'score', `Raw IAT Feedback: <strong>${iatFeedback}</strong>`);
-    iatSection.appendChild(iatFeedbackParagraph);
-    // IAT Feedback Description
-    const iatDescription = createElement('p', 'feedback-description', iatFeedbackDescription(iatFeedback));
-    iatSection.appendChild(iatDescription);
+    // Feedback Display
+    const iatFeedbackDisplay = createElement('p', 'score', `<strong>${iatFeedback}</strong>`);
+    iatSection.appendChild(iatFeedbackDisplay);
+    // Corresponding Explanation
+    const iatExplanation = createElement('p', 'feedback-description', iatFeedbackDescription(iatFeedback));
+    iatSection.appendChild(iatExplanation);
+    // Disclaimer
+    const disclaimer = createElement('p', 'disclaimer', 'These results are NOT a definitive assessment of your automatically-activated associations. The results may be influenced by variables related to the test (e.g., the category labels or particular items used to represent the categories on the IAT) or the person (e.g., how tired you are). The results are provided for educational purposes only.');
+    iatSection.appendChild(disclaimer);
     // Understanding Your IAT Results Subsection
-    const understandingIATTitle = createElement('h2', 'subsection-title', 'Understanding Your IAT Results');
+    const understandingIATTitle = createElement('h3', 'subsection-title', 'Understanding Your IAT Results');
     iatSection.appendChild(understandingIATTitle);
     const understandingIATList = createElement('ul', 'subtext', null);
     getUnderstandingIATContent().forEach(item => {
@@ -251,12 +328,26 @@ Displaying Results from Explicit and Implicit Bias Tests
         understandingIATList.appendChild(li);
     });
     iatSection.appendChild(understandingIATList);
-    // Encouragement for Continued Growth Subsection
-    const encouragementTitle = createElement('h2', 'subsection-title', 'Encouragement for Continued Growth');
-    iatSection.appendChild(encouragementTitle);
-    const encouragementParagraph = createElement('p', 'subtext', encouragementText);
-    iatSection.appendChild(encouragementParagraph);
-    container.appendChild(iatSection);
+    // Resources for Further Understanding Subsection
+    const resourcesTitle = createElement('h3', 'subsection-title', 'Resources for Further Understanding');
+    iatSection.appendChild(resourcesTitle);
+
+    const resourcesList = createElement('ul', 'resources-list', null);
+    getResourcesContent().forEach(resource => {
+        const li = createElement('li', null, `<strong>${resource.title}</strong>
+            <ul>
+                <li>${resource.text}</li>
+            </ul>`);
+        resourcesList.appendChild(li);
+    });
+    iatSection.appendChild(resourcesList);
+    // Append IAT Section to Main Container
+    containerDiv.appendChild(iatSection);
+    // ---------------------------
+    // Encouragement for Continued Growth
+    // ---------------------------
+    const encouragementDiv = createElement('div', 'encouragement', encouragementText);
+    containerDiv.appendChild(encouragementDiv);
     // ===========================
     // Dynamic Content Handling
     // ===========================
@@ -265,20 +356,16 @@ Displaying Results from Explicit and Implicit Bias Tests
      * @param {number} score - The Likert score to update.
      */
     function updateLikertScore(score) {
-        const scoreElement = likertScoreParagraph.querySelector('strong');
-        scoreElement.textContent = score;
-        // Update the description
-        likertDescription.textContent = likertScoreDescription(score);
+        likertScoreDisplay.innerHTML = `<strong>${score}</strong>`;
+        likertExplanation.textContent = likertScoreDescription(score);
     }
     /**
      * Updates the IAT Feedback explanation based on the selected feedback category.
      * @param {string} feedbackCategory - The IAT feedback category to update.
      */
     function updateIATFeedback(feedbackCategory) {
-        const feedbackElement = iatFeedbackParagraph.querySelector('strong');
-        feedbackElement.textContent = feedbackCategory;
-        // Update the description
-        iatDescription.textContent = iatFeedbackDescription(feedbackCategory);
+        iatFeedbackDisplay.innerHTML = `<strong>${feedbackCategory}</strong>`;
+        iatExplanation.textContent = iatFeedbackDescription(feedbackCategory);
     }
     // ===========================
     // Example Dynamic Updates
