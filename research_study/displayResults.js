@@ -9,24 +9,23 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
     // Example Scores (Replace these with actual dynamic values as needed)
     const likertScore = 20; // Likert Scale Score (Range: 6-30)
     const iatFeedback = 'Moderate Automatic Preference for European Americans Over African Americans'; // IAT Feedback Category
-
     // Feedback Definitions for Likert Scale
     const likertFeedbackDefinitions = [
         {
             range: [6, 12],
-            description: "You have a low level of self-awareness and commitment to equity. You may benefit from increasing your awareness of potential biases and exploring ways to promote equity in your teaching practices. Recognizing and acknowledging biases is a crucial step toward fostering an inclusive learning environment."
+            description: "Scores between 6-12: You have a low level of self-awareness and commitment to equity. You may benefit from increasing your awareness of potential biases and exploring ways to promote equity in your teaching practices. Recognizing and acknowledging biases is a crucial step toward fostering an inclusive learning environment."
         },
         {
             range: [13, 18],
-            description: "You have a moderate level of self-awareness and commitment to equity. You are somewhat aware of potential biases and are beginning to incorporate equity into your teaching practices. There are opportunities to deepen your understanding and further reduce biases in the classroom."
+            description: "Scores between 13-18: You have a moderate level of self-awareness and commitment to equity. You are somewhat aware of potential biases and are beginning to incorporate equity into your teaching practices. There are opportunities to deepen your understanding and further reduce biases in the classroom."
         },
         {
             range: [19, 24],
-            description: "You have a high level of self-awareness and commitment to equity. You are actively aware of potential biases and are working to promote equity in your teaching practices. Your commitment to fostering an inclusive learning environment is commendable."
+            description: "Scores between 19-24: You have a high level of self-awareness and commitment to equity. You are actively aware of potential biases and are working to promote equity in your teaching practices. Your commitment to fostering an inclusive learning environment is commendable."
         },
         {
             range: [25, 30],
-            description: "You have a very high level of self-awareness and commitment to equity. You are deeply committed to promoting equity in your teaching practices and creating an inclusive and fair learning environment. Your dedication is exemplary."
+            description: "Scores between 25-30: You have a very high level of self-awareness and commitment to equity. You are deeply committed to promoting equity in your teaching practices and creating an inclusive and fair learning environment. Your dedication is exemplary."
         }
     ];
     // Feedback Definitions for IAT
@@ -136,7 +135,7 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
     const styles = `
         /* General Styles */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Times New Roman', Times, serif;
             line-height: 1.6;
             margin: 0;
             padding: 20px;
@@ -308,7 +307,7 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
     // ---------------------------
     const iatSection = createElement('div', 'section', null);
     // Section Title
-    const iatTitle = createElement('h2', 'section-title', 'Raw IAT Feedback:');
+    const iatTitle = createElement('h2', 'section-title', 'Your Raw IAT Feedback Results:');
     iatSection.appendChild(iatTitle);
     // Feedback Display
     const iatFeedbackDisplay = createElement('p', 'score', `<strong>${iatFeedback}</strong>`);
@@ -331,7 +330,6 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
     // Resources for Further Understanding Subsection
     const resourcesTitle = createElement('h3', 'subsection-title', 'Resources for Further Understanding');
     iatSection.appendChild(resourcesTitle);
-
     const resourcesList = createElement('ul', 'resources-list', null);
     getResourcesContent().forEach(resource => {
         const li = createElement('li', null, `<strong>${resource.title}</strong>
