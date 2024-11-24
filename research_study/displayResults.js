@@ -9,6 +9,7 @@ Displaying Results from Explicit and Implicit Bias Tests
     // Example Scores (Replace these with actual dynamic values as needed)
     const likertScore = 20; // Likert Scale Score (Range: 6-30)
     const iatFeedback = 'Moderate Automatic Preference for European Americans Over African Americans'; // IAT Feedback Category
+
     // Feedback Definitions for Likert Scale
     const likertFeedbackDefinitions = [
         {
@@ -118,19 +119,31 @@ Displaying Results from Explicit and Implicit Bias Tests
             margin: 0;
             padding: 20px;
             background-color: #f9f9f9;
+            overflow-x: hidden;
         }
         .container {
-            max-width: 800px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+            max-width: 1600px; /* Increased width for landscape */
             margin: auto;
             background: #fff;
             padding: 30px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            gap: 40px; /* Space between Likert and IAT sections */
+        }
+        /* Section Styles */
+        .section {
+            flex: 1;
+            min-width: 400px; /* Ensures readability on smaller screens */
         }
         /* Section Titles */
         .section-title {
             font-size: 2em; /* Bigger font */
             margin-bottom: 20px;
             color: #333;
+            text-align: center;
         }
         /* Subsection Titles */
         .subsection-title {
@@ -145,25 +158,33 @@ Displaying Results from Explicit and Implicit Bias Tests
             font-size: 1.2em;
             margin-bottom: 20px;
         }
-        /* Feedback Lists */
-        .feedback-list {
-            list-style-type: disc;
-            margin-left: 20px;
+        /* Feedback Description */
+        .feedback-description {
+            font-size: 1em;
             margin-bottom: 20px;
+            text-align: justify;
         }
-        .feedback-list li {
-            margin-bottom: 15px;
-        }
-        /* Subtext Paragraphs */
+        /* Understanding and Encouragement Sections */
         .subtext {
             font-size: 1em;
             margin-bottom: 20px;
+            text-align: justify;
         }
         /* Bold Text */
         strong {
             font-weight: bold;
         }
         /* Responsive Design */
+        @media (max-width: 1200px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .section {
+                width: 100%;
+                max-width: 800px;
+            }
+        }
         @media (max-width: 600px) {
             .section-title {
                 font-size: 1.5em;
@@ -174,6 +195,9 @@ Displaying Results from Explicit and Implicit Bias Tests
             .score {
                 font-size: 1em;
             }
+            .feedback-description, .subtext {
+                font-size: 0.9em;
+            }
         }
     `;
     // Inject the CSS styles into the document
@@ -181,62 +205,58 @@ Displaying Results from Explicit and Implicit Bias Tests
     // ===========================
     // Create and Append Elements
     // ===========================
-    // Create Container
+    // Create Main Container
     const container = createElement('div', 'container', null);
     document.body.appendChild(container);
     // ---------------------------
     // Likert Scale Results Section
     // ---------------------------
+    const likertSection = createElement('div', 'section', null);
     // Section Title
     const likertTitle = createElement('h1', 'section-title', 'Likert Scale Results');
-    container.appendChild(likertTitle);
+    likertSection.appendChild(likertTitle);
     // Likert Score Paragraph
     const likertScoreParagraph = createElement('p', 'score', `Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong>`);
-    container.appendChild(likertScoreParagraph);
-    // Likert Feedback List
-    const likertFeedbackList = createElement('ul', 'feedback-list', null);
-    likertFeedbackDefinitions.forEach(feedback => {
-        const li = createElement('li', null, `<strong>Scores between ${feedback.range[0]}-${feedback.range[1]}:</strong> ${feedback.description}`);
-        likertFeedbackList.appendChild(li);
-    });
-    container.appendChild(likertFeedbackList);
+    likertSection.appendChild(likertScoreParagraph);
+    // Likert Feedback Description
+    const likertDescription = createElement('p', 'feedback-description', likertScoreDescription(likertScore));
+    likertSection.appendChild(likertDescription);
     // Understanding Your Results Subsection
     const understandingResultsTitle = createElement('h2', 'subsection-title', 'Understanding Your Results');
-    container.appendChild(understandingResultsTitle);
+    likertSection.appendChild(understandingResultsTitle);
     const understandingResultsParagraph = createElement('p', 'subtext', 
         "The Likert Scale assesses your self-perceived awareness of bias and your commitment to equity, while the Implicit Association Test (IAT) evaluates unconscious associations that may influence your behaviors. Together, these tools provide a holistic view of your equity practices and areas for growth. Use these results as an opportunity to reflect on your practices and take steps toward fostering a more inclusive environment."
     );
-    container.appendChild(understandingResultsParagraph);
+    likertSection.appendChild(understandingResultsParagraph);
+    container.appendChild(likertSection);
     // ---------------------------------
     // Implicit Association Test Results
     // ---------------------------------
+    const iatSection = createElement('div', 'section', null);
     // Section Title
     const iatTitle = createElement('h1', 'section-title', 'Implicit Association Test Results');
-    container.appendChild(iatTitle);
+    iatSection.appendChild(iatTitle);
     // IAT Feedback Paragraph
     const iatFeedbackParagraph = createElement('p', 'score', `Raw IAT Feedback: <strong>${iatFeedback}</strong>`);
-    container.appendChild(iatFeedbackParagraph);
-    // IAT Detailed Feedback List
-    const iatFeedbackList = createElement('ul', 'feedback-list', null);
-    for (const [category, description] of Object.entries(iatFeedbackDefinitions)) {
-        const li = createElement('li', null, `<strong>‘${category}’</strong><br>${description}`);
-        iatFeedbackList.appendChild(li);
-    }
-    container.appendChild(iatFeedbackList);
+    iatSection.appendChild(iatFeedbackParagraph);
+    // IAT Feedback Description
+    const iatDescription = createElement('p', 'feedback-description', iatFeedbackDescription(iatFeedback));
+    iatSection.appendChild(iatDescription);
     // Understanding Your IAT Results Subsection
     const understandingIATTitle = createElement('h2', 'subsection-title', 'Understanding Your IAT Results');
-    container.appendChild(understandingIATTitle);
+    iatSection.appendChild(understandingIATTitle);
     const understandingIATList = createElement('ul', 'subtext', null);
     getUnderstandingIATContent().forEach(item => {
         const li = createElement('li', null, `<strong>${item.title}</strong> ${item.text}`);
         understandingIATList.appendChild(li);
     });
-    container.appendChild(understandingIATList);
+    iatSection.appendChild(understandingIATList);
     // Encouragement for Continued Growth Subsection
     const encouragementTitle = createElement('h2', 'subsection-title', 'Encouragement for Continued Growth');
-    container.appendChild(encouragementTitle);
+    iatSection.appendChild(encouragementTitle);
     const encouragementParagraph = createElement('p', 'subtext', encouragementText);
-    container.appendChild(encouragementParagraph);
+    iatSection.appendChild(encouragementParagraph);
+    container.appendChild(iatSection);
     // ===========================
     // Dynamic Content Handling
     // ===========================
@@ -247,8 +267,8 @@ Displaying Results from Explicit and Implicit Bias Tests
     function updateLikertScore(score) {
         const scoreElement = likertScoreParagraph.querySelector('strong');
         scoreElement.textContent = score;
-        // Optionally, you can add logic to highlight or emphasize the relevant feedback based on the score
-        // For example, you could scroll to the relevant feedback or change its background color
+        // Update the description
+        likertDescription.textContent = likertScoreDescription(score);
     }
     /**
      * Updates the IAT Feedback explanation based on the selected feedback category.
@@ -257,11 +277,13 @@ Displaying Results from Explicit and Implicit Bias Tests
     function updateIATFeedback(feedbackCategory) {
         const feedbackElement = iatFeedbackParagraph.querySelector('strong');
         feedbackElement.textContent = feedbackCategory;
-        // Optionally, you can highlight or filter relevant feedback
-        // For example, you might want to display only the relevant feedback item
+        // Update the description
+        iatDescription.textContent = iatFeedbackDescription(feedbackCategory);
     }
-    // Example of updating scores dynamically
-    // Uncomment and set new scores as needed
+    // ===========================
+    // Example Dynamic Updates
+    // ===========================
+    // Uncomment the following lines to see dynamic updates in action
     // updateLikertScore(25);
     // updateIATFeedback('Slight Automatic Preference for African Americans Over European Americans');
 })();
