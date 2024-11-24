@@ -1,6 +1,6 @@
 /* 
-Display Results from Likert Scale and Implicit Association Test (IAT)
-*/
+ * Display Results from Likert Scale and Implicit Association Test (IAT)
+ */
 // Immediately Invoked Function Expression (IIFE) to encapsulate the code
 (function() {
     // ===========================
@@ -38,36 +38,6 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
         'Moderate Automatic Preference for African Americans Over European Americans': "You have a moderate unconscious association favoring African Americans. You more quickly associated \"African Americans\" with positive words and \"European Americans\" with negative words during the test.",
         'Strong Automatic Preference for African Americans Over European Americans': "You have a strong unconscious association favoring African Americans. You more quickly associated \"African Americans\" with positive words and \"European Americans\" with negative words during the test."
     };
-    // Understanding IAT Results Content
-    const understandingIATContent = [
-        {
-            title: "Implicit vs. Explicit Attitudes:",
-            text: "Remember that implicit biases are unconscious and may not align with your conscious beliefs or values."
-        },
-        {
-            title: "Commonality of Biases:",
-            text: "Implicit biases are common and result from societal influences, cultural exposure, and personal experiences."
-        },
-        {
-            title: "Opportunity for Growth:",
-            text: "Recognizing implicit biases provides an opportunity to reflect and take steps toward mitigating their impact."
-        }
-    ];
-    // Resources for Further Understanding Content
-    const resourcesContent = [
-        {
-            title: "Project Implicit: implicit.harvard.edu",
-            text: "Explore more about the IAT and view examples of how results are presented."
-        },
-        {
-            title: "Understanding Implicit Bias: Kirwan Institute",
-            text: "Offers resources on the impact of implicit bias and strategies for addressing it."
-        },
-        {
-            title: "Implicit Bias in Education: Teaching Tolerance",
-            text: "Provides materials for educators to recognize and reduce bias in schools."
-        }
-    ];
     // Encouragement Text
     const encouragementText = "Your willingness to engage with these assessments reflects a commitment to growth and equity. Remember, bias is not a fixed trait—your efforts can lead to meaningful change. Every step you take contributes to a more inclusive and fair educational system!";
     // ===========================
@@ -115,97 +85,83 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
     function iatFeedbackDescription(feedbackCategory) {
         return iatFeedbackDefinitions[feedbackCategory] || "Feedback category not recognized.";
     }
-    /**
-     * Retrieves the understanding IAT content.
-     * @returns {Array} Array of objects containing title and text.
-     */
-    function getUnderstandingIATContent() {
-        return understandingIATContent;
-    }
-    /**
-     * Retrieves the resources content.
-     * @returns {Array} Array of objects containing title and text.
-     */
-    function getResourcesContent() {
-        return resourcesContent;
-    }
     // ===========================
     // CSS Styles
     // ===========================
     const styles = `
         /* General Styles */
-        body, html {
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.6;
             margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            overflow: hidden; /* Prevent scrolling */
+            padding: 20px;
+            background-color: #f9f9f9;
         }
         /* Container for all content */
         .container {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            height: 100vh; /* Full viewport height */
-            width: 100vw;  /* Full viewport width */
-            background-color: #f9f9f9;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto; /* Allow vertical scrolling if necessary */
+            max-width: 1800px; /* Increased width for landscape */
+            margin: auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         /* Title */
         .main-title {
             text-align: center;
             font-size: 2.5em;
-            margin-bottom: 10px;
-            color: #333;
+            margin-bottom: 20px;
         }
         /* Thank You Paragraph */
         .thank-you {
             text-align: center;
             font-size: 1.2em;
-            margin-bottom: 30px;
-            color: #555;
+            margin-bottom: 40px;
+        }
+        /* Sections Container */
+        .sections {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        /* Individual Section */
+        .section {
+            flex: 1;
+            min-width: 400px;
         }
         /* Section Titles */
         .section-title {
             font-size: 1.8em;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             color: #333;
             text-align: center;
         }
         /* Score Paragraph */
         .score {
-            font-size: 1.4em;
+            font-size: 1.2em;
             margin-bottom: 20px;
             text-align: center;
-            color: #444;
         }
         /* Feedback Description */
         .feedback-description {
-            font-size: 1.1em;
-            margin-bottom: 25px;
+            font-size: 1em;
+            margin-bottom: 20px;
             text-align: justify;
-            color: #555;
         }
         /* Subsection Titles */
         .subsection-title {
             font-size: 1.4em;
-            margin-top: 25px;
+            margin-top: 30px;
             margin-bottom: 10px;
             color: #444;
             font-weight: bold;
-            text-align: left;
-            width: 100%;
         }
         /* Subtext Paragraphs */
         .subtext {
-            font-size: 1.1em;
+            font-size: 1em;
             margin-bottom: 20px;
             text-align: justify;
-            color: #555;
-            width: 100%;
         }
         /* Disclaimer */
         .disclaimer {
@@ -213,8 +169,6 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
             font-weight: bold;
             margin-top: 20px;
             text-align: justify;
-            color: #666;
-            width: 100%;
         }
         /* Resources */
         .resources-title {
@@ -222,19 +176,14 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
             font-weight: bold;
             margin-top: 20px;
             margin-bottom: 10px;
-            color: #444;
-            text-align: left;
-            width: 100%;
         }
         .resources-list {
             list-style-type: disc;
             padding-left: 20px;
             margin-bottom: 20px;
-            width: 100%;
         }
         .resources-list li {
             margin-bottom: 10px;
-            color: #555;
         }
         .resources-list li ul {
             list-style-type: circle;
@@ -243,162 +192,45 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
         }
         /* Encouragement Section */
         .encouragement {
-            font-size: 1.3em;
+            font-size: 1.2em;
             text-align: center;
-            margin-top: 30px;
+            margin-top: 40px;
             padding: 20px;
             background-color: #e7f3fe;
             border-left: 6px solid #2196F3;
-            width: 100%;
-            box-sizing: border-box;
-            color: #333;
         }
         /* Responsive Design */
         @media (max-width: 1200px) {
-            .container {
-                padding: 15px;
+            .sections {
+                flex-direction: column;
+                align-items: center;
             }
-            .main-title {
-                font-size: 2.2em;
-            }
-            .thank-you {
-                font-size: 1.1em;
-                margin-bottom: 25px;
-            }
-            .section-title {
-                font-size: 1.6em;
-                margin-bottom: 12px;
-            }
-            .score {
-                font-size: 1.3em;
-                margin-bottom: 18px;
-            }
-            .feedback-description {
-                font-size: 1em;
-                margin-bottom: 20px;
-            }
-            .subsection-title {
-                font-size: 1.3em;
-                margin-top: 20px;
-                margin-bottom: 8px;
-            }
-            .subtext {
-                font-size: 1em;
-                margin-bottom: 18px;
-            }
-            .disclaimer {
-                font-size: 0.85em;
-                margin-top: 18px;
-            }
-            .resources-title {
-                font-size: 1.1em;
-                margin-top: 18px;
-                margin-bottom: 8px;
-            }
-            .resources-list {
-                font-size: 1em;
-                margin-bottom: 18px;
-            }
-            .encouragement {
-                font-size: 1.2em;
-                margin-top: 25px;
-                padding: 18px;
+            .section {
+                width: 100%;
+                max-width: 800px;
             }
         }
-        @media (max-width: 800px) {
+        @media (max-width: 600px) {
             .main-title {
                 font-size: 2em;
             }
             .thank-you {
                 font-size: 1em;
-                margin-bottom: 20px;
             }
             .section-title {
-                font-size: 1.4em;
-                margin-bottom: 10px;
+                font-size: 1.5em;
             }
             .score {
-                font-size: 1.2em;
-                margin-bottom: 15px;
-            }
-            .feedback-description {
-                font-size: 0.95em;
-                margin-bottom: 15px;
+                font-size: 1em;
             }
             .subsection-title {
                 font-size: 1.2em;
-                margin-top: 18px;
-                margin-bottom: 6px;
             }
-            .subtext {
-                font-size: 0.95em;
-                margin-bottom: 15px;
-            }
-            .disclaimer {
-                font-size: 0.8em;
-                margin-top: 16px;
-            }
-            .resources-title {
-                font-size: 1em;
-                margin-top: 16px;
-                margin-bottom: 6px;
-            }
-            .resources-list {
-                font-size: 0.95em;
-                margin-bottom: 15px;
-            }
-            .encouragement {
-                font-size: 1.1em;
-                margin-top: 20px;
-                padding: 16px;
-            }
-        }
-        @media (max-width: 500px) {
-            .main-title {
-                font-size: 1.8em;
-            }
-            .thank-you {
-                font-size: 0.95em;
-                margin-bottom: 15px;
-            }
-            .section-title {
-                font-size: 1.2em;
-                margin-bottom: 8px;
-            }
-            .score {
-                font-size: 1.1em;
-                margin-bottom: 12px;
-            }
-            .feedback-description {
+            .feedback-description, .subtext, .disclaimer {
                 font-size: 0.9em;
-                margin-bottom: 12px;
-            }
-            .subsection-title {
-                font-size: 1.1em;
-                margin-top: 15px;
-                margin-bottom: 5px;
-            }
-            .subtext {
-                font-size: 0.9em;
-                margin-bottom: 12px;
-            }
-            .disclaimer {
-                font-size: 0.75em;
-                margin-top: 14px;
-            }
-            .resources-title {
-                font-size: 0.95em;
-                margin-top: 14px;
-                margin-bottom: 5px;
-            }
-            .resources-list {
-                font-size: 0.9em;
-                margin-bottom: 12px;
             }
             .encouragement {
                 font-size: 1em;
-                margin-top: 18px;
-                padding: 14px;
             }
         }
     `;
@@ -420,6 +252,11 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
     // ---------------------------
     const thankYou = createElement('p', 'thank-you', 'Thank you for participating in this study. Below are your results from the Likert scale and the Implicit Association Test (IAT).');
     containerDiv.appendChild(thankYou);
+    // ---------------------------
+    // Sections Container (Likert and IAT)
+    // ---------------------------
+    const sectionsDiv = createElement('div', 'sections', null);
+    containerDiv.appendChild(sectionsDiv);
     // ---------------------------
     // Likert Scale Results Section
     // ---------------------------
@@ -447,8 +284,8 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
         understandingLikertList.appendChild(li);
     });
     likertSection.appendChild(understandingLikertList);
-    // Append Likert Section to Main Container
-    containerDiv.appendChild(likertSection);
+    // Append Likert Section to Sections Container
+    sectionsDiv.appendChild(likertSection);
     // ---------------------------
     // Implicit Association Test Results Section
     // ---------------------------
@@ -469,8 +306,13 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
     const understandingIATTitle = createElement('h3', 'subsection-title', 'Understanding Your IAT Results');
     iatSection.appendChild(understandingIATTitle);
     const understandingIATList = createElement('ul', 'subtext', null);
-    getUnderstandingIATContent().forEach(item => {
-        const li = createElement('li', null, `<strong>${item.title}</strong> ${item.text}`);
+    const understandingIATBullets = [
+        "Implicit vs. Explicit Attitudes: Remember that implicit biases are unconscious and may not align with your conscious beliefs or values.",
+        "Commonality of Biases: Implicit biases are common and result from societal influences, cultural exposure, and personal experiences.",
+        "Opportunity for Growth: Recognizing implicit biases provides an opportunity to reflect and take steps toward mitigating their impact."
+    ];
+    understandingIATBullets.forEach(bullet => {
+        const li = createElement('li', null, bullet);
         understandingIATList.appendChild(li);
     });
     iatSection.appendChild(understandingIATList);
@@ -478,7 +320,21 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
     const resourcesTitle = createElement('h3', 'subsection-title', 'Resources for Further Understanding');
     iatSection.appendChild(resourcesTitle);
     const resourcesList = createElement('ul', 'resources-list', null);
-    getResourcesContent().forEach(resource => {
+    const resourcesItems = [
+        {
+            title: "Project Implicit: implicit.harvard.edu",
+            text: "Explore more about the IAT and view examples of how results are presented."
+        },
+        {
+            title: "Understanding Implicit Bias: Kirwan Institute",
+            text: "Offers resources on the impact of implicit bias and strategies for addressing it."
+        },
+        {
+            title: "Implicit Bias in Education: Teaching Tolerance",
+            text: "Provides materials for educators to recognize and reduce bias in schools."
+        }
+    ];
+    resourcesItems.forEach(resource => {
         const li = createElement('li', null, `<strong>${resource.title}</strong>
             <ul>
                 <li>${resource.text}</li>
@@ -486,8 +342,8 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
         resourcesList.appendChild(li);
     });
     iatSection.appendChild(resourcesList);
-    // Append IAT Section to Main Container
-    containerDiv.appendChild(iatSection);
+    // Append IAT Section to Sections Container
+    sectionsDiv.appendChild(iatSection);
     // ---------------------------
     // Encouragement for Continued Growth
     // ---------------------------
@@ -515,9 +371,11 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
     // ===========================
     // Example Dynamic Updates
     // ===========================
-    // Uncomment the following lines to see dynamic updates in action
-    // setTimeout(() => {
-    //     updateLikertScore(25);
-    //     updateIATFeedback('Slight Automatic Preference for African Americans Over European Americans');
-    // }, 3000);
+    // Uncomment the following lines to see dynamic updates in action after 3 seconds
+    /*
+    setTimeout(() => {
+        updateLikertScore(25);
+        updateIATFeedback('Slight Automatic Preference for African Americans Over European Americans');
+    }, 3000);
+    */
 })();
