@@ -6,9 +6,9 @@
     // ===========================
     // Configuration and Data
     // ===========================
-    // Example Scores (Replace these with actual dynamic values as needed)
-    const likertScore = 20; // Likert Scale Score (Range: 6-30)
-    const iatFeedback = 'Moderate Automatic Preference for European Americans Over African Americans'; // IAT Feedback Category
+    // Default Scores (if not provided via URL or form)
+    let likertScore = null;
+    let iatFeedback = null;
     // Feedback Definitions for Likert Scale
     const likertFeedbackDefinitions = [
         {
@@ -85,6 +85,21 @@
     function iatFeedbackDescription(feedbackCategory) {
         return iatFeedbackDefinitions[feedbackCategory] || "Feedback category not recognized.";
     }
+    /**
+     * Parses URL query parameters and returns an object.
+     * @returns {Object} Key-value pairs of query parameters.
+     */
+    function getQueryParams() {
+        const params = {};
+        const queryString = window.location.search.substring(1);
+        const pairs = queryString.split("&");
+        for (let pair of pairs) {
+            if (pair === "") continue;
+            const [key, value] = pair.split("=");
+            params[decodeURIComponent(key)] = decodeURIComponent(value || "");
+        }
+        return params;
+    }
     // ===========================
     // CSS Styles
     // ===========================
@@ -99,59 +114,62 @@
         }
         /* Container for all content */
         .container {
-            max-width: 1800px; /* Increased width for landscape */
+            max-width: 1200px; /* Adjusted for landscape */
             margin: auto;
             background: #fff;
             padding: 40px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            height: 100vh; /* Full viewport height */
+            overflow-y: auto; /* Enable scrolling if content overflows */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         /* Title */
         .main-title {
             text-align: center;
-            font-size: 2.5em;
+            font-size: 3em;
             margin-bottom: 20px;
         }
         /* Thank You Paragraph */
         .thank-you {
             text-align: center;
-            font-size: 1.2em;
+            font-size: 1.5em;
             margin-bottom: 40px;
         }
         /* Sections Container */
         .sections {
+            flex: 1;
             display: flex;
-            flex-direction: row;
-            justify-content: space-between;
+            flex-direction: column;
             gap: 40px;
-            margin-bottom: 40px;
         }
         /* Individual Section */
         .section {
-            flex: 1;
-            min-width: 400px;
+            /* Removed flex properties for single column */
         }
         /* Section Titles */
         .section-title {
-            font-size: 1.8em;
+            font-size: 2em;
             margin-bottom: 20px;
             color: #333;
             text-align: center;
         }
         /* Score Paragraph */
         .score {
-            font-size: 1.2em;
+            font-size: 1.5em;
             margin-bottom: 20px;
             text-align: center;
         }
         /* Feedback Description */
         .feedback-description {
-            font-size: 1em;
+            font-size: 1.2em;
             margin-bottom: 20px;
             text-align: justify;
         }
         /* Subsection Titles */
         .subsection-title {
-            font-size: 1.4em;
+            font-size: 1.6em;
             margin-top: 30px;
             margin-bottom: 10px;
             color: #444;
@@ -159,27 +177,29 @@
         }
         /* Subtext Paragraphs */
         .subtext {
-            font-size: 1em;
+            font-size: 1.2em;
             margin-bottom: 20px;
             text-align: justify;
+            padding-left: 20px;
         }
         /* Disclaimer */
         .disclaimer {
-            font-size: 0.9em;
+            font-size: 1em;
             font-weight: bold;
             margin-top: 20px;
             text-align: justify;
+            padding-left: 20px;
         }
         /* Resources */
         .resources-title {
-            font-size: 1.2em;
+            font-size: 1.4em;
             font-weight: bold;
             margin-top: 20px;
             margin-bottom: 10px;
         }
         .resources-list {
             list-style-type: disc;
-            padding-left: 20px;
+            padding-left: 40px;
             margin-bottom: 20px;
         }
         .resources-list li {
@@ -192,7 +212,7 @@
         }
         /* Encouragement Section */
         .encouragement {
-            font-size: 1.2em;
+            font-size: 1.5em;
             text-align: center;
             margin-top: 40px;
             padding: 20px;
@@ -201,13 +221,29 @@
         }
         /* Responsive Design */
         @media (max-width: 1200px) {
-            .sections {
-                flex-direction: column;
-                align-items: center;
+            .container {
+                padding: 20px;
             }
-            .section {
-                width: 100%;
-                max-width: 800px;
+            .main-title {
+                font-size: 2.5em;
+            }
+            .thank-you {
+                font-size: 1.2em;
+            }
+            .section-title {
+                font-size: 1.8em;
+            }
+            .score {
+                font-size: 1.3em;
+            }
+            .subsection-title {
+                font-size: 1.4em;
+            }
+            .feedback-description, .subtext, .disclaimer {
+                font-size: 1em;
+            }
+            .encouragement {
+                font-size: 1.2em;
             }
         }
         @media (max-width: 600px) {
@@ -265,25 +301,27 @@
     const likertTitle = createElement('h2', 'section-title', 'Your Likert scale self-perceived bias score is:');
     likertSection.appendChild(likertTitle);
     // Score Display
-    const likertScoreDisplay = createElement('p', 'score', `<strong>${likertScore}</strong>`);
+    const likertScoreDisplay = createElement('p', 'score', `<strong>${likertScore !== null ? likertScore : '---'}</strong>`);
     likertSection.appendChild(likertScoreDisplay);
     // Corresponding Explanation
-    const likertExplanation = createElement('p', 'feedback-description', likertScoreDescription(likertScore));
+    const likertExplanation = createElement('p', 'feedback-description', likertScore !== null ? likertScoreDescription(likertScore) : "Please provide your Likert score.");
     likertSection.appendChild(likertExplanation);
     // Understanding Self-Perceived Bias Subsection
-    const understandingLikertTitle = createElement('h3', 'subsection-title', 'Understanding Self-Perceived Bias');
-    likertSection.appendChild(understandingLikertTitle);
-    const understandingLikertList = createElement('ul', 'subtext', null);
-    const likertBullets = [
-        "Recognizing your own biases is important for personal and professional growth.",
-        "Increased self-awareness allows you to reflect on how your beliefs and actions may impact others.",
-        "Continuous learning and reflection can help you foster a more inclusive environment."
-    ];
-    likertBullets.forEach(bullet => {
-        const li = createElement('li', null, bullet);
-        understandingLikertList.appendChild(li);
-    });
-    likertSection.appendChild(understandingLikertList);
+    if (likertScore !== null) {
+        const understandingLikertTitle = createElement('h3', 'subsection-title', 'Understanding Self-Perceived Bias');
+        likertSection.appendChild(understandingLikertTitle);
+        const understandingLikertList = createElement('ul', 'subtext', null);
+        const likertBullets = [
+            "Recognizing your own biases is important for personal and professional growth.",
+            "Increased self-awareness allows you to reflect on how your beliefs and actions may impact others.",
+            "Continuous learning and reflection can help you foster a more inclusive environment."
+        ];
+        likertBullets.forEach(bullet => {
+            const li = createElement('li', null, bullet);
+            understandingLikertList.appendChild(li);
+        });
+        likertSection.appendChild(understandingLikertList);
+    }
     // Append Likert Section to Sections Container
     sectionsDiv.appendChild(likertSection);
     // ---------------------------
@@ -294,54 +332,58 @@
     const iatTitle = createElement('h2', 'section-title', 'Raw IAT Feedback:');
     iatSection.appendChild(iatTitle);
     // Feedback Display
-    const iatFeedbackDisplay = createElement('p', 'score', `<strong>${iatFeedback}</strong>`);
+    const iatFeedbackDisplay = createElement('p', 'score', `<strong>${iatFeedback !== null ? iatFeedback : '---'}</strong>`);
     iatSection.appendChild(iatFeedbackDisplay);
     // Corresponding Explanation
-    const iatExplanation = createElement('p', 'feedback-description', iatFeedbackDescription(iatFeedback));
+    const iatExplanation = createElement('p', 'feedback-description', iatFeedback !== null ? iatFeedbackDescription(iatFeedback) : "Please provide your IAT feedback category.");
     iatSection.appendChild(iatExplanation);
     // Disclaimer
-    const disclaimer = createElement('p', 'disclaimer', 'These results are NOT a definitive assessment of your automatically-activated associations. The results may be influenced by variables related to the test (e.g., the category labels or particular items used to represent the categories on the IAT) or the person (e.g., how tired you are). The results are provided for educational purposes only.');
-    iatSection.appendChild(disclaimer);
+    if (iatFeedback !== null) {
+        const disclaimer = createElement('p', 'disclaimer', 'These results are NOT a definitive assessment of your automatically-activated associations. The results may be influenced by variables related to the test (e.g., the category labels or particular items used to represent the categories on the IAT) or the person (e.g., how tired you are). The results are provided for educational purposes only.');
+        iatSection.appendChild(disclaimer);
+    }
     // Understanding Your IAT Results Subsection
-    const understandingIATTitle = createElement('h3', 'subsection-title', 'Understanding Your IAT Results');
-    iatSection.appendChild(understandingIATTitle);
-    const understandingIATList = createElement('ul', 'subtext', null);
-    const understandingIATBullets = [
-        "Implicit vs. Explicit Attitudes: Remember that implicit biases are unconscious and may not align with your conscious beliefs or values.",
-        "Commonality of Biases: Implicit biases are common and result from societal influences, cultural exposure, and personal experiences.",
-        "Opportunity for Growth: Recognizing implicit biases provides an opportunity to reflect and take steps toward mitigating their impact."
-    ];
-    understandingIATBullets.forEach(bullet => {
-        const li = createElement('li', null, bullet);
-        understandingIATList.appendChild(li);
-    });
-    iatSection.appendChild(understandingIATList);
-    // Resources for Further Understanding Subsection
-    const resourcesTitle = createElement('h3', 'subsection-title', 'Resources for Further Understanding');
-    iatSection.appendChild(resourcesTitle);
-    const resourcesList = createElement('ul', 'resources-list', null);
-    const resourcesItems = [
-        {
-            title: "Project Implicit: implicit.harvard.edu",
-            text: "Explore more about the IAT and view examples of how results are presented."
-        },
-        {
-            title: "Understanding Implicit Bias: Kirwan Institute",
-            text: "Offers resources on the impact of implicit bias and strategies for addressing it."
-        },
-        {
-            title: "Implicit Bias in Education: Teaching Tolerance",
-            text: "Provides materials for educators to recognize and reduce bias in schools."
-        }
-    ];
-    resourcesItems.forEach(resource => {
-        const li = createElement('li', null, `<strong>${resource.title}</strong>
-            <ul>
-                <li>${resource.text}</li>
-            </ul>`);
-        resourcesList.appendChild(li);
-    });
-    iatSection.appendChild(resourcesList);
+    if (iatFeedback !== null) {
+        const understandingIATTitle = createElement('h3', 'subsection-title', 'Understanding Your IAT Results');
+        iatSection.appendChild(understandingIATTitle);
+        const understandingIATList = createElement('ul', 'subtext', null);
+        const understandingIATBullets = [
+            "Implicit vs. Explicit Attitudes: Remember that implicit biases are unconscious and may not align with your conscious beliefs or values.",
+            "Commonality of Biases: Implicit biases are common and result from societal influences, cultural exposure, and personal experiences.",
+            "Opportunity for Growth: Recognizing implicit biases provides an opportunity to reflect and take steps toward mitigating their impact."
+        ];
+        understandingIATBullets.forEach(bullet => {
+            const li = createElement('li', null, bullet);
+            understandingIATList.appendChild(li);
+        });
+        iatSection.appendChild(understandingIATList);
+        // Resources for Further Understanding Subsection
+        const resourcesTitle = createElement('h3', 'subsection-title', 'Resources for Further Understanding');
+        iatSection.appendChild(resourcesTitle);
+        const resourcesList = createElement('ul', 'resources-list', null);
+        const resourcesItems = [
+            {
+                title: "Project Implicit: implicit.harvard.edu",
+                text: "Explore more about the IAT and view examples of how results are presented."
+            },
+            {
+                title: "Understanding Implicit Bias: Kirwan Institute",
+                text: "Offers resources on the impact of implicit bias and strategies for addressing it."
+            },
+            {
+                title: "Implicit Bias in Education: Teaching Tolerance",
+                text: "Provides materials for educators to recognize and reduce bias in schools."
+            }
+        ];
+        resourcesItems.forEach(resource => {
+            const li = createElement('li', null, `<strong>${resource.title}</strong>
+                <ul>
+                    <li>${resource.text}</li>
+                </ul>`);
+            resourcesList.appendChild(li);
+        });
+        iatSection.appendChild(resourcesList);
+    }
     // Append IAT Section to Sections Container
     sectionsDiv.appendChild(iatSection);
     // ---------------------------
@@ -359,6 +401,22 @@
     function updateLikertScore(score) {
         likertScoreDisplay.innerHTML = `<strong>${score}</strong>`;
         likertExplanation.textContent = likertScoreDescription(score);
+        // Append Understanding Self-Perceived Bias Subsection if not already present
+        if (!likertSection.querySelector('.subsection-title')) {
+            const understandingLikertTitle = createElement('h3', 'subsection-title', 'Understanding Self-Perceived Bias');
+            likertSection.appendChild(understandingLikertTitle);
+            const understandingLikertList = createElement('ul', 'subtext', null);
+            const likertBullets = [
+                "Recognizing your own biases is important for personal and professional growth.",
+                "Increased self-awareness allows you to reflect on how your beliefs and actions may impact others.",
+                "Continuous learning and reflection can help you foster a more inclusive environment."
+            ];
+            likertBullets.forEach(bullet => {
+                const li = createElement('li', null, bullet);
+                understandingLikertList.appendChild(li);
+            });
+            likertSection.appendChild(understandingLikertList);
+        }
     }
     /**
      * Updates the IAT Feedback explanation based on the selected feedback category.
@@ -367,15 +425,119 @@
     function updateIATFeedback(feedbackCategory) {
         iatFeedbackDisplay.innerHTML = `<strong>${feedbackCategory}</strong>`;
         iatExplanation.textContent = iatFeedbackDescription(feedbackCategory);
+        // Append Disclaimer and Understanding Your IAT Results Subsections if not already present
+        if (!iatSection.querySelector('.disclaimer')) {
+            const disclaimer = createElement('p', 'disclaimer', 'These results are NOT a definitive assessment of your automatically-activated associations. The results may be influenced by variables related to the test (e.g., the category labels or particular items used to represent the categories on the IAT) or the person (e.g., how tired you are). The results are provided for educational purposes only.');
+            iatSection.appendChild(disclaimer);
+        }
+        if (!iatSection.querySelector('.subsection-title')) {
+            const understandingIATTitle = createElement('h3', 'subsection-title', 'Understanding Your IAT Results');
+            iatSection.appendChild(understandingIATTitle);
+            const understandingIATList = createElement('ul', 'subtext', null);
+            const understandingIATBullets = [
+                "Implicit vs. Explicit Attitudes: Remember that implicit biases are unconscious and may not align with your conscious beliefs or values.",
+                "Commonality of Biases: Implicit biases are common and result from societal influences, cultural exposure, and personal experiences.",
+                "Opportunity for Growth: Recognizing implicit biases provides an opportunity to reflect and take steps toward mitigating their impact."
+            ];
+            understandingIATBullets.forEach(bullet => {
+                const li = createElement('li', null, bullet);
+                understandingIATList.appendChild(li);
+            });
+            iatSection.appendChild(understandingIATList);
+            // Append Resources for Further Understanding Subsection
+            const resourcesTitle = createElement('h3', 'subsection-title', 'Resources for Further Understanding');
+            iatSection.appendChild(resourcesTitle);
+
+            const resourcesList = createElement('ul', 'resources-list', null);
+            const resourcesItems = [
+                {
+                    title: "Project Implicit: implicit.harvard.edu",
+                    text: "Explore more about the IAT and view examples of how results are presented."
+                },
+                {
+                    title: "Understanding Implicit Bias: Kirwan Institute",
+                    text: "Offers resources on the impact of implicit bias and strategies for addressing it."
+                },
+                {
+                    title: "Implicit Bias in Education: Teaching Tolerance",
+                    text: "Provides materials for educators to recognize and reduce bias in schools."
+                }
+            ];
+            resourcesItems.forEach(resource => {
+                const li = createElement('li', null, `<strong>${resource.title}</strong>
+                    <ul>
+                        <li>${resource.text}</li>
+                    </ul>`);
+                resourcesList.appendChild(li);
+            });
+            iatSection.appendChild(resourcesList);
+        }
     }
     // ===========================
-    // Example Dynamic Updates
+    // Initialize Page with Dynamic Data
     // ===========================
-    // Uncomment the following lines to see dynamic updates in action after 3 seconds
-    /*
-    setTimeout(() => {
-        updateLikertScore(25);
-        updateIATFeedback('Slight Automatic Preference for African Americans Over European Americans');
-    }, 3000);
-    */
+    // Retrieve Query Parameters
+    const queryParams = getQueryParams();
+    likertScore = queryParams['likert'] ? parseInt(queryParams['likert']) : null;
+    iatFeedback = queryParams['iat'] ? queryParams['iat'] : null;
+    // Validate Likert Score
+    if (likertScore !== null && (isNaN(likertScore) || likertScore < 6 || likertScore > 30)) {
+        alert('Invalid Likert score provided. Please ensure it is a number between 6 and 30.');
+        likertScore = null;
+    }
+    // Update Likert Score and IAT Feedback if available
+    if (likertScore !== null) {
+        updateLikertScore(likertScore);
+    }
+    if (iatFeedback !== null) {
+        updateIATFeedback(iatFeedback);
+    }
+    // ===========================
+    // Optional: User Input Form (If Query Params Are Absent)
+    // ===========================
+    if (likertScore === null || iatFeedback === null) {
+        // Create Form
+        const form = createElement('form', 'input-form', `
+            <h2>Please Enter Your Results</h2>
+            <label for="likert">Likert Score (6-30):</label><br>
+            <input type="number" id="likert" name="likert" min="6" max="30" required><br><br>
+            <label for="iat">IAT Feedback Category:</label><br>
+            <select id="iat" name="iat" required>
+                <option value="">--Select--</option>
+                <option value="Strong Automatic Preference for European Americans Over African Americans">Strong Automatic Preference for European Americans Over African Americans</option>
+                <option value="Moderate Automatic Preference for European Americans Over African Americans">Moderate Automatic Preference for European Americans Over African Americans</option>
+                <option value="Slight Automatic Preference for European Americans Over African Americans">Slight Automatic Preference for European Americans Over African Americans</option>
+                <option value="Little to No Automatic Preference Between European Americans and African Americans">Little to No Automatic Preference Between European Americans and African Americans</option>
+                <option value="Slight Automatic Preference for African Americans Over European Americans">Slight Automatic Preference for African Americans Over European Americans</option>
+                <option value="Moderate Automatic Preference for African Americans Over European Americans">Moderate Automatic Preference for African Americans Over European Americans</option>
+                <option value="Strong Automatic Preference for African Americans Over European Americans">Strong Automatic Preference for African Americans Over European Americans</option>
+            </select><br><br>
+            <button type="submit">Submit</button>
+        `);
+        containerDiv.appendChild(form);
+        // Handle Form Submission
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent page reload
+            const scoreInput = document.getElementById('likert').value;
+            const feedbackInput = document.getElementById('iat').value;
+            const score = parseInt(scoreInput);
+            const feedback = feedbackInput;
+            // Validate Inputs
+            if (isNaN(score) || score < 6 || score > 30) {
+                alert('Please enter a valid Likert score between 6 and 30.');
+                return;
+            }
+            if (!feedback) {
+                alert('Please select an IAT feedback category.');
+                return;
+            }
+            // Update Scores
+            likertScore = score;
+            iatFeedback = feedback;
+            updateLikertScore(likertScore);
+            updateIATFeedback(iatFeedback);
+            // Hide the form after submission
+            form.style.display = 'none';
+        });
+    }
 })();
