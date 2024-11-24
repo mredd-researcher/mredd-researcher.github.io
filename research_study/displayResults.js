@@ -1,175 +1,267 @@
 /* 
-Displaying results from Explicit and Implicit Bias Tests
+Displaying Results from Explicit and Implicit Bias Tests
 */
-// Function to get the Likert Scale description based on the participant's score
-function likertScoreDescription(likertScore) {
-    if (likertScore >= 6 && likertScore <= 12) {
-        return `
-            <h3 style="font-family: 'Times New Roman';">Participant Results: Likert Scale</h3>
-            <p style="font-family: 'Times New Roman';">Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
-            <p style="font-family: 'Times New Roman';"><strong>Scores between 6-12:</strong> You have a low level of self-awareness and commitment to equity. You may benefit from increasing your awareness of potential biases and exploring ways to promote equity in your teaching practices. Recognizing and acknowledging biases is a crucial step toward fostering an inclusive learning environment.</p>
-        `;
-    } else if (likertScore >= 13 && likertScore <= 18) {
-        return `
-            <h3 style="font-family: 'Times New Roman';">Participant Results: Likert Scale</h3>
-            <p style="font-family: 'Times New Roman';">Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
-            <p style="font-family: 'Times New Roman';"><strong>Scores between 13-18:</strong> You have a moderate level of self-awareness and commitment to equity. You are somewhat aware of potential biases and are beginning to incorporate equity into your teaching practices. There are opportunities to deepen your understanding and further reduce biases in the classroom.</p>
-        `;
-    } else if (likertScore >= 19 && likertScore <= 24) {
-        return `
-            <h3 style="font-family: 'Times New Roman';">Participant Results: Likert Scale</h3>
-            <p style="font-family: 'Times New Roman';">Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
-            <p style="font-family: 'Times New Roman';"><strong>Scores between 19-24:</strong> You have a high level of self-awareness and commitment to equity. You are actively aware of potential biases and are working to promote equity in your teaching practices. Your commitment to fostering an inclusive learning environment is commendable.</p>
-        `;
-    } else if (likertScore >= 25 && likertScore <= 30) {
-        return `
-            <h3 style="font-family: 'Times New Roman';">Participant Results: Likert Scale</h3>
-            <p style="font-family: 'Times New Roman';">Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong></p>
-            <p style="font-family: 'Times New Roman';"><strong>Scores between 25-30:</strong> You have a very high level of self-awareness and commitment to equity. You are deeply committed to promoting equity in your teaching practices and creating an inclusive and fair learning environment. Your dedication is exemplary.</p>
-        `;
-    }
-    return "";
-}
-// Function to get the IAT description based on the participant's feedback
-function iatScoreDescription(iatFeedback) {
-    if (!iatFeedback) {
-        return "";
-    }
-    // Convert feedback to lowercase and trim spaces for case-insensitive matching
-    const feedbackLower = iatFeedback.trim().toLowerCase();
-
-    // Conditions for "European Americans" and "African Americans"
-    if (feedbackLower.includes('strong automatic preference for european americans over african americans')) {
-        return `
-            <h3 style="font-family: 'Times New Roman';">Implicit Association Test (IAT) Results</h3>
-            <p style="font-family: 'Times New Roman';">Your IAT score indicates that you have a <strong>Strong Automatic Preference for European Americans Over African Americans</strong></p>
-            <p style="font-family: 'Times New Roman';">You have a strong unconscious association favoring European Americans. You more quickly associated "European Americans" with positive words and "African Americans" with negative words during the test.</p>
-        `;
-    } else if (feedbackLower.includes('moderate automatic preference for european americans over african americans')) {
-        return `
-            <h3 style="font-family: 'Times New Roman';">Implicit Association Test (IAT) Results</h3>
-            <p style="font-family: 'Times New Roman';">Your IAT score indicates that you have a <strong>Moderate Automatic Preference for European Americans Over African Americans</strong></p>
-            <p style="font-family: 'Times New Roman';">You have a moderate unconscious association favoring European Americans. You more quickly associated "European Americans" with positive words and "African Americans" with negative words during the test.</p>
-        `;
-    } else if (feedbackLower.includes('slight automatic preference for european americans over african americans')) {
-        return `
-            <h3 style="font-family: 'Times New Roman';">Implicit Association Test (IAT) Results</h3>
-            <p style="font-family: 'Times New Roman';">Your IAT score indicates that you have a <strong>Slight Automatic Preference for European Americans Over African Americans</strong></p>
-            <p style="font-family: 'Times New Roman';">You have a slight unconscious association favoring European Americans. You more quickly associated "European Americans" with positive words and "African Americans" with negative words during the test.</p>
-        `;
-    } else if (feedbackLower.includes('little to no automatic preference between european americans and african americans')) {
-        return `
-            <h3 style="font-family: 'Times New Roman';">Implicit Association Test (IAT) Results</h3>
-            <p style="font-family: 'Times New Roman';">Your IAT score indicates that you have <strong>Little to No Automatic Preference Between European Americans and African Americans</strong></p>
-            <p style="font-family: 'Times New Roman';">You do not exhibit a significant implicit preference for either racial group. Your associations between both groups and positive or negative words were similar during the test.</p>
-        `;
-    }
-    // Conditions for "White people" and "Black people"
-    else if (feedbackLower.includes("slightly faster at sorting 'black people' with 'bad words' and 'white people' with 'good words'")) {
-        return `
-            <h3 style="font-family: 'Times New Roman';">Implicit Association Test (IAT) Results</h3>
-            <p style="font-family: 'Times New Roman';">Your IAT score indicates that you have a <strong>Slight Automatic Preference for White People Over Black People</strong></p>
-            <p style="font-family: 'Times New Roman';">You have a slight unconscious association favoring White people. You were slightly faster at sorting "Black people" with "Bad words" and "White people" with "Good words" compared to the reverse during the test.</p>
-        `;
-    } else if (feedbackLower.includes("moderately faster at sorting 'black people' with 'bad words' and 'white people' with 'good words'")) {
-        return `
-            <h3 style="font-family: 'Times New Roman';">Implicit Association Test (IAT) Results</h3>
-            <p style="font-family: 'Times New Roman';">Your IAT score indicates that you have a <strong>Moderate Automatic Preference for White People Over Black People</strong></p>
-            <p style="font-family: 'Times New Roman';">You have a moderate unconscious association favoring White people. You were moderately faster at sorting "Black people" with "Bad words" and "White people" with "Good words" compared to the reverse during the test.</p>
-        `;
-    } else if (feedbackLower.includes("strongly faster at sorting 'black people' with 'bad words' and 'white people' with 'good words'")) {
-        return `
-            <h3 style="font-family: 'Times New Roman';">Implicit Association Test (IAT) Results</h3>
-            <p style="font-family: 'Times New Roman';">Your IAT score indicates that you have a <strong>Strong Automatic Preference for White People Over Black People</strong></p>
-            <p style="font-family: 'Times New Roman';">You have a strong unconscious association favoring White people. You were strongly faster at sorting "Black people" with "Bad words" and "White people" with "Good words" compared to the reverse during the test.</p>
-        `;
-    } else if (feedbackLower.includes("slightly faster at sorting 'white people' with 'bad words' and 'black people' with 'good words'")) {
-        return `
-            <h3 style="font-family: 'Times New Roman';">Implicit Association Test (IAT) Results</h3>
-            <p style="font-family: 'Times New Roman';">Your IAT score indicates that you have a <strong>Slight Automatic Preference for Black People Over White People</strong></p>
-            <p style="font-family: 'Times New Roman';">You have a slight unconscious association favoring Black people. You were slightly faster at sorting "White people" with "Bad words" and "Black people" with "Good words" compared to the reverse during the test.</p>
-        `;
-    } else if (feedbackLower.includes("moderately faster at sorting 'white people' with 'bad words' and 'black people' with 'good words'")) {
-        return `
-            <h3 style="font-family: 'Times New Roman';">Implicit Association Test (IAT) Results</h3>
-            <p style="font-family: 'Times New Roman';">Your IAT score indicates that you have a <strong>Moderate Automatic Preference for Black People Over White People</strong></p>
-            <p style="font-family: 'Times New Roman';">You have a moderate unconscious association favoring Black people. You were moderately faster at sorting "White people" with "Bad words" and "Black people" with "Good words" compared to the reverse during the test.</p>
-        `;
-    } else if (feedbackLower.includes("strongly faster at sorting 'white people' with 'bad words' and 'black people' with 'good words'")) {
-        return `
-            <h3 style="font-family: 'Times New Roman';">Implicit Association Test (IAT) Results</h3>
-            <p style="font-family: 'Times New Roman';">Your IAT score indicates that you have a <strong>Strong Automatic Preference for Black People Over White People</strong></p>
-            <p style="font-family: 'Times New Roman';">You have a strong unconscious association favoring Black people. You were strongly faster at sorting "White people" with "Bad words" and "Black people" with "Good words" compared to the reverse during the test.</p>
-        `;
-    }
-    return "";
-}
-define(['questAPI'], function (quest) {
-    var API = new quest();
-    let global = API.getGlobal();
-    // Obtain the participant's Likert score
-    let likertScore = parseInt(global.likert.questions.likertQ.response); // Adjust the path if necessary
-    // Obtain the participant's IAT feedback
-    let iatFeedback = global.raceiat.feedback; // Ensure this path is correct
-    // Debugging: Log the retrieved scores (can be removed after verification)
-    console.log('Likert Score:', likertScore);
-    console.log('IAT Feedback:', iatFeedback);
-    API.addSequence([
+// Immediately Invoked Function Expression (IIFE) to encapsulate the code
+(function() {
+    // ===========================
+    // Configuration and Data
+    // ===========================
+    // Example Scores (Replace these with actual dynamic values as needed)
+    const likertScore = 20; // Likert Scale Score (Range: 6-30)
+    const iatFeedback = 'Moderate Automatic Preference for European Americans Over African Americans'; // IAT Feedback Category
+    // Feedback Definitions for Likert Scale
+    const likertFeedbackDefinitions = [
         {
-            header: 'Participant Results',
-            text: "",
-            submitText: 'Continue',
-            name: 'resultsPage', // for logs, does not appear on webpage
-            questions: [
-                {
-                    type: 'info',
-                    name: 'resultExplicit',
-                    stem: likertScoreDescription(likertScore),
-                },
-                {
-                    type: 'info',
-                    name: 'likertUnderstanding',
-                    stem: `
-                        <h3 style="font-family: 'Times New Roman';">Understanding Self-Perceived Bias:</h3>
-                        <ul style="font-family: 'Times New Roman';">
-                            <li>Recognizing your own biases is important for personal and professional growth.</li>
-                            <li>Increased self-awareness allows you to reflect on how your beliefs and actions may impact others.</li>
-                            <li>Continuous learning and reflection can help you foster a more inclusive environment.</li>
-                        </ul>
-                        <h3 style="font-family: 'Times New Roman';">Next Steps:</h3>
-                        <ul style="font-family: 'Times New Roman';">
-                            <li>Engage in professional development workshops on diversity and inclusion.</li>
-                            <li>Reflect on your teaching practices and identify areas for improvement.</li>
-                            <li>Explore resources on implicit bias and equitable education strategies.</li>
-                        </ul>
-                    `,
-                },
-                {
-                    type: 'info',
-                    name: 'resultImplicit',
-                    stem: iatScoreDescription(iatFeedback),
-                },
-                {
-                    type: 'info',
-                    name: 'implicitUnderstanding',
-                    stem: `
-                        <h3 style="font-family: 'Times New Roman';">Understanding Implicit Bias:</h3>
-                        <ul style="font-family: 'Times New Roman';">
-                            <li>Implicit biases are unconscious associations that can influence perceptions and actions without conscious intent.</li>
-                            <li>Recognizing these biases is a positive step toward promoting equity and inclusivity.</li>
-                            <li>Implicit biases are common and can be addressed through conscious effort and reflection.</li>
-                        </ul>
-                        <h3 style="font-family: 'Times New Roman';">Next Steps:</h3>
-                        <ul style="font-family: 'Times New Roman';">
-                            <li>Reflect on how these unconscious associations may impact your interactions and decision-making.</li>
-                            <li>Participate in training or workshops focused on diversity, equity, and inclusion.</li>
-                            <li>Implement strategies to mitigate the influence of implicit biases in your professional practice.</li>
-                        </ul>
-                    `,
-                },
-            ]
+            range: [6, 12],
+            description: "You have a low level of self-awareness and commitment to equity. You may benefit from increasing your awareness of potential biases and exploring ways to promote equity in your teaching practices. Recognizing and acknowledging biases is a crucial step toward fostering an inclusive learning environment."
         },
-    ]);
-
-    return API.script;
-});
+        {
+            range: [13, 18],
+            description: "You have a moderate level of self-awareness and commitment to equity. You are somewhat aware of potential biases and are beginning to incorporate equity into your teaching practices. There are opportunities to deepen your understanding and further reduce biases in the classroom."
+        },
+        {
+            range: [19, 24],
+            description: "You have a high level of self-awareness and commitment to equity. You are actively aware of potential biases and are working to promote equity in your teaching practices. Your commitment to fostering an inclusive learning environment is commendable."
+        },
+        {
+            range: [25, 30],
+            description: "You have a very high level of self-awareness and commitment to equity. You are deeply committed to promoting equity in your teaching practices and creating an inclusive and fair learning environment. Your dedication is exemplary."
+        }
+    ];
+    // Feedback Definitions for IAT
+    const iatFeedbackDefinitions = {
+        'Strong Automatic Preference for European Americans Over African Americans': "You have a strong unconscious association favoring European Americans. You more quickly associated \"European Americans\" with positive words and \"African Americans\" with negative words during the test.",
+        'Moderate Automatic Preference for European Americans Over African Americans': "You have a moderate unconscious association favoring European Americans. You more quickly associated \"European Americans\" with positive words and \"African Americans\" with negative words during the test.",
+        'Slight Automatic Preference for European Americans Over African Americans': "You have a slight unconscious association favoring European Americans. You slightly quicker associated \"European Americans\" with positive words and \"African Americans\" with negative words during the test.",
+        'Little to No Automatic Preference Between European Americans and African Americans': "You do not exhibit a significant implicit preference for either racial group. Your associations between both groups and positive or negative words were similar during the test.",
+        'Slight Automatic Preference for African Americans Over European Americans': "You have a slight unconscious association favoring African Americans. You more quickly associated \"African Americans\" with positive words and \"European Americans\" with negative words during the test.",
+        'Moderate Automatic Preference for African Americans Over European Americans': "You have a moderate unconscious association favoring African Americans. You more quickly associated \"African Americans\" with positive words and \"European Americans\" with negative words during the test.",
+        'Strong Automatic Preference for African Americans Over European Americans': "You have a strong unconscious association favoring African Americans. You more quickly associated \"African Americans\" with positive words and \"European Americans\" with negative words during the test."
+    };
+    // Understanding IAT Results Content
+    const understandingIATContent = [
+        {
+            title: "Implicit vs. Explicit Attitudes:",
+            text: "Implicit biases are unconscious and may not align with your conscious beliefs or values."
+        },
+        {
+            title: "Commonality of Biases:",
+            text: "Implicit biases are common and result from societal influences, cultural exposure, and personal experiences."
+        },
+        {
+            title: "Opportunity for Growth:",
+            text: "Recognizing implicit biases provides an opportunity to reflect and take steps toward mitigating their impact."
+        }
+    ];
+    // Encouragement Text
+    const encouragementText = "Your willingness to engage with these assessments reflects a commitment to growth and equity. Remember, bias is not a fixed trait—your efforts can lead to meaningful change. Every step you take contributes to a more inclusive and fair educational system!";
+    // ===========================
+    // Helper Functions
+    // ===========================
+    /**
+     * Creates and returns an HTML element with specified tag, class, and innerHTML.
+     * @param {string} tag - The HTML tag to create.
+     * @param {string} className - The class name(s) to assign.
+     * @param {string} html - The innerHTML content.
+     * @returns {HTMLElement} The created HTML element.
+     */
+    function createElement(tag, className, html) {
+        const element = document.createElement(tag);
+        if (className) element.className = className;
+        if (html) element.innerHTML = html;
+        return element;
+    }
+    /**
+     * Injects CSS styles into the document head.
+     * @param {string} css - The CSS string to inject.
+     */
+    function injectStyles(css) {
+        const style = createElement('style', null, css);
+        document.head.appendChild(style);
+    }
+    /**
+     * Retrieves the Likert Scale description based on the participant's score.
+     * @param {number} score - The Likert score.
+     * @returns {string} The corresponding feedback description.
+     */
+    function likertScoreDescription(score) {
+        for (let feedback of likertFeedbackDefinitions) {
+            if (score >= feedback.range[0] && score <= feedback.range[1]) {
+                return feedback.description;
+            }
+        }
+        return "Score out of range.";
+    }
+    /**
+     * Retrieves the IAT feedback explanation based on the feedback category.
+     * @param {string} feedbackCategory - The IAT feedback category.
+     * @returns {string} The corresponding feedback explanation.
+     */
+    function iatFeedbackDescription(feedbackCategory) {
+        return iatFeedbackDefinitions[feedbackCategory] || "Feedback category not recognized.";
+    }
+    /**
+     * Retrieves the understanding IAT content.
+     * @returns {Array} Array of objects containing title and text.
+     */
+    function getUnderstandingIATContent() {
+        return understandingIATContent;
+    }
+    // ===========================
+    // CSS Styles
+    // ===========================
+    const styles = `
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        /* Section Titles */
+        .section-title {
+            font-size: 2em; /* Bigger font */
+            margin-bottom: 20px;
+            color: #333;
+        }
+        /* Subsection Titles */
+        .subsection-title {
+            font-size: 1.5em; /* Slightly smaller than section titles */
+            margin-top: 30px;
+            margin-bottom: 10px;
+            color: #444;
+            font-weight: bold;
+        }
+        /* Score Paragraph */
+        .score {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        /* Feedback Lists */
+        .feedback-list {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        .feedback-list li {
+            margin-bottom: 15px;
+        }
+        /* Subtext Paragraphs */
+        .subtext {
+            font-size: 1em;
+            margin-bottom: 20px;
+        }
+        /* Bold Text */
+        strong {
+            font-weight: bold;
+        }
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .section-title {
+                font-size: 1.5em;
+            }
+            .subsection-title {
+                font-size: 1.2em;
+            }
+            .score {
+                font-size: 1em;
+            }
+        }
+    `;
+    // Inject the CSS styles into the document
+    injectStyles(styles);
+    // ===========================
+    // Create and Append Elements
+    // ===========================
+    // Create Container
+    const container = createElement('div', 'container', null);
+    document.body.appendChild(container);
+    // ---------------------------
+    // Likert Scale Results Section
+    // ---------------------------
+    // Section Title
+    const likertTitle = createElement('h1', 'section-title', 'Likert Scale Results');
+    container.appendChild(likertTitle);
+    // Likert Score Paragraph
+    const likertScoreParagraph = createElement('p', 'score', `Your Likert Scale Self-Perceived Bias Score is <strong>${likertScore}</strong>`);
+    container.appendChild(likertScoreParagraph);
+    // Likert Feedback List
+    const likertFeedbackList = createElement('ul', 'feedback-list', null);
+    likertFeedbackDefinitions.forEach(feedback => {
+        const li = createElement('li', null, `<strong>Scores between ${feedback.range[0]}-${feedback.range[1]}:</strong> ${feedback.description}`);
+        likertFeedbackList.appendChild(li);
+    });
+    container.appendChild(likertFeedbackList);
+    // Understanding Your Results Subsection
+    const understandingResultsTitle = createElement('h2', 'subsection-title', 'Understanding Your Results');
+    container.appendChild(understandingResultsTitle);
+    const understandingResultsParagraph = createElement('p', 'subtext', 
+        "The Likert Scale assesses your self-perceived awareness of bias and your commitment to equity, while the Implicit Association Test (IAT) evaluates unconscious associations that may influence your behaviors. Together, these tools provide a holistic view of your equity practices and areas for growth. Use these results as an opportunity to reflect on your practices and take steps toward fostering a more inclusive environment."
+    );
+    container.appendChild(understandingResultsParagraph);
+    // ---------------------------------
+    // Implicit Association Test Results
+    // ---------------------------------
+    // Section Title
+    const iatTitle = createElement('h1', 'section-title', 'Implicit Association Test Results');
+    container.appendChild(iatTitle);
+    // IAT Feedback Paragraph
+    const iatFeedbackParagraph = createElement('p', 'score', `Raw IAT Feedback: <strong>${iatFeedback}</strong>`);
+    container.appendChild(iatFeedbackParagraph);
+    // IAT Detailed Feedback List
+    const iatFeedbackList = createElement('ul', 'feedback-list', null);
+    for (const [category, description] of Object.entries(iatFeedbackDefinitions)) {
+        const li = createElement('li', null, `<strong>‘${category}’</strong><br>${description}`);
+        iatFeedbackList.appendChild(li);
+    }
+    container.appendChild(iatFeedbackList);
+    // Understanding Your IAT Results Subsection
+    const understandingIATTitle = createElement('h2', 'subsection-title', 'Understanding Your IAT Results');
+    container.appendChild(understandingIATTitle);
+    const understandingIATList = createElement('ul', 'subtext', null);
+    getUnderstandingIATContent().forEach(item => {
+        const li = createElement('li', null, `<strong>${item.title}</strong> ${item.text}`);
+        understandingIATList.appendChild(li);
+    });
+    container.appendChild(understandingIATList);
+    // Encouragement for Continued Growth Subsection
+    const encouragementTitle = createElement('h2', 'subsection-title', 'Encouragement for Continued Growth');
+    container.appendChild(encouragementTitle);
+    const encouragementParagraph = createElement('p', 'subtext', encouragementText);
+    container.appendChild(encouragementParagraph);
+    // ===========================
+    // Dynamic Content Handling
+    // ===========================
+    /**
+     * Updates the Likert Scale score and corresponding feedback.
+     * @param {number} score - The Likert score to update.
+     */
+    function updateLikertScore(score) {
+        const scoreElement = likertScoreParagraph.querySelector('strong');
+        scoreElement.textContent = score;
+        // Optionally, you can add logic to highlight or emphasize the relevant feedback based on the score
+        // For example, you could scroll to the relevant feedback or change its background color
+    }
+    /**
+     * Updates the IAT Feedback explanation based on the selected feedback category.
+     * @param {string} feedbackCategory - The IAT feedback category to update.
+     */
+    function updateIATFeedback(feedbackCategory) {
+        const feedbackElement = iatFeedbackParagraph.querySelector('strong');
+        feedbackElement.textContent = feedbackCategory;
+        // Optionally, you can highlight or filter relevant feedback
+        // For example, you might want to display only the relevant feedback item
+    }
+    // Example of updating scores dynamically
+    // Uncomment and set new scores as needed
+    // updateLikertScore(25);
+    // updateIATFeedback('Slight Automatic Preference for African Americans Over European Americans');
+})();
