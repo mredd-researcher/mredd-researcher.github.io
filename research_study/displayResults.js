@@ -1,249 +1,523 @@
 /* 
-Displaying results from Explicit and Implicit Bias Tests
+Display Results from Likert Scale and Implicit Association Test (IAT)
 */
-define(['questAPI'], function (quest) {
-    var API = new quest();
-    let global = API.getGlobal();
+// Immediately Invoked Function Expression (IIFE) to encapsulate the code
+(function() {
     // ===========================
-    // Function Definitions
+    // Configuration and Data
     // ===========================
-    // Function to generate Likert Scale description
-    function likertScoreDescription(likertScore) {
-        if (likertScore >= 6 && likertScore <= 12) {
-            return `
-                <h2>Your Likert Scale Self-Perceived Bias Score is: <strong>${likertScore}</strong></h2>
-                <p><strong>Scores between 6-12:</strong> You have a low level of self-awareness and commitment to equity. You may benefit from increasing your awareness of potential biases and exploring ways to promote equity in your teaching practices. Recognizing and acknowledging biases is a crucial step toward fostering an inclusive learning environment.</p>
-            `;
-        } else if (likertScore >= 13 && likertScore <= 18) {
-            return `
-                <h2>Your Likert Scale Self-Perceived Bias Score is: <strong>${likertScore}</strong></h2>
-                <p><strong>Scores between 13-18:</strong> You have a moderate level of self-awareness and commitment to equity. You are somewhat aware of potential biases and are beginning to incorporate equity into your teaching practices. There are opportunities to deepen your understanding and further reduce biases in the classroom.</p>
-            `;
-        } else if (likertScore >= 19 && likertScore <= 24) {
-            return `
-                <h2>Your Likert Scale Self-Perceived Bias Score is: <strong>${likertScore}</strong></h2>
-                <p><strong>Scores between 19-24:</strong> You have a high level of self-awareness and commitment to equity. You are actively aware of potential biases and are working to promote equity in your teaching practices. Your commitment to fostering an inclusive learning environment is commendable.</p>
-            `;
-        } else if (likertScore >= 25 && likertScore <= 30) {
-            return `
-                <h2>Your Likert Scale Self-Perceived Bias Score is: <strong>${likertScore}</strong></h2>
-                <p><strong>Scores between 25-30:</strong> You have a very high level of self-awareness and commitment to equity. You are deeply committed to promoting equity in your teaching practices and creating an inclusive and fair learning environment. Your dedication is exemplary.</p>
-            `;
-        } else {
-            // Placeholder for invalid scores
-            return `<p>Your Likert Scale Self-Perceived Bias Score is: <strong>---</strong></p>
-                    <p>Please ensure you have completed the Likert survey correctly.</p>`;
+    // Example Scores (Replace these with actual dynamic values as needed)
+    const likertScore = 20; // Likert Scale Score (Range: 6-30)
+    const iatFeedback = 'Moderate Automatic Preference for European Americans Over African Americans'; // IAT Feedback Category
+    // Feedback Definitions for Likert Scale
+    const likertFeedbackDefinitions = [
+        {
+            range: [6, 12],
+            description: "Scores between 6-12: You have a low level of self-awareness and commitment to equity. You may benefit from increasing your awareness of potential biases and exploring ways to promote equity in your teaching practices. Recognizing and acknowledging biases is a crucial step toward fostering an inclusive learning environment."
+        },
+        {
+            range: [13, 18],
+            description: "Scores between 13-18: You have a moderate level of self-awareness and commitment to equity. You are somewhat aware of potential biases and are beginning to incorporate equity into your teaching practices. There are opportunities to deepen your understanding and further reduce biases in the classroom."
+        },
+        {
+            range: [19, 24],
+            description: "Scores between 19-24: You have a high level of self-awareness and commitment to equity. You are actively aware of potential biases and are working to promote equity in your teaching practices. Your commitment to fostering an inclusive learning environment is commendable."
+        },
+        {
+            range: [25, 30],
+            description: "Scores between 25-30: You have a very high level of self-awareness and commitment to equity. You are deeply committed to promoting equity in your teaching practices and creating an inclusive and fair learning environment. Your dedication is exemplary."
         }
+    ];
+    // Feedback Definitions for IAT
+    const iatFeedbackDefinitions = {
+        'Strong Automatic Preference for European Americans Over African Americans': "You have a strong unconscious association favoring European Americans. You more quickly associated \"European Americans\" with positive words and \"African Americans\" with negative words during the test.",
+        'Moderate Automatic Preference for European Americans Over African Americans': "You have a moderate unconscious association favoring European Americans. You more quickly associated \"European Americans\" with positive words and \"African Americans\" with negative words during the test.",
+        'Slight Automatic Preference for European Americans Over African Americans': "You have a slight unconscious association favoring European Americans. You slightly quicker associated \"European Americans\" with positive words and \"African Americans\" with negative words during the test.",
+        'Little to No Automatic Preference Between European Americans and African Americans': "You do not exhibit a significant implicit preference for either racial group. Your associations between both groups and positive or negative words were similar during the test.",
+        'Slight Automatic Preference for African Americans Over European Americans': "You have a slight unconscious association favoring African Americans. You more quickly associated \"African Americans\" with positive words and \"European Americans\" with negative words during the test.",
+        'Moderate Automatic Preference for African Americans Over European Americans': "You have a moderate unconscious association favoring African Americans. You more quickly associated \"African Americans\" with positive words and \"European Americans\" with negative words during the test.",
+        'Strong Automatic Preference for African Americans Over European Americans': "You have a strong unconscious association favoring African Americans. You more quickly associated \"African Americans\" with positive words and \"European Americans\" with negative words during the test."
+    };
+    // Understanding IAT Results Content
+    const understandingIATContent = [
+        {
+            title: "Implicit vs. Explicit Attitudes:",
+            text: "Remember that implicit biases are unconscious and may not align with your conscious beliefs or values."
+        },
+        {
+            title: "Commonality of Biases:",
+            text: "Implicit biases are common and result from societal influences, cultural exposure, and personal experiences."
+        },
+        {
+            title: "Opportunity for Growth:",
+            text: "Recognizing implicit biases provides an opportunity to reflect and take steps toward mitigating their impact."
+        }
+    ];
+    // Resources for Further Understanding Content
+    const resourcesContent = [
+        {
+            title: "Project Implicit: implicit.harvard.edu",
+            text: "Explore more about the IAT and view examples of how results are presented."
+        },
+        {
+            title: "Understanding Implicit Bias: Kirwan Institute",
+            text: "Offers resources on the impact of implicit bias and strategies for addressing it."
+        },
+        {
+            title: "Implicit Bias in Education: Teaching Tolerance",
+            text: "Provides materials for educators to recognize and reduce bias in schools."
+        }
+    ];
+    // Encouragement Text
+    const encouragementText = "Your willingness to engage with these assessments reflects a commitment to growth and equity. Remember, bias is not a fixed trait—your efforts can lead to meaningful change. Every step you take contributes to a more inclusive and fair educational system!";
+    // ===========================
+    // Helper Functions
+    // ===========================
+    /**
+     * Creates and returns an HTML element with specified tag, class, and innerHTML.
+     * @param {string} tag - The HTML tag to create.
+     * @param {string} className - The class name(s) to assign.
+     * @param {string} html - The innerHTML content.
+     * @returns {HTMLElement} The created HTML element.
+     */
+    function createElement(tag, className, html) {
+        const element = document.createElement(tag);
+        if (className) element.className = className;
+        if (html) element.innerHTML = html;
+        return element;
     }
-    // Function to generate IAT description
-    function iatScoreDescription(iatFeedback) {
-        if (!iatFeedback) {
-            // Placeholder for missing feedback
-            return `<p>Your Raw IAT Feedback Results: <strong>---</strong></p>
-                    <p>Please ensure you have completed the IAT correctly.</p>`;
-        }
-        // Normalize feedback string for case-insensitive matching
-        const feedbackLower = iatFeedback.trim().toLowerCase();
-        // Define feedback categories
-        const feedbackMap = {
-            'strong automatic preference for european americans over african americans': {
-                title: 'Strong Automatic Preference for European Americans Over African Americans',
-                description: 'You have a strong unconscious association favoring European Americans. You more quickly associated "European Americans" with positive words and "African Americans" with negative words during the test.'
-            },
-            'moderate automatic preference for european americans over african americans': {
-                title: 'Moderate Automatic Preference for European Americans Over African Americans',
-                description: 'You have a moderate unconscious association favoring European Americans. You more quickly associated "European Americans" with positive words and "African Americans" with negative words during the test.'
-            },
-            'slight automatic preference for european americans over african americans': {
-                title: 'Slight Automatic Preference for European Americans Over African Americans',
-                description: 'You have a slight unconscious association favoring European Americans. You slightly quicker associated "European Americans" with positive words and "African Americans" with negative words during the test.'
-            },
-            'little to no automatic preference between european americans and african americans': {
-                title: 'Little to No Automatic Preference Between European Americans and African Americans',
-                description: 'You do not exhibit a significant implicit preference for either racial group. Your associations between both groups and positive or negative words were similar during the test.'
-            },
-            'slight automatic preference for african americans over european americans': {
-                title: 'Slight Automatic Preference for African Americans Over European Americans',
-                description: 'You have a slight unconscious association favoring African Americans. You more quickly associated "African Americans" with positive words and "European Americans" with negative words during the test.'
-            },
-            'moderate automatic preference for african americans over european americans': {
-                title: 'Moderate Automatic Preference for African Americans Over European Americans',
-                description: 'You have a moderate unconscious association favoring African Americans. You more quickly associated "African Americans" with positive words and "European Americans" with negative words during the test.'
-            },
-            'strong automatic preference for african americans over european americans': {
-                title: 'Strong Automatic Preference for African Americans Over European Americans',
-                description: 'You have a strong unconscious association favoring African Americans. You more quickly associated "African Americans" with positive words and "European Americans" with negative words during the test.'
-            },
-            // Add more mappings if necessary
-        };
-        // Check for a matching feedback category
-        for (let key in feedbackMap) {
-            if (feedbackLower.includes(key)) {
-                return `
-                    <h2>Your Raw IAT Feedback Results:</h2>
-                    <p><strong>${feedbackMap[key].title}</strong></p>
-                    <p>${feedbackMap[key].description}</p>
-                `;
-            }
-        }
-        // If no match found, provide a generic message
-        return `
-            <h2>Your Raw IAT Feedback Results:</h2>
-            <p><strong>${iatFeedback}</strong></p>
-            <p>Your results indicate a unique pattern of associations.</p>
-        `;
-    }
-    // ===========================
-    // CSS Styles Injection
-    // ===========================
+    /**
+     * Injects CSS styles into the document head.
+     * @param {string} css - The CSS string to inject.
+     */
     function injectStyles(css) {
-        var style = document.createElement('style');
-        style.type = 'text/css';
-        style.innerHTML = css;
+        const style = createElement('style', null, css);
         document.head.appendChild(style);
     }
+    /**
+     * Retrieves the Likert Scale description based on the participant's score.
+     * @param {number} score - The Likert score.
+     * @returns {string} The corresponding feedback description.
+     */
+    function likertScoreDescription(score) {
+        for (let feedback of likertFeedbackDefinitions) {
+            if (score >= feedback.range[0] && score <= feedback.range[1]) {
+                return feedback.description;
+            }
+        }
+        return "Score out of range.";
+    }
+    /**
+     * Retrieves the IAT feedback explanation based on the feedback category.
+     * @param {string} feedbackCategory - The IAT feedback category.
+     * @returns {string} The corresponding feedback explanation.
+     */
+    function iatFeedbackDescription(feedbackCategory) {
+        return iatFeedbackDefinitions[feedbackCategory] || "Feedback category not recognized.";
+    }
+    /**
+     * Retrieves the understanding IAT content.
+     * @returns {Array} Array of objects containing title and text.
+     */
+    function getUnderstandingIATContent() {
+        return understandingIATContent;
+    }
+    /**
+     * Retrieves the resources content.
+     * @returns {Array} Array of objects containing title and text.
+     */
+    function getResourcesContent() {
+        return resourcesContent;
+    }
+    // ===========================
+    // CSS Styles
+    // ===========================
     const styles = `
-        body {
-            font-family: 'Times New Roman', Times, serif;
-            background-image: url('https://images.unsplash.com/photo-1529253355930-25c696b4dc09?auto=format&fit=crop&w=1350&q=80'); /* Replace with your desired landscape background image URL */
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
+        /* General Styles */
+        body, html {
             margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            padding: 0;
+            height: 100%;
+            width: 100%;
             overflow: hidden; /* Prevent scrolling */
         }
-        .results-container {
-            background-color: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 10px;
-            max-width: 800px;
-            width: 100%;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-            overflow-y: auto;
-            max-height: 90vh; /* Ensure it fits within viewport height */
+        /* Container for all content */
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh; /* Full viewport height */
+            width: 100vw;  /* Full viewport width */
+            background-color: #f9f9f9;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto; /* Allow vertical scrolling if necessary */
         }
-        h1, h2 {
-            font-family: 'Times New Roman', Times, serif;
+        /* Title */
+        .main-title {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
             color: #333;
         }
-        .section-title {
-            font-size: 2.5em; /* Larger titles */
-            margin-bottom: 20px;
+        /* Thank You Paragraph */
+        .thank-you {
             text-align: center;
-        }
-        .score {
-            font-size: 1.8em; /* Larger text */
-            margin-bottom: 20px;
-            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 30px;
             color: #555;
         }
-        .description-list {
-            font-size: 1.2em; /* Regular text */
-            margin-left: 20px;
-            margin-bottom: 20px;
-            color: #444;
-            list-style-type: disc;
-        }
-        .description-list li {
+        /* Section Titles */
+        .section-title {
+            font-size: 1.8em;
             margin-bottom: 15px;
+            color: #333;
+            text-align: center;
         }
+        /* Score Paragraph */
+        .score {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #444;
+        }
+        /* Feedback Description */
+        .feedback-description {
+            font-size: 1.1em;
+            margin-bottom: 25px;
+            text-align: justify;
+            color: #555;
+        }
+        /* Subsection Titles */
+        .subsection-title {
+            font-size: 1.4em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            color: #444;
+            font-weight: bold;
+            text-align: left;
+            width: 100%;
+        }
+        /* Subtext Paragraphs */
+        .subtext {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            text-align: justify;
+            color: #555;
+            width: 100%;
+        }
+        /* Disclaimer */
         .disclaimer {
-            font-size: 1em;
+            font-size: 0.9em;
             font-weight: bold;
             margin-top: 20px;
-            color: #888;
             text-align: justify;
+            color: #666;
+            width: 100%;
         }
+        /* Resources */
+        .resources-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #444;
+            text-align: left;
+            width: 100%;
+        }
+        .resources-list {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .resources-list li {
+            margin-bottom: 10px;
+            color: #555;
+        }
+        .resources-list li ul {
+            list-style-type: circle;
+            padding-left: 20px;
+            margin-top: 5px;
+        }
+        /* Encouragement Section */
         .encouragement {
-            font-size: 1.5em;
+            font-size: 1.3em;
             text-align: center;
             margin-top: 30px;
             padding: 20px;
             background-color: #e7f3fe;
             border-left: 6px solid #2196F3;
+            width: 100%;
+            box-sizing: border-box;
             color: #333;
-            border-radius: 5px;
         }
-        @media (max-width: 800px) {
-            .results-container {
-                padding: 20px;
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 15px;
+            }
+            .main-title {
+                font-size: 2.2em;
+            }
+            .thank-you {
+                font-size: 1.1em;
+                margin-bottom: 25px;
             }
             .section-title {
-                font-size: 2em;
+                font-size: 1.6em;
+                margin-bottom: 12px;
             }
             .score {
-                font-size: 1.5em;
+                font-size: 1.3em;
+                margin-bottom: 18px;
             }
-            .description-list {
+            .feedback-description {
                 font-size: 1em;
+                margin-bottom: 20px;
+            }
+            .subsection-title {
+                font-size: 1.3em;
+                margin-top: 20px;
+                margin-bottom: 8px;
+            }
+            .subtext {
+                font-size: 1em;
+                margin-bottom: 18px;
+            }
+            .disclaimer {
+                font-size: 0.85em;
+                margin-top: 18px;
+            }
+            .resources-title {
+                font-size: 1.1em;
+                margin-top: 18px;
+                margin-bottom: 8px;
+            }
+            .resources-list {
+                font-size: 1em;
+                margin-bottom: 18px;
             }
             .encouragement {
                 font-size: 1.2em;
+                margin-top: 25px;
+                padding: 18px;
+            }
+        }
+        @media (max-width: 800px) {
+            .main-title {
+                font-size: 2em;
+            }
+            .thank-you {
+                font-size: 1em;
+                margin-bottom: 20px;
+            }
+            .section-title {
+                font-size: 1.4em;
+                margin-bottom: 10px;
+            }
+            .score {
+                font-size: 1.2em;
+                margin-bottom: 15px;
+            }
+            .feedback-description {
+                font-size: 0.95em;
+                margin-bottom: 15px;
+            }
+            .subsection-title {
+                font-size: 1.2em;
+                margin-top: 18px;
+                margin-bottom: 6px;
+            }
+            .subtext {
+                font-size: 0.95em;
+                margin-bottom: 15px;
+            }
+            .disclaimer {
+                font-size: 0.8em;
+                margin-top: 16px;
+            }
+            .resources-title {
+                font-size: 1em;
+                margin-top: 16px;
+                margin-bottom: 6px;
+            }
+            .resources-list {
+                font-size: 0.95em;
+                margin-bottom: 15px;
+            }
+            .encouragement {
+                font-size: 1.1em;
+                margin-top: 20px;
+                padding: 16px;
+            }
+        }
+        @media (max-width: 500px) {
+            .main-title {
+                font-size: 1.8em;
+            }
+            .thank-you {
+                font-size: 0.95em;
+                margin-bottom: 15px;
+            }
+            .section-title {
+                font-size: 1.2em;
+                margin-bottom: 8px;
+            }
+            .score {
+                font-size: 1.1em;
+                margin-bottom: 12px;
+            }
+            .feedback-description {
+                font-size: 0.9em;
+                margin-bottom: 12px;
+            }
+            .subsection-title {
+                font-size: 1.1em;
+                margin-top: 15px;
+                margin-bottom: 5px;
+            }
+            .subtext {
+                font-size: 0.9em;
+                margin-bottom: 12px;
+            }
+            .disclaimer {
+                font-size: 0.75em;
+                margin-top: 14px;
+            }
+            .resources-title {
+                font-size: 0.95em;
+                margin-top: 14px;
+                margin-bottom: 5px;
+            }
+            .resources-list {
+                font-size: 0.9em;
+                margin-bottom: 12px;
+            }
+            .encouragement {
+                font-size: 1em;
+                margin-top: 18px;
+                padding: 14px;
             }
         }
     `;
+    // Inject the CSS styles into the document
     injectStyles(styles);
     // ===========================
     // Create and Append Elements
     // ===========================
-    function createResultsHTML() {
-        // Obtain the participant's Likert score and IAT feedback
-        // Ensure that the paths to these responses are correct
-        // Adjust 'likertQ.response' and 'raceiat.feedback' if necessary based on your survey structure
-        // Example Paths:
-        // - global.likert.questions.likertQ.response
-        // - global.raceiat.feedback
-        // Ensure that 'likertQ' and 'raceiat' are the correct identifiers for your questions
-        // You can verify this by checking the survey structure or using debugging logs
-        // Debugging: Check if responses are correctly retrieved
-        console.log('Likert Score:', global.likert.questions.likertQ.response);
-        console.log('IAT Feedback:', global.raceiat.feedback);
-        let likertScore = parseInt(global.likert.questions.likertQ.response);
-        let iatFeedback = global.raceiat.feedback;
-        // Validate Likert Score
-        if (isNaN(likertScore) || likertScore < 6 || likertScore > 30) {
-            console.warn('Invalid Likert score:', likertScore);
-            likertScore = null; // Reset to null if invalid
-        }
-        // Validate IAT Feedback
-        if (!iatFeedback || typeof iatFeedback !== 'string') {
-            console.warn('Invalid IAT feedback:', iatFeedback);
-            iatFeedback = null; // Reset to null if invalid
-        }
-        // Generate the full HTML
-        const resultsHTML = `
-            <div class="results-container">
-                <h1 class="section-title">Participant Results</h1>
-                <p>Thank you for participating in this study. Below are your results from the Likert scale and the Implicit Association Test (IAT).</p>
-                <hr />
-                ${likertScoreDescription(likertScore)}
-                ${iatScoreDescription(iatFeedback)}
-                <hr />
-                <p class="disclaimer">Disclaimer: These results are NOT a definitive assessment of your automatically-activated associations. The results may be influenced by variables related to the test (e.g., the category labels or particular items used to represent the categories on the IAT) or the person (e.g., how tired you are). The results are provided for educational purposes only.</p>
-                <div class="encouragement">Your willingness to engage with these assessments reflects a commitment to growth and equity. Remember, bias is not a fixed trait—your efforts can lead to meaningful change. Every step you take contributes to a more inclusive and fair educational system!</div>
-            </div>
-        `;
-        return resultsHTML;
+    // Create Main Container
+    const containerDiv = createElement('div', 'container', null);
+    document.body.appendChild(containerDiv);
+    // ---------------------------
+    // Participant Results Title
+    // ---------------------------
+    const title = createElement('h1', 'main-title', 'Participant Results');
+    containerDiv.appendChild(title);
+    // ---------------------------
+    // Thank You Paragraph
+    // ---------------------------
+    const thankYou = createElement('p', 'thank-you', 'Thank you for participating in this study. Below are your results from the Likert scale and the Implicit Association Test (IAT).');
+    containerDiv.appendChild(thankYou);
+    // ---------------------------
+    // Likert Scale Results Section
+    // ---------------------------
+    const likertSection = createElement('div', 'section', null);
+    // Section Title
+    const likertTitle = createElement('h2', 'section-title', 'Your Likert scale self-perceived bias score is:');
+    likertSection.appendChild(likertTitle);
+    // Score Display
+    const likertScoreDisplay = createElement('p', 'score', `<strong>${likertScore}</strong>`);
+    likertSection.appendChild(likertScoreDisplay);
+    // Corresponding Explanation
+    const likertExplanation = createElement('p', 'feedback-description', likertScoreDescription(likertScore));
+    likertSection.appendChild(likertExplanation);
+    // Understanding Self-Perceived Bias Subsection
+    const understandingLikertTitle = createElement('h3', 'subsection-title', 'Understanding Self-Perceived Bias');
+    likertSection.appendChild(understandingLikertTitle);
+    const understandingLikertList = createElement('ul', 'subtext', null);
+    const likertBullets = [
+        "Recognizing your own biases is important for personal and professional growth.",
+        "Increased self-awareness allows you to reflect on how your beliefs and actions may impact others.",
+        "Continuous learning and reflection can help you foster a more inclusive environment."
+    ];
+    likertBullets.forEach(bullet => {
+        const li = createElement('li', null, bullet);
+        understandingLikertList.appendChild(li);
+    });
+    likertSection.appendChild(understandingLikertList);
+    // Append Likert Section to Main Container
+    containerDiv.appendChild(likertSection);
+    // ---------------------------
+    // Implicit Association Test Results Section
+    // ---------------------------
+    const iatSection = createElement('div', 'section', null);
+    // Section Title
+    const iatTitle = createElement('h2', 'section-title', 'Raw IAT Feedback:');
+    iatSection.appendChild(iatTitle);
+    // Feedback Display
+    const iatFeedbackDisplay = createElement('p', 'score', `<strong>${iatFeedback}</strong>`);
+    iatSection.appendChild(iatFeedbackDisplay);
+    // Corresponding Explanation
+    const iatExplanation = createElement('p', 'feedback-description', iatFeedbackDescription(iatFeedback));
+    iatSection.appendChild(iatExplanation);
+    // Disclaimer
+    const disclaimer = createElement('p', 'disclaimer', 'These results are NOT a definitive assessment of your automatically-activated associations. The results may be influenced by variables related to the test (e.g., the category labels or particular items used to represent the categories on the IAT) or the person (e.g., how tired you are). The results are provided for educational purposes only.');
+    iatSection.appendChild(disclaimer);
+    // Understanding Your IAT Results Subsection
+    const understandingIATTitle = createElement('h3', 'subsection-title', 'Understanding Your IAT Results');
+    iatSection.appendChild(understandingIATTitle);
+    const understandingIATList = createElement('ul', 'subtext', null);
+    getUnderstandingIATContent().forEach(item => {
+        const li = createElement('li', null, `<strong>${item.title}</strong> ${item.text}`);
+        understandingIATList.appendChild(li);
+    });
+    iatSection.appendChild(understandingIATList);
+    // Resources for Further Understanding Subsection
+    const resourcesTitle = createElement('h3', 'subsection-title', 'Resources for Further Understanding');
+    iatSection.appendChild(resourcesTitle);
+    const resourcesList = createElement('ul', 'resources-list', null);
+    getResourcesContent().forEach(resource => {
+        const li = createElement('li', null, `<strong>${resource.title}</strong>
+            <ul>
+                <li>${resource.text}</li>
+            </ul>`);
+        resourcesList.appendChild(li);
+    });
+    iatSection.appendChild(resourcesList);
+    // Append IAT Section to Main Container
+    containerDiv.appendChild(iatSection);
+    // ---------------------------
+    // Encouragement for Continued Growth
+    // ---------------------------
+    const encouragementDiv = createElement('div', 'encouragement', encouragementText);
+    containerDiv.appendChild(encouragementDiv);
+    // ===========================
+    // Dynamic Content Handling
+    // ===========================
+    /**
+     * Updates the Likert Scale score and corresponding feedback.
+     * @param {number} score - The Likert score to update.
+     */
+    function updateLikertScore(score) {
+        likertScoreDisplay.innerHTML = `<strong>${score}</strong>`;
+        likertExplanation.textContent = likertScoreDescription(score);
     }
-    API.addSequence([
-        {
-            header: 'Participant Results',
-            text: "",
-            submitText: 'Continue',
-            name: 'resultsPage', // for logs, does not appear on webpage
-            questions: [
-                {
-                    type: 'info',
-                    name: 'fullResults',
-                    stem: createResultsHTML(),
-                }
-            ]
-        },
-    ]);
-    return API.script;
-});
+    /**
+     * Updates the IAT Feedback explanation based on the selected feedback category.
+     * @param {string} feedbackCategory - The IAT feedback category to update.
+     */
+    function updateIATFeedback(feedbackCategory) {
+        iatFeedbackDisplay.innerHTML = `<strong>${feedbackCategory}</strong>`;
+        iatExplanation.textContent = iatFeedbackDescription(feedbackCategory);
+    }
+    // ===========================
+    // Example Dynamic Updates
+    // ===========================
+    // Uncomment the following lines to see dynamic updates in action
+    // setTimeout(() => {
+    //     updateLikertScore(25);
+    //     updateIATFeedback('Slight Automatic Preference for African Americans Over European Americans');
+    // }, 3000);
+})();
