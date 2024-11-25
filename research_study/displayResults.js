@@ -7,9 +7,8 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
     // Configuration and Data
     // ===========================
     // Example Scores (Replace these with actual dynamic values as needed)
-    const likertScore = 20; // Replace with actual participant score
-    const iatFeedback = 'Moderate Automatic Preference for European Americans Over African Americans'; // Replace with actual IAT result
-    
+    const likertScore = 20; // Likert Scale Score (Range: 6-30)
+    const iatFeedback = 'Moderate Automatic Preference for European Americans Over African Americans'; // IAT Feedback Category
     // Feedback Definitions for Likert Scale
     const likertFeedbackDefinitions = [
         {
@@ -39,6 +38,39 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
         'Moderate Automatic Preference for African Americans Over European Americans': "You have a moderate unconscious association favoring African Americans. You more quickly associated \"African Americans\" with positive words and \"European Americans\" with negative words during the test.",
         'Strong Automatic Preference for African Americans Over European Americans': "You have a strong unconscious association favoring African Americans. You more quickly associated \"African Americans\" with positive words and \"European Americans\" with negative words during the test."
     };
+    // Understanding IAT Results Content
+    const understandingIATContent = [
+        {
+            title: "Implicit vs. Explicit Attitudes:",
+            text: "Remember that implicit biases are unconscious and may not align with your conscious beliefs or values."
+        },
+        {
+            title: "Commonality of Biases:",
+            text: "Implicit biases are common and result from societal influences, cultural exposure, and personal experiences."
+        },
+        {
+            title: "Opportunity for Growth:",
+            text: "Recognizing implicit biases provides an opportunity to reflect and take steps toward mitigating their impact."
+        }
+    ];
+    // Resources for Further Understanding Content
+    const resourcesContent = [
+        {
+            title: "Project Implicit: implicit.harvard.edu",
+            text: "Explore more about the IAT and view examples of how results are presented."
+        },
+        {
+            title: "Understanding Implicit Bias: Kirwan Institute",
+            text: "Offers resources on the impact of implicit bias and strategies for addressing it."
+        },
+        {
+            title: "Implicit Bias in Education: Teaching Tolerance",
+            text: "Provides materials for educators to recognize and reduce bias in schools."
+        }
+    ];
+    // Encouragement Text
+    const encouragementText = "Your willingness to engage with these assessments reflects a commitment to growth and equity. Remember, bias is not a fixed trait—your efforts can lead to meaningful change. Every step you take contributes to a more inclusive and fair educational system!";
+
     // ===========================
     // Helper Functions
     // ===========================
@@ -83,6 +115,20 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
      */
     function iatFeedbackDescription(feedbackCategory) {
         return iatFeedbackDefinitions[feedbackCategory] || "Feedback category not recognized.";
+    }
+    /**
+     * Retrieves the understanding IAT content.
+     * @returns {Array} Array of objects containing title and text.
+     */
+    function getUnderstandingIATContent() {
+        return understandingIATContent;
+    }
+    /**
+     * Retrieves the resources content.
+     * @returns {Array} Array of objects containing title and text.
+     */
+    function getResourcesContent() {
+        return resourcesContent;
     }
     // ===========================
     // CSS Styles
@@ -236,7 +282,7 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
     // ---------------------------
     const likertSection = createElement('div', 'section', null);
     // Section Title
-    const likertTitle = createElement('h2', 'section-title', 'Your Likert Scale Self-Perceived Bias Score is:');
+    const likertTitle = createElement('h2', 'section-title', 'Your self-perceived bias score is:');
     likertSection.appendChild(likertTitle);
     // Score Display
     const likertScoreDisplay = createElement('p', 'score', `<strong>${likertScore}</strong>`);
