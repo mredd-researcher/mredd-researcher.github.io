@@ -138,15 +138,18 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
             font-family: 'Times New Roman', Times, serif;
             line-height: 1.6;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             background-color: #f9f9f9;
         }
         /* Container for all content */
         .container {
-            max-width: 800px;
-            margin: auto;
+            width: 100%;
+            padding: 0 1in; /* 1-inch left and right margins */
+            box-sizing: border-box; /* Ensures padding doesn't affect width */
             background: #fff;
-            padding: 40px;
+            margin: 0 auto;
+            padding-top: 40px;
+            padding-bottom: 40px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         /* Title */
