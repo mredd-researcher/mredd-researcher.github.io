@@ -70,6 +70,7 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
     ];
     // Encouragement Text
     const encouragementText = "Your willingness to engage with these assessments reflects a commitment to growth and equity. Remember, bias is not a fixed trait—your efforts can lead to meaningful change. Every step you take contributes to a more inclusive and fair educational system!";
+
     // ===========================
     // Helper Functions
     // ===========================
@@ -144,7 +145,7 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
         /* Container for all content */
         .container {
             width: 100%;
-            padding: 0 1in; /* 1-inch left and right margins */
+            padding: 1in 1in 0; /* 1-inch left and right margins, 1-inch top margin */
             box-sizing: border-box; /* Ensures padding doesn't affect width */
             background: #fff;
             margin: 0 auto;
@@ -161,31 +162,31 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
         /* Thank You Paragraph */
         .thank-you {
             text-align: center;
-            font-size: 1.2em;
+            font-size: 1.5em;
             margin-bottom: 40px;
         }
         /* Section Titles */
         .section-title {
-            font-size: 1.8em;
+            font-size: 2em;
             margin-bottom: 20px;
             color: #333;
             text-align: center;
         }
         /* Score Paragraph */
         .score {
-            font-size: 1.2em;
+            font-size: 1.5em;
             margin-bottom: 20px;
             text-align: center;
         }
         /* Feedback Description */
         .feedback-description {
-            font-size: 1em;
+            font-size: 1.2em;
             margin-bottom: 20px;
             text-align: justify;
         }
         /* Subsection Titles */
         .subsection-title {
-            font-size: 1.4em;
+            font-size: 1.6em;
             margin-top: 30px;
             margin-bottom: 10px;
             color: #444;
@@ -193,20 +194,20 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
         }
         /* Subtext Paragraphs */
         .subtext {
-            font-size: 1em;
+            font-size: 1.2em;
             margin-bottom: 20px;
             text-align: justify;
         }
         /* Disclaimer */
         .disclaimer {
-            font-size: 0.9em;
+            font-size: 1.0em;
             font-weight: bold;
             margin-top: 20px;
             text-align: justify;
         }
         /* Resources */
         .resources-title {
-            font-size: 1.2em;
+            font-size: 1.5em;
             font-weight: bold;
             margin-top: 20px;
             margin-bottom: 10px;
@@ -226,7 +227,7 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
         }
         /* Encouragement Section */
         .encouragement {
-            font-size: 1.2em;
+            font-size: 1.5em;
             text-align: center;
             margin-top: 40px;
             padding: 20px;
@@ -239,22 +240,22 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
                 font-size: 2em;
             }
             .thank-you {
-                font-size: 1em;
-            }
-            .section-title {
-                font-size: 1.5em;
-            }
-            .score {
-                font-size: 1em;
-            }
-            .subsection-title {
                 font-size: 1.2em;
             }
+            .section-title {
+                font-size: 1.8em;
+            }
+            .score {
+                font-size: 1.2em;
+            }
+            .subsection-title {
+                font-size: 1.4em;
+            }
             .feedback-description, .subtext, .disclaimer {
-                font-size: 0.9em;
+                font-size: 1em;
             }
             .encouragement {
-                font-size: 1em;
+                font-size: 1.2em;
             }
         }
     `;
@@ -281,7 +282,7 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
     // ---------------------------
     const likertSection = createElement('div', 'section', null);
     // Section Title
-    const likertTitle = createElement('h2', 'section-title', 'Your Likert scale self-perceived bias score is:');
+    const likertTitle = createElement('h2', 'section-title', 'Your self-perceived bias score is:');
     likertSection.appendChild(likertTitle);
     // Score Display
     const likertScoreDisplay = createElement('p', 'score', `<strong>${likertScore}</strong>`);
@@ -289,20 +290,6 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
     // Corresponding Explanation
     const likertExplanation = createElement('p', 'feedback-description', likertScoreDescription(likertScore));
     likertSection.appendChild(likertExplanation);
-    // Understanding Self-Perceived Bias Subsection
-    const understandingLikertTitle = createElement('h3', 'subsection-title', 'Understanding Self-Perceived Bias');
-    likertSection.appendChild(understandingLikertTitle);
-    const understandingLikertList = createElement('ul', 'subtext', null);
-    const likertBullets = [
-        "Recognizing your own biases is important for personal and professional growth.",
-        "Increased self-awareness allows you to reflect on how your beliefs and actions may impact others.",
-        "Continuous learning and reflection can help you foster a more inclusive environment."
-    ];
-    likertBullets.forEach(bullet => {
-        const li = createElement('li', null, bullet);
-        understandingLikertList.appendChild(li);
-    });
-    likertSection.appendChild(understandingLikertList);
     // Append Likert Section to Main Container
     containerDiv.appendChild(likertSection);
     // ---------------------------
@@ -321,27 +308,6 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
     // Disclaimer
     const disclaimer = createElement('p', 'disclaimer', 'These results are NOT a definitive assessment of your automatically-activated associations. The results may be influenced by variables related to the test (e.g., the category labels or particular items used to represent the categories on the IAT) or the person (e.g., how tired you are). The results are provided for educational purposes only.');
     iatSection.appendChild(disclaimer);
-    // Understanding Your IAT Results Subsection
-    const understandingIATTitle = createElement('h3', 'subsection-title', 'Understanding Your IAT Results');
-    iatSection.appendChild(understandingIATTitle);
-    const understandingIATList = createElement('ul', 'subtext', null);
-    getUnderstandingIATContent().forEach(item => {
-        const li = createElement('li', null, `<strong>${item.title}</strong> ${item.text}`);
-        understandingIATList.appendChild(li);
-    });
-    iatSection.appendChild(understandingIATList);
-    // Resources for Further Understanding Subsection
-    const resourcesTitle = createElement('h3', 'subsection-title', 'Resources for Further Understanding');
-    iatSection.appendChild(resourcesTitle);
-    const resourcesList = createElement('ul', 'resources-list', null);
-    getResourcesContent().forEach(resource => {
-        const li = createElement('li', null, `<strong>${resource.title}</strong>
-            <ul>
-                <li>${resource.text}</li>
-            </ul>`);
-        resourcesList.appendChild(li);
-    });
-    iatSection.appendChild(resourcesList);
     // Append IAT Section to Main Container
     containerDiv.appendChild(iatSection);
     // ---------------------------
@@ -349,29 +315,4 @@ Display Results from Likert Scale and Implicit Association Test (IAT)
     // ---------------------------
     const encouragementDiv = createElement('div', 'encouragement', encouragementText);
     containerDiv.appendChild(encouragementDiv);
-    // ===========================
-    // Dynamic Content Handling
-    // ===========================
-    /**
-     * Updates the Likert Scale score and corresponding feedback.
-     * @param {number} score - The Likert score to update.
-     */
-    function updateLikertScore(score) {
-        likertScoreDisplay.innerHTML = `<strong>${score}</strong>`;
-        likertExplanation.textContent = likertScoreDescription(score);
-    }
-    /**
-     * Updates the IAT Feedback explanation based on the selected feedback category.
-     * @param {string} feedbackCategory - The IAT feedback category to update.
-     */
-    function updateIATFeedback(feedbackCategory) {
-        iatFeedbackDisplay.innerHTML = `<strong>${feedbackCategory}</strong>`;
-        iatExplanation.textContent = iatFeedbackDescription(feedbackCategory);
-    }
-    // ===========================
-    // Example Dynamic Updates
-    // ===========================
-    // Uncomment the following lines to see dynamic updates in action
-    // updateLikertScore(25);
-    // updateIATFeedback('Slight Automatic Preference for African Americans Over European Americans');
 })();
