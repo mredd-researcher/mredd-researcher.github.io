@@ -103,16 +103,10 @@ define(['managerAPI',
             scriptUrl: 'raceiat.js'
         }],
 
-        displayResults: [{
+        resultsAndFollowUp: [{
             type: 'quest',
-            name: 'displayResults',
-            scriptUrl: 'displayResults.js'
-        }],
-
-        interview: [{
-            type: 'quest',
-            name: 'interview',
-            scriptUrl: 'interview_questions.js'
+            name: 'resultsAndFollowUp',
+            scriptUrl: 'resultsAndFollowUp.js'
         }],
 
         lastpage: [{
@@ -176,7 +170,7 @@ define(['managerAPI',
             ]
         },
         
-        
+        // {inherit: 'resultsAndFollowUp'},        
         {inherit: 'intro'},
         {inherit: 'consent'},
         {inherit: 'likert'},
@@ -196,8 +190,7 @@ define(['managerAPI',
         //         },
         //     ]
         // },
-        {inherit: 'displayResults'},
-        {inherit: "interview"},
+        {inherit: 'resultsAndFollowUp'},
 		{inherit: 'uploading'},
         {inherit: 'lastpage'},
         {inherit: 'redirect'}
