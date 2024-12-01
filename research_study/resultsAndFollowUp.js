@@ -80,6 +80,11 @@ function iatScoreDescription(iatFeedback) {
             <p style="font-size:125%; margin-top:.5em">Your IAT score indicates a <strong>${iatResult}.</strong></p>
             <p>${iatExplanation}</p>
         `;
+    }
+    else if (iatFeedback) {
+        return `
+            <p style="font-size:125%; margin-top:.5em">Your IAT results showed: <strong>${iatFeedback}.</strong></p>
+        `;
     } else {
         // Handle unknown feedback by returning a default message without raw feedback
         return `<p style="font-size:150%; margin-top:.5em">Your IAT score indicates an <strong>unknown preference.</strong></p>`;
