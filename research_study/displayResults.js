@@ -2,15 +2,23 @@
 Display Results from Likert Scale and Implicit Association Test (IAT)
 */
 // Immediately Invoked Function Expression (IIFE) to encapsulate the code
-(function() {
+define(['questAPI'], function(quest) {
+    var API = new quest();
+    let global = API.getGlobal();
     // ===========================
     // Configuration and Data
     // ===========================
     // Example Scores (Replace these with actual dynamic values as needed)
-    const likertScore = 20; // Likert Scale Score (Range: 6-30)
-    const iatFeedback = 'Moderate Automatic Preference for European Americans Over African Americans'; // IAT Feedback Category
+    const likertScore = global.likert.questions.likertQ.response;
+    // const likertScore = 20; // Likert Scale Score (Range: 6-30)
+    const iatFeedback = global.raceiat.feedback;
+    // const iatFeedback = 'Moderate Automatic Preference for European Americans Over African Americans'; // IAT Feedback Category
     // Feedback Definitions for Likert Scale
     const likertFeedbackDefinitions = [
+        {
+            range: [0, 5],
+            description: "You declined to answer the questions concerning self-awareness and commitment to equity."
+        },
         {
             range: [6, 12],
             description: "You have a low level of self-awareness and commitment to equity. You may benefit from increasing your awareness of potential biases and exploring ways to promote equity in your teaching practices. Recognizing and acknowledging biases is a crucial step toward fostering an inclusive learning environment."
